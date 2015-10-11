@@ -1,4 +1,0 @@
-<?php
-// Yeah baby
-	phpinfo();
-?>
