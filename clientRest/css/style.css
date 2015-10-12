@@ -1,0 +1,16 @@
+table tbody {
+	border: solid 1px #CCC;
+}
+table thead {
+	border: solid 1px #AA0000;
+}
+table thead tr {
+	background-color: #AA0000 !important;
+	color: #FFF;
+}
+table tbody tr:hover {
+	background-color: #FF6347 !important;
+}
+table thead tr th {
+	border-radius: 2px !important;
+}

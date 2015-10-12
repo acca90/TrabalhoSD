@@ -10,6 +10,7 @@
 		switch ($_REQUEST['acao']) {
 
 			case 'listar':
+				echo $contato->listar();
 				break;
 
 			case 'novo':
@@ -17,9 +18,11 @@
 				break;
 
 			case 'update':
+			echo $contato->update();
 				break;
 
 			case 'delete':
+			echo $contato->delete();
 				break;
 
 		}
