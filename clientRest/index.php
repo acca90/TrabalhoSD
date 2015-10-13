@@ -42,7 +42,7 @@
 				  	<button type="button" ng-click="listar()" class="btn btn-default">Buscar</button>
 				</form>
 		        <ul class="nav navbar-nav">
-	                <li><a data-toggle="modal" data-target="#myModal" href="#">Novo</a></li>
+	                <li><a ng-click="novo()" data-toggle="modal" data-target="#myModal" href="#">Novo</a></li>
 	                <li><a href="#">Configurar</a></li>
 	            </ul>
         	</div>
@@ -57,11 +57,10 @@
 						<th align='left'>Nome</th>
 						<th align='left'>Endereço</th>
 						<th align='left'>Complemento</th>
-						<th align='left'>CEP</th>
 						<th align='left'>Cidade</th>
-						<th align='left'>Estado</th>
 						<th align='left'>Email</th>
 						<th align='left'>Email Alternativo</th>
+						<th style="width: 20px;"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -70,11 +69,14 @@
 				    	<td>{{ x.nome }}</td>
 				    	<td>{{ x.endereco }}</td>
 				    	<td>{{ x.complemento }}</td>
-				    	<td>{{ x.cep }}</td>
 				    	<td>{{ x.cidade }}</td>
-				    	<td>{{ x.estado }}</td>
 				    	<td>{{ x.email }}</td>
 				    	<td>{{ x.email_alter }}</td>
+				    	<td>
+				    		<button ng-click="editar(x)" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-danger btn-xs">
+				    			<i class='glyphicon glyphicon-pencil'></i>
+				    		</button>
+						</td>
 				  	</tr>
 				  	<tr>
 				  		<td colspan="9" ng-if="registros == 0">Nenhum registro localizado</td>
@@ -86,11 +88,10 @@
 
 
 	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
+	<div id="myModal" class="modal fade" role="dialog" ng-controller='formulario'>
 	  <div class="modal-dialog modal-lg">
-
 	    <!-- Modal content-->
-	    <div class="modal-content">
+	    <div class="modal-content" >
 	      	<div class="modal-header">
 	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	        	<h4 class="modal-title">Novo contato</h4>
@@ -99,59 +100,61 @@
 				<div class="container">
 				    <div class="col-lg-10 col-offset-6 centered">
 						<form class="form-horizontal" role="form" id="form-contato">
-							<input type='hidden' id='acao' value='novo'>
+							
+							<input ng-model="acao" ng-value="acao" value="" type='hidden'>
+
 							<div style="display:none" class="form-group">
-						    	<label class="control-label col-md-3" for="contato_codigo">Código:</label>
+						    	<label class="control-label col-md-3" for="contato_codigo">Código</label>
 						    	<div class='col-md-5'>
-						    		<input type="text" class="form-control" id='contato_codigo' name="contato_codigo">
+						    		<input ng-model="contatoForm.codigo" ng-value="contatoForm.codigo" type="text" class="form-control">
 						  		</div>
 						  	</div>
-							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contat_nome">Nome:</label>
+							<div class="form-group" id="contato_nome">
+						    	<label class="control-label vermelho col-md-3" for="contato_nome">Nome</label>
 						    	<div class='col-md-5'>
-						    		<input type="text" class="form-control" name="contato_nome">
+						    		<input ng-model="contatoForm.nome" ng-value="contatoForm.nome"  type="text" class="form-control">
 						  		</div>
 						  	</div>
-						  	<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_email">Email Principal:</label>
+						  	<div class="form-group" id="contato_email">
+						    	<label class="control-label vermelho col-md-3" for="contato_email">Email Principal</label>
 						    	<div class='col-md-5'>
-						    		<input type="email" class="form-control" name="contato_email">
+						    		<input ng-model="contatoForm.email" ng-value="contatoForm.email"  type="text" class="form-control">
 						    	</div>
 						  	</div>
 						  	<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_email_alter">Email Alternativo:</label>
+						    	<label class="control-label col-md-3" for="contato_email_alter">Email Alternativo</label>
 						    	<div class='col-md-5'>
-						    		<input type="email" class="form-control" name="contato_email_alter">
+						    		<input ng-model="contatoForm.email_alter" ng-value="contatoForm.email_alter" type="text" class="form-control">
 						    	</div>
 						  	</div>
 							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_endereco">Endereço:</label>
+						    	<label class="control-label col-md-3" for="contato_endereco">Endereço</label>
 						    	<div class='col-md-5'>
-							    	<input type="text" class="form-control" name="contato_endereco">
+							    	<input ng-model="contatoForm.endereco" ng-value="contatoForm.endereco" type="text" class="form-control">
 						    	</div>
 						  	</div>
 							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_complemento">Complemento:</label>
+						    	<label class="control-label col-md-3" for="contato.complemento">Complemento</label>
 						    	<div class='col-md-4'>
-							    	<input type="text" class="form-control" name="contato_complemento">
+							    	<input ng-model="contatoForm.complemento" ng-value="contatoForm.complemento" type="text" class="form-control">
 						    	</div>
 						  	</div>
 							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_cep">CEP:</label>
+						    	<label class="control-label col-md-3" for="contato_cep">CEP</label>
 						    	<div class='col-md-3'>
-							    	<input type="text" class="form-control" name="contato_cep">
+							    	<input ng-model="contatoForm.cep" ng-value="contatoForm.cep" type="text" class="form-control">
 						    	</div>
 						  	</div>
-							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_cidade">Cidade:</label>
+							<div class="form-group" id="contato_cidade">
+						    	<label class="control-label vermelho col-md-3" for="contato.cidade">Cidade</label>
 						    	<div class='col-md-5'>
-							    	<input type="text" class="form-control" name="contato_cidade">
+							    	<input ng-model="contatoForm.cidade" ng-value="contatoForm.cidade" type="text" class="form-control">
 						    	</div>
 						  	</div>
-							<div class="form-group">
-						    	<label class="control-label col-md-3" for="contato_estado">Estado:</label>
+							<div class="form-group" id="contato_estado"> 
+						    	<label class="control-label vermelho col-md-3" for="contato_estado">Estado</label>
 						    	<div class='col-md-3'>
-							    	<input type="text" class="form-control" name="contato_estado">
+							    	<input ng-model="contatoForm.estado" ng-value="contatoForm.estado" type="text" class="form-control">
 						    	</div>
 						  	</div>
 						</form>
@@ -159,7 +162,7 @@
 				</div>
 	      	</div>
 	      	<div class="modal-footer">
-	  			<button type="button" id='contato_submit' class="btn btn-default">Confirmar</button>
+	  			<button type="button" ng-click='gravar()' class="btn btn-default">Confirmar</button>
 	  			<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 	      	</div>
 	   	</div>
@@ -169,82 +172,6 @@
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script>
-
-    	$("#contato_submit").click(function() {
-
-    		var form = $("#form-contato").serializeArray();
-    		var acao = $("#acao").val();
-
-    		$.ajax({
-    			url: "controle.php",
-    			data: {acao:acao,contato:form},
-    			success: function(retorno) {
-    				alert(retorno);
-    			}
-    		});
-
-    	});
-
-
-    </script>
-
-	<script>
-
-		var app = angular.module('clientRest', [])
-		.controller('lista', ['$scope', 'loadLista', '$rootScope', function($scope, loadLista, $rootScope) {
-			
-			$scope.registros 	= 0;
-			$scope.contatos 	= loadLista.getContatos();
-			$rootScope.$on('click',function(){
-				var contatos 	= loadLista.getContatos();
-		        $scope.contatos = contatos;
-		        $scope.registros = contatos.length;
-            });
-            $rootScope.$on('zero',function(){
-            	$scope.registros = 0;
-            });
-		}])
-		.controller('pesquisa', ['$scope', '$http', 'loadLista', function($scope, $http, loadLista) {
-			$scope.cidade = "";
-			$scope.listar = function() {
-
-				url 	= 	"http://localhost/wsRest/index.php/contato";
-				cidade 	= 	$scope.cidade;
-				if (cidade.length > 0) url = url + '/' + cidade;
-				
-				$http.get(url
-				).success(function (response) {
-				  	loadLista.setContatos(response);
-				});
-
-			};
-		}])
-		.service('loadLista', ['$rootScope', function($rootScope) {
-			var contatos 	= 	[];
-			var cidade 		=	"";
-			return {
-				getCidade: function() {
-					return cidade;
-				},
-				setCidade: function(c) {
-					cidade = c;
-				},
-            	getContatos: function () {
-                	return contatos;
-            	},
-	            setContatos: function(c) {
-	            	if (c.codigo == 0) {
-						$rootScope.$emit('zero');
-	            	} else {
-	            		contatos = c;
-	                	$rootScope.$emit('click');
-	            	}
-	        	}
-        	};
-		}]); 
-
-	</script>
-
+    <script src="js/base.js"></script>
     </body>
 </html>

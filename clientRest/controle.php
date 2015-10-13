@@ -2,12 +2,14 @@
 //CONTROLE
 
 	require_once('classes/contato.class.php');
+	$request = json_decode(file_get_contents("php://input"));
 
-	if ($_REQUEST) {
 
-		$contato = new contato($_REQUEST['contato']);
+	if ($request) {
 
-		switch ($_REQUEST['acao']) {
+		$contato = new contato($request->contato);
+
+		switch ($request->acao) {
 
 			case 'listar':
 				echo $contato->listar();

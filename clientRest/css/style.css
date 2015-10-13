@@ -1,4 +1,4 @@
-table tbody {
+/*table tbody {
 	border: solid 1px #CCC;
 }
 table thead {
@@ -13,4 +13,8 @@ table tbody tr:hover {
 }
 table thead tr th {
 	border-radius: 2px !important;
+}*/
+
+.vermelho {
+	color: #AA0000 !important;
 }
