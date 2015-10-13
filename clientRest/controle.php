@@ -4,7 +4,6 @@
 	require_once('classes/contato.class.php');
 	$request = json_decode(file_get_contents("php://input"));
 
-
 	if ($request) {
 
 		$contato = new contato($request->contato);
@@ -20,11 +19,11 @@
 				break;
 
 			case 'update':
-			echo $contato->update();
+				echo $contato->update();
 				break;
 
 			case 'delete':
-			echo $contato->delete();
+				echo $contato->delete();
 				break;
 
 		}

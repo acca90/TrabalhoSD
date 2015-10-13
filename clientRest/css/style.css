@@ -18,3 +18,7 @@ table thead tr th {
 .vermelho {
 	color: #AA0000 !important;
 }
+
+table tbody tr td {
+	height: 20px !important;
+}

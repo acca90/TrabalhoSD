@@ -48,44 +48,74 @@
         	</div>
       	</nav>
 
-	<div class="container" ng-controller="lista">
-      	<div class="starter-template">
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th align='left'>#</th>
-						<th align='left'>Nome</th>
-						<th align='left'>Endereço</th>
-						<th align='left'>Complemento</th>
-						<th align='left'>Cidade</th>
-						<th align='left'>Email</th>
-						<th align='left'>Email Alternativo</th>
-						<th style="width: 20px;"></th>
-					</tr>
-				</thead>
-				<tbody>
-				  	<tr ng-if="registros != 0" ng-repeat="x in contatos">
-				    	<td>{{ x.codigo }}</td>
-				    	<td>{{ x.nome }}</td>
-				    	<td>{{ x.endereco }}</td>
-				    	<td>{{ x.complemento }}</td>
-				    	<td>{{ x.cidade }}</td>
-				    	<td>{{ x.email }}</td>
-				    	<td>{{ x.email_alter }}</td>
-				    	<td>
-				    		<button ng-click="editar(x)" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-danger btn-xs">
-				    			<i class='glyphicon glyphicon-pencil'></i>
-				    		</button>
-						</td>
-				  	</tr>
-				  	<tr>
-				  		<td colspan="9" ng-if="registros == 0">Nenhum registro localizado</td>
-				  	</tr>
-			  	</tbody>
-			</table>
-		</div>
-	</div>
 
+
+
+	<div class="container" ng-controller="lista">
+
+		<div class="panel panel-default">
+	  		<!-- Default panel contents -->
+	  		<div class="panel-heading">Contatos </div>
+			
+			 <table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th align='left'>#</th>
+							<th align='left'>Nome</th>
+							<th align='left'>Endereço</th>
+							<th align='left'>Complemento</th>
+							<th align='left'>Cidade</th>
+							<th align='left'>Email</th>
+							<th align='left'>Email Alternativo</th>
+							<th style="width: 70px;"></th>
+						</tr>
+					</thead>
+					<tbody>
+					  	<tr ng-if="registros != 0" ng-repeat="x in contatos">
+					    	<td>{{ x.codigo }}</td>
+					    	<td>{{ x.nome }}</td>
+					    	<td>{{ x.endereco }}</td>
+					    	<td>{{ x.complemento }}</td>
+					    	<td>{{ x.cidade }}</td>
+					    	<td>{{ x.email }}</td>
+					    	<td>{{ x.email_alter }}</td>
+					    	<td>
+					    		<button ng-click="editar(x)" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-danger btn-xs">
+					    			<i class='glyphicon glyphicon-pencil'></i>
+					    		</button>
+					    		<button ng-click="excluir(x)" data-toggle="modal" data-target="#confirma" type="button" class="btn btn-danger btn-xs">
+					    			<i class='glyphicon glyphicon-trash'></i>
+					    		</button>
+							</td>
+					  	</tr>
+					  	<tr>
+					  		<td colspan="9" ng-if="registros == 0">Nenhum registro localizado</td>
+					  	</tr>
+				  	</tbody>
+				</table> 
+
+
+			</div>
+		</div>
+
+    <div ng-controller="confirma"  class="modal fade" id="confirma" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+                <div class="modal-body">
+                	Tem certeza que deseja excluir este contato?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button ng-click="excluir()" class="btn btn-danger btn-ok">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog" ng-controller='formulario'>
@@ -162,8 +192,8 @@
 				</div>
 	      	</div>
 	      	<div class="modal-footer">
-	  			<button type="button" ng-click='gravar()' class="btn btn-default">Confirmar</button>
-	  			<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+	  			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	  			<button type="button" ng-click='gravar()'class="btn btn-danger">Confirmar</button>
 	      	</div>
 	   	</div>
 

@@ -1,19 +1,42 @@
 
 		var app = angular.module('clientRest', [])
-		.controller('lista', ['$scope', 'loadLista', '$rootScope', 'loadContato', function($scope, loadLista, $rootScope, loadContato) {
+		.controller('lista', ['$scope', 'loadLista', '$rootScope', 'loadContato', '$http', function($scope, loadLista, $rootScope, loadContato, $http) {
 			
 			$scope.registros 	= 0;
 			$scope.contatos 	= loadLista.getContatos();
+
 			$rootScope.$on('click',function(){
 				var contatos 	= loadLista.getContatos();
 		        $scope.contatos = contatos;
 		        $scope.registros = contatos.length;
             });
+            
             $rootScope.$on('zero',function(){
             	$scope.registros = 0;
             });
 
+            $rootScope.$on('delete',function(){
+
+            	var contato = loadContato.getContato();
+            	$scope.acao = 'delete';
+
+				$http({
+					url: 'controle.php',
+					method: 'POST',
+					data: {contato:contato,acao:$scope.acao}
+				}).success(function (response) {
+					loadLista.setContatos(response);
+					$('#confirma').modal('toggle');
+				}).error(function (response){
+					alert('Falha');
+				});
+            });
+
             $scope.editar = function(contato) {
+            	loadContato.setContato(contato);
+            }
+
+            $scope.excluir = function(contato) {
             	loadContato.setContato(contato);
             }
 
@@ -92,6 +115,13 @@
 			};
 
 		}])
+		.controller('confirma', ['$scope', '$http', 'loadContato', function($scope, $http, loadContato) {
+
+			$scope.excluir = function() {
+				loadContato.del();
+			}
+
+		}])
 		.service('loadLista', ['$rootScope', function($rootScope) {
 			var contatos 	= 	[];
 			var cidade 		=	"";
@@ -129,6 +159,9 @@
 				},
 				novo: function() {
 					$rootScope.$emit('novo');
+				},
+				del: function() {
+					$rootScope.$emit('delete');
 				}
 			};
 
