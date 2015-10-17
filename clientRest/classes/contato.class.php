@@ -3,18 +3,33 @@
 	class contato {
 
 		private $contato 	=	array();
-		private $url 		= 	"http://localhost/wsRest/index.php/contato";
-		private $comando;
+		private $url;
 
-		public function __construct($contato) {
-			$this->contato = json_encode($contato);
+		public function __construct($contato,$url) {
+			$this->contato 	= json_encode($contato);
+			$this->url 		= $url;
 		}
 
 		/* CONEXÃO COM WEBSERVICE */
-		public function curl_contato($OPT,$TIPO,$GET = false) {
-		   	$curl = curl_init($this->url . $this->comando);
+		public function curl_contato(
+			$OPT 	= 	"",
+			$TIPO	=	"",
+			$GET 	= 	false) 
+		{
+
+			$urlSperador = "";
+			$cidade 	 = "";
+
+			if ($GET) {
+				$this->contato = json_decode($this->contato);
+				if (strlen($this->contato->cidade) > 0) 
+					$urlSperador='/';
+				$cidade 	 = $this->contato->cidade;
+			}
+
+		   	$curl = curl_init($this->url.$urlSperador.$cidade);
+
 		   	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		   	
 		   	/* PARA METODOS POST, PUT e DELETE */
 		   	if (!$GET) curl_setopt($curl, $OPT, $TIPO);
 		   	if (!$GET) curl_setopt($curl, CURLOPT_POSTFIELDS, $this->contato);
@@ -41,13 +56,7 @@
 
 		/* LISTA CONTATO */
 		public function listar() {
-			foreach (json_decode($this->contato) as $dado) {
-				if (str_replace("contato_","",$dado->name) == "cidade") { 
-					if (strlen($dado->value) > 0)
-						$this->comando = "/" . urlencode($dado->value);
-				}
-			}
-			return $this->curl_contato("","",true); 
+			return $this->curl_contato("","",true);
 		}
 
 

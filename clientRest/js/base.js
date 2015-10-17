@@ -1,29 +1,34 @@
 
 		var app = angular.module('clientRest', [])
-		.controller('lista', ['$scope', 'loadLista', '$rootScope', 'loadContato', '$http', function($scope, loadLista, $rootScope, loadContato, $http) {
+		.controller('lista', ['$scope', 'loadLista', '$rootScope', 'loadContato', '$http', 'loadUrl', function($scope, loadLista, $rootScope, loadContato, $http, loadUrl) {
 			
 			$scope.registros 	= 0;
 			$scope.contatos 	= loadLista.getContatos();
+			$scope.url 			= loadUrl.get;
+
 
 			$rootScope.$on('click',function(){
-				var contatos 	= loadLista.getContatos();
-		        $scope.contatos = contatos;
-		        $scope.registros = contatos.length;
+				var contatos 		= loadLista.getContatos();
+		        $scope.contatos 	= contatos;
+		        $scope.registros 	= contatos.length;
             });
             
             $rootScope.$on('zero',function(){
             	$scope.registros = 0;
             });
 
-            $rootScope.$on('delete',function(){
+			$rootScope.$on('url',function(){
+            	$scope.url = loadUrl.get();
+            });
 
+            $rootScope.$on('delete',function(){
             	var contato = loadContato.getContato();
             	$scope.acao = 'delete';
 
 				$http({
 					url: 'controle.php',
 					method: 'POST',
-					data: {contato:contato,acao:$scope.acao}
+					data: {contato:contato,acao:$scope.acao,url:$scope.url}
 				}).success(function (response) {
 					loadLista.setContatos(response);
 					$('#confirma').modal('toggle');
@@ -31,6 +36,7 @@
 					alert('Falha');
 				});
             });
+
 
             $scope.editar = function(contato) {
             	loadContato.setContato(contato);
@@ -40,18 +46,24 @@
             	loadContato.setContato(contato);
             }
 
-
 		}])
-		.controller('pesquisa', ['$scope', '$http', 'loadLista', 'loadContato', function($scope, $http, loadLista, loadContato) {
-			$scope.cidade = "";
+		.controller('pesquisa', ['$scope', '$http', 'loadLista', 'loadContato', 'loadUrl', '$rootScope', function($scope, $http, loadLista, loadContato, loadUrl, $rootScope) {
 			
+			$scope.cidade 			= "";
+			$scope.contato 			= { "codigo": "", "nome": "", "email": "", "endereco": "", "complemento": "", "cep": "", "cidade": "", "estado": "", "email_alter": "" };  
+			$scope.url 				= loadUrl.get();
+
+            $rootScope.$on('url',function(){
+            	$scope.url = loadUrl.get();
+            });
+
 			$scope.listar = function() {
-				url 	= 	"http://localhost/wsRest/index.php/contato";
-				cidade 	= 	$scope.cidade;
-				if (cidade.length > 0) url = url + '/' + cidade;
-				
-				$http.get(url
-				).success(function (response) {
+				$scope.contato.cidade = $scope.cidade;
+				$http({
+					url: 'controle.php',
+					method: 'POST',
+					data: {contato:$scope.contato,acao:'listar',url:$scope.url}
+				}).success(function (response) {
 				  	loadLista.setContatos(response);
 				});
 			};
@@ -59,6 +71,10 @@
 			$scope.novo = function() {
 				loadContato.novo();
 			};
+
+			$scope.urlAtual = function() {
+            	loadUrl.setOld($scope.url);
+			}
 
 		}])
 		.controller('formulario',['$rootScope','$scope','$http', 'loadLista', 'loadContato', function($rootScope,$scope, $http, loadLista, loadContato) {
@@ -85,6 +101,10 @@
             	$scope.acao 		= 	'novo';
             });
 
+            $rootScope.$on('url',function(){
+            	//$scope.url = loadUrl.get();
+            });
+
 			$scope.gravar = function() {
 				msg = "";
 				if ($scope.contatoForm.nome 	== "") { $("#contato_nome").addClass("has-warning"); }
@@ -104,7 +124,7 @@
 				$http({
 					url: 'controle.php',
 					method: 'POST',
-					data: {contato:$scope.contatoForm,acao:$scope.acao}
+					data: {contato:$scope.contatoForm,acao:$scope.acao,url:$scope.url}
 				}).success(function (response) {
 					//alert(response);
 					loadLista.setContatos(response);
@@ -115,12 +135,22 @@
 			};
 
 		}])
-		.controller('confirma', ['$scope', '$http', 'loadContato', function($scope, $http, loadContato) {
-
+		.controller('confirma', ['$scope', '$http', 'loadContato', function($scope, $http, loadContato) {         
 			$scope.excluir = function() {
 				loadContato.del();
 			}
 
+		}])
+		.controller('url', [ '$scope', '$http', 'loadUrl', '$rootScope', function($scope, $http, loadUrl, $rootScope) {
+			$scope.url 		= 	loadUrl.get();
+
+			$rootScope.$on('urlOld',function(){
+            	$scope.url = loadUrl.get();
+            });
+
+			$scope.gravar 	=	function() {
+				loadUrl.set($scope.url);
+			} 
 		}])
 		.service('loadLista', ['$rootScope', function($rootScope) {
 			var contatos 	= 	[];
@@ -165,4 +195,24 @@
 				}
 			};
 
-		}]); 
+		}])
+		.service('loadUrl',['$rootScope', function($rootScope){
+
+			var url = "http://localhost/wsRest/index.php/contato";
+
+			return {
+				setOld: function(urlNova) {
+					url = url;
+					$rootScope.$emit('urlOld');
+				},				
+				set: function(urlNova) {
+					url = urlNova;
+					$rootScope.$emit('url');
+					$('#url').modal('toggle');
+				},
+				get: function() {
+					return url;
+				}
+			}
+
+		}]);

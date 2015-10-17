@@ -43,7 +43,7 @@
 				</form>
 		        <ul class="nav navbar-nav">
 	                <li><a ng-click="novo()" data-toggle="modal" data-target="#myModal" href="#">Novo</a></li>
-	                <li><a href="#">Configurar</a></li>
+	                <li><a ng-click="urlAtual()"data-toggle="modal" data-target="#url" href="#" href="#">Configurar</a></li>
 	            </ul>
         	</div>
       	</nav>
@@ -98,13 +98,37 @@
 			</div>
 		</div>
 
+    <div ng-controller="url"  class="modal fade" id="url" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Insira a URL do WebService</h4>
+                </div>
+                <div class="modal-body">
+				<div class="container">
+				    <div class="col-md-6 ">
+							<div class='col-md-12'>
+								<input ng-model="url" ng-value="url" id='url' type="text" class="form-control">
+							</div>
+				    </div>
+				</div>					
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button ng-click="gravar()" class="btn btn-danger btn-ok">Gravar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div ng-controller="confirma"  class="modal fade" id="confirma" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-            
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    <h4 class="modal-title" id="myModalLabel">Confirme</h4>
                 </div>
                 <div class="modal-body">
                 	Tem certeza que deseja excluir este contato?
