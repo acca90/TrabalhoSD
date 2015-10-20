@@ -4,7 +4,7 @@
 			
 			$scope.registros 	= 0;
 			$scope.contatos 	= loadLista.getContatos();
-			$scope.url 			= loadUrl.get;
+			$scope.url 			= loadUrl.get();
 
 
 			$rootScope.$on('click',function(){
@@ -17,7 +17,7 @@
             	$scope.registros = 0;
             });
 
-			$rootScope.$on('url',function(){
+			$rootScope.$on('url',function() {
             	$scope.url = loadUrl.get();
             });
 
@@ -57,7 +57,7 @@
             	$scope.url = loadUrl.get();
             });
 
-			$scope.listar = function() {
+			$scope.listar = function() {				
 				$scope.contato.cidade = $scope.cidade;
 				$http({
 					url: 'controle.php',
@@ -77,10 +77,12 @@
 			}
 
 		}])
-		.controller('formulario',['$rootScope','$scope','$http', 'loadLista', 'loadContato', function($rootScope,$scope, $http, loadLista, loadContato) {
+		.controller('formulario',['$rootScope','$scope','$http', 'loadLista', 'loadContato', 'loadUrl', function($rootScope,$scope, $http, loadLista, loadContato, loadUrl) {
 
 			$scope.contatoForm 		= { "codigo": "", "nome": "", "email": "", "endereco": "", "complemento": "", "cep": "", "cidade": "", "estado": "", "email_alter": "" };   		
 			$scope.acao 			= "novo";
+
+			$scope.url = loadUrl.get();
 
             $rootScope.$on('contato',function(){
             	x = loadContato.getContato();
@@ -102,7 +104,7 @@
             });
 
             $rootScope.$on('url',function(){
-            	//$scope.url = loadUrl.get();
+            	$scope.url = loadUrl.get();
             });
 
 			$scope.gravar = function() {
@@ -141,16 +143,17 @@
 			}
 
 		}])
-		.controller('url', [ '$scope', '$http', 'loadUrl', '$rootScope', function($scope, $http, loadUrl, $rootScope) {
+		.controller('url', ['$rootScope', '$scope', '$http', 'loadUrl', function($rootScope, $scope, $http, loadUrl) {
 			$scope.url 		= 	loadUrl.get();
+
+			$scope.gravar 	=	function() {
+				loadUrl.set($scope.url);
+			}; 
 
 			$rootScope.$on('urlOld',function(){
             	$scope.url = loadUrl.get();
             });
 
-			$scope.gravar 	=	function() {
-				loadUrl.set($scope.url);
-			} 
 		}])
 		.service('loadLista', ['$rootScope', function($rootScope) {
 			var contatos 	= 	[];
