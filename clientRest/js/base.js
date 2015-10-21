@@ -64,6 +64,7 @@
 					method: 'POST',
 					data: {contato:$scope.contato,acao:'listar',url:$scope.url}
 				}).success(function (response) {
+					//alert(response);
 				  	loadLista.setContatos(response);
 				});
 			};
