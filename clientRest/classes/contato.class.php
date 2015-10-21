@@ -34,7 +34,7 @@
 		   	if (!$GET) curl_setopt($curl, $OPT, $TIPO);
 		   	if (!$GET) curl_setopt($curl, CURLOPT_POSTFIELDS, $this->contato);
 
-			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));   
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
 
 		   	$curl_response = curl_exec($curl);
 		   	curl_close($curl);
