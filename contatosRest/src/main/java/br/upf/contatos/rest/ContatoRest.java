@@ -1,4 +1,4 @@
-package br.upf.contatos.dal.rest;
+package br.upf.contatos.rest;
 
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
@@ -23,12 +23,12 @@ import javax.ws.rs.core.MediaType;
 @Path("contatos")
 public class ContatoRest implements Serializable {
     
-    @Inject
-    private ContatoService service;
+    private ContatoService service = new ContatoService();
     
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Contato> getAll() {
+        
         return service.getAll();
     }
     

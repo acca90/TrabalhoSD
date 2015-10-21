@@ -4,7 +4,7 @@
     <groupId>br.upf.contatos</groupId>
     <artifactId>dal</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <repositories>
         <repository>
             <id>objectdb</id>
@@ -24,12 +24,6 @@
             <version>1.1</version>
         </dependency>
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
@@ -41,13 +35,10 @@
             <version>2.6.0</version>
         </dependency>
     </dependencies>
-    <build>
-        <finalName>dal</finalName>
-    </build>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
-    <name>dal</name>
+    <name>contatosDAL</name>
 </project>
