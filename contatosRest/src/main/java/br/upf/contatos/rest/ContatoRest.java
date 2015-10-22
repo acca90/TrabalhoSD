@@ -2,9 +2,7 @@ package br.upf.contatos.rest;
 
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
-import java.io.Serializable;
 import java.util.List;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,7 +19,7 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Path("contatos")
-public class ContatoRest implements Serializable {
+public class ContatoRest {
     
     private ContatoService service = new ContatoService();
     
