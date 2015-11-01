@@ -1,5 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".Lista">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" />
+
+    <item android:id="@+id/novo"
+        android:title="@string/novo"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/conf"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+
 </menu>

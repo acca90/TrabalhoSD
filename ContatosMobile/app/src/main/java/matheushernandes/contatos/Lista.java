@@ -2,27 +2,42 @@ package matheushernandes.contatos;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Lista extends Activity {
 
     public static Activity a;
-
     public Lista() {
         a = this;
     }
+    public RestConnect Contatos;
+    public static JSONArray DATA;
+    private static Context context;
 
+    public static Context getContext() {
+        return context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
+        this.Contatos = new RestConnect();
+        context = this;
     }
 
     @Override
@@ -32,65 +47,79 @@ public class Lista extends Activity {
         return true;
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
-    public void myClickHandler(View view) {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Toast.makeText(getApplicationContext(),"Ok",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(),"Nope",Toast.LENGTH_SHORT).show();
+
+
+    public void listar(View view) throws JSONException {
+
+        /* EXECUTA A FUNÇÃO */
+
+        /* LÊ O CAMPO DA CIDADE */
+        EditText edit = (EditText)findViewById(R.id.cidade);
+        this.Contatos.setCidade(edit.getText().toString());
+
+        try {
+            this.Contatos.setResponse(Contatos.execute().get());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
 
+        DATA = new JSONArray(this.Contatos.getResponse());
 
+        // QUEBRA JSON
+        JSONArray ContatosArray = new JSONArray(this.Contatos.getResponse());
+        final ArrayList<String> list = new ArrayList<String>();
 
-    public void listar(View view) {
+        for (int i=0;i<ContatosArray.length();i++) {
+            JSONObject nodo = ContatosArray.getJSONObject(i);
+            list.add(nodo.getString("nome"));
+        }
 
-/*
-        Thread t = new Thread()
-        {
-            public void run() {
+        // ADICIONA PARA A LISTA
+        ListView lista = (ListView)findViewById(R.id.lista);
 
-                RestConnect Contatos = new RestConnect();
-                String message = Contatos.doInBackground();
+        final StableArrayAdapter adapter =
+                new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 
+        lista.setAdapter(adapter);
 
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
 
+                try {
+                    JSONObject contato = DATA.getJSONObject(position);
+                    Toast.makeText(getApplicationContext(), contato.getString("codigo").toString(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
+        });
+    }
 
-        };
-
-        t.start();
-*/
-
-
-        RestConnect Contatos = new RestConnect();
-        String message = Contatos.doInBackground();
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        Toast.makeText(getApplicationContext(), " aaa", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.novo:
+                Intent i = new Intent(getApplicationContext(), Formulario.class);
+                startActivityForResult(i,100);
+                break;
+            case R.id.conf:
+                Toast.makeText(getApplicationContext(),"eee",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
 }

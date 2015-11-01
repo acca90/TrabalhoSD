@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Contatos</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="novo">Novo</string>
+    <string name="voltar">Voltar</string>
+    <string name="action_settings">Configurar</string>
+    <string name="title_activity_formulario">Contato</string>
+
 </resources>

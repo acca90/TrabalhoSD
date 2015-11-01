@@ -2,6 +2,7 @@ package matheushernandes.contatos;
 
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.StrictMode;
 
 import java.io.BufferedReader;
@@ -12,33 +13,44 @@ import java.net.URL;
 /**
  * Created by virgilio on 28/10/15.
  */
-public class RestConnect extends AsyncTask<String, Void, String> {
+public class RestConnect extends AsyncTask<String, String, String> {
 
+    private String ContatosJson;
+    private String response;
+    private String Cidade;
 
     @Override
     protected String doInBackground(String... params) {
-
-        String lista  = "aaaa";
-
+        String retorno = "{'response':'null'}";
         try {
-            lista = this.listar();
+            retorno = this.Listar();
         } catch (Exception e) {
-            lista = "fuck";
             e.printStackTrace();
         }
 
-        return lista;
+        this.setResponse(retorno);
+        setContatosJson(retorno);
+
+        return retorno;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        this.setResponse(result);
     }
 
 
-    public String listar() throws Exception {
 
-        StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
-        StrictMode.setThreadPolicy(tp);
+    public String Listar() throws Exception {
 
-        String retorno = "AAA";
+        //StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
+        //StrictMode.setThreadPolicy(tp);
 
-        String url = "http://172.30.147.71/wsRest/index.php/contato";
+        String url = "http://192.168.1.104/wsRest/index.php/contato";
+
+        if (!this.Cidade.equals("")) {
+            url += "/" + this.Cidade;
+        }
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -47,11 +59,7 @@ public class RestConnect extends AsyncTask<String, Void, String> {
         con.addRequestProperty("Connection", "Keep-Alive");
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        //con.setInstanceFollowRedirects(false);
         con.connect();
-
-     //
-
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
@@ -63,14 +71,22 @@ public class RestConnect extends AsyncTask<String, Void, String> {
         }
         in.close();
 
-        retorno = response.toString();
-
-        //print result
-        return retorno;
-        //System.out.println(response.toString());
-
+        return response.toString();
     }
 
+
+
+
+
+    public String getContatosJson() { return this.ContatosJson;  }
+    public void setContatosJson(String contatosJson) { this.ContatosJson = contatosJson; }
+    public String getResponse() {
+        return response;
+    }
+    public void setResponse(String response) {
+        this.response = response;
+    }
+    public void setCidade(String cidade) { this.Cidade = cidade; }
 }
 
 
