@@ -68,7 +68,15 @@ public class ContatoService {
     
     public Contato delete(Integer id) {
         try {
-            Contato c = dao.getById(id);
+            return delete(dao.getById(id));
+        } catch (Exception ex) {
+            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public Contato delete(Contato c) {
+        try {
             dao.remove(c);
             return c;
         } catch (Exception ex) {

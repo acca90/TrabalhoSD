@@ -9,87 +9,87 @@ import java.util.List;
 public interface Dao<T> {
 
 	/**
-	 * MÈtodo para inserir uma inst‚ncia no banco de dados.
-	 * @param instancia Inst‚ncia a ser inserida no banco de dados.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * M√©todo para inserir uma inst√¢ncia no banco de dados.
+	 * @param instancia Inst√¢ncia a ser inserida no banco de dados.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */ 
 	public void persist(T instancia) throws Exception;
 
 	/**
-	 * MÈtodo para sincronizar uma inst‚ncia no banco de dados.
-	 * @param instancia Inst‚ncia a ser sincronizada no banco de dados.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
-	 * @return Inst‚ncia sincronizada com o banco de dados.
+	 * M√©todo para sincronizar uma inst√¢ncia no banco de dados.
+	 * @param instancia Inst√¢ncia a ser sincronizada no banco de dados.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
+	 * @return Inst√¢ncia sincronizada com o banco de dados.
 	 */ 
 	public T merge(T instancia) throws Exception;
 	
 
 	/**
-	 * MÈtodo para excluir uma inst‚ncia do banco de dados.
-	 * @param instancia Inst‚ncia a ser excluÌda do banco de dados.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * M√©todo para excluir uma inst√¢ncia do banco de dados.
+	 * @param instancia Inst√¢ncia a ser exclu√≠da do banco de dados.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */ 
 	public void remove(T instancia) throws Exception;
 	
 	/**
-	 * MÈtodo para excluir uma inst‚ncia do banco de dados a partir de seu id.
-	 * @param id Identificador da inst‚ncia a ser excluÌda do banco de dados.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * M√©todo para excluir uma inst√¢ncia do banco de dados a partir de seu id.
+	 * @param id Identificador da inst√¢ncia a ser exclu√≠da do banco de dados.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */ 
 	public void remove(Integer id) throws Exception;
 	
 	/**
-	 * MÈtodo para obter uma inst‚ncia pelo cÛdigo informado.
-	 * @param id CÛdigo da inst‚ncia a ser recuperada do banco de dados.
-	 * @return Inst‚ncia respectiva ou null caso o cÛdigo n„o for 
+	 * M√©todo para obter uma inst√¢ncia pelo c√≥digo informado.
+	 * @param id C√≥digo da inst√¢ncia a ser recuperada do banco de dados.
+	 * @return Inst√¢ncia respectiva ou null caso o c√≥digo n√£o for 
 	 * encontrado.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */
 	public T getById(Integer id) throws Exception;
 	
 	/**
-	 * MÈtodo para obter uma lista de todas as inst‚ncias contidas no 
+	 * M√©todo para obter uma lista de todas as inst√¢ncias contidas no 
 	 * banco de dados.
-	 * @return coleÁ„o com as inst‚ncias encontradas. 
-	 * Caso nenhuma inst‚ncia for encontrada a coleÁ„o dever· ser vazia, mas inicializada.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * @return cole√ß√£o com as inst√¢ncias encontradas. 
+	 * Caso nenhuma inst√¢ncia for encontrada a cole√ß√£o dever√° ser vazia, mas inicializada.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */
 	public List<T> getList() throws Exception;
 
 	/**
-	 * MÈtodo para obter uma lista de todas as inst‚ncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no par‚metro atributoOrdem.
-	 * @param atributoOrdem Nome do atributo para a ordenaÁ„o. Pode ser mais de um, separado por vÌrgula.
-	 * @return ColeÁ„o com as inst‚ncias ordenadas. 
-	 * Caso nenhuma inst‚ncia for encontrada a coleÁ„o dever· ser vazia, mas inicializada.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * M√©todo para obter uma lista de todas as inst√¢ncias contidas no 
+	 * banco de dados ordenadas pelo atributo informado no par√¢metro atributoOrdem.
+	 * @param atributoOrdem Nome do atributo para a ordena√ß√£o. Pode ser mais de um, separado por v√≠rgula.
+	 * @return Cole√ß√£o com as inst√¢ncias ordenadas. 
+	 * Caso nenhuma inst√¢ncia for encontrada a cole√ß√£o dever√° ser vazia, mas inicializada.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */
 	public List<T> getList(String atributoOrdem) throws Exception;
 
 	/**
-	 * MÈtodo para obter uma lista de todas as inst‚ncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no par‚metro atributoOrdem  
-	 * e filtrando os objetos que contÈm no atributoFiltro o conte˙do informado no valorFiltro.
-	 * @param atributoOrdem Nome do atributo para a ordenaÁ„o. Pode ser mais de um, separado por vÌrgula.
+	 * M√©todo para obter uma lista de todas as inst√¢ncias contidas no 
+	 * banco de dados ordenadas pelo atributo informado no par√¢metro atributoOrdem  
+	 * e filtrando os objetos que cont√©m no atributoFiltro o conte√∫do informado no valorFiltro.
+	 * @param atributoOrdem Nome do atributo para a ordena√ß√£o. Pode ser mais de um, separado por v√≠rgula.
 	 * @param atributoFiltro Atributo sobre o qual deve ser aplicado o filtro.
 	 * @param valorFiltro Valor para o filtro. 
-	 * @return ColeÁ„o com as inst‚ncias ordenadas e filradas. 
-	 * Caso nenhuma inst‚ncia for encontrada a coleÁ„o dever· ser vazia, mas inicializada.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * @return Cole√ß√£o com as inst√¢ncias ordenadas e filradas. 
+	 * Caso nenhuma inst√¢ncia for encontrada a cole√ß√£o dever√° ser vazia, mas inicializada.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */    
 	public List<T> getList(String atributoOrdem, String atributoFiltro, String valorFiltro) throws Exception;
 
 	/**
-	 * MÈtodo para obter uma lista de todas as inst‚ncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no par‚metro atributoOrdem  
-	 * e filtrando os objetos que contÈm no atributoFiltro o conte˙do informado no valorFiltro.
-	 * O resultado deve ser paginado usando os par„metros quantidade e posicaoInicial.
-	 * @param atributoOrdem Nome do atributo para a ordenaÁ„o. Pode ser mais de um, separado por vÌrgula.
+	 * M√©todo para obter uma lista de todas as inst√¢ncias contidas no 
+	 * banco de dados ordenadas pelo atributo informado no par√¢metro atributoOrdem  
+	 * e filtrando os objetos que cont√©m no atributoFiltro o conte√∫do informado no valorFiltro.
+	 * O resultado deve ser paginado usando os par√¢metros quantidade e posicaoInicial.
+	 * @param atributoOrdem Nome do atributo para a ordena√ß√£o. Pode ser mais de um, separado por v√≠rgula.
 	 * @param atributoFiltro Atributo sobre o qual deve ser aplicado o filtro.
 	 * @param valorFiltro Valor para o filtro. 
-	 * @return ColeÁ„o com as inst‚ncias ordenadas, filradas e paginadas. 
-	 * Caso nenhuma inst‚ncia for encontrada a coleÁ„o dever· ser vazia, mas inicializada.
-	 * @throws Exception PossÌvel exceÁ„o gerada ao realizar a operaÁ„o.
+	 * @return Cole√ß√£o com as inst√¢ncias ordenadas, filradas e paginadas. 
+	 * Caso nenhuma inst√¢ncia for encontrada a cole√ß√£o dever√° ser vazia, mas inicializada.
+	 * @throws Exception Poss√≠vel exce√ß√£o gerada ao realizar a opera√ß√£o.
 	 */    
 	public List<T> getList(String atributoOrdem, String atributoFiltro, String valorFiltro, Integer quantidade, Integer posicaoInicial) throws Exception;
 	
