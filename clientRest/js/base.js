@@ -202,7 +202,7 @@
 		}])
 		.service('loadUrl',['$rootScope', function($rootScope){
 
-			var url = "http://localhost/wsRest/index.php/contato";
+			var url = "http://localhost:8080/contatos/rest/contatos";
 
 			return {
 				setOld: function(urlNova) {
