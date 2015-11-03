@@ -44,7 +44,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
 
     private String novo() {
 
-        return null;
+        return "OII";
     }
 
     @Override
@@ -91,7 +91,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
 
 
 
-    public static void setOP(int OP) { OP = OP; }
+    public static void setOP(int novoOP) { op = novoOP; }
     public String getContatosJson() { return this.ContatosJson;  }
     public void setContatosJson(String contatosJson) { this.ContatosJson = contatosJson; }
     public String getResponse() {
@@ -101,6 +101,10 @@ public class RestConnect extends AsyncTask<String, String, String> {
         this.response = response;
     }
     public void setCidade(String cidade) { this.Cidade = cidade; }
+
+    public String getOP() {
+        return String.valueOf(op);
+    }
 }
 
 

@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Lista extends Activity {
@@ -24,20 +25,16 @@ public class Lista extends Activity {
     public Lista() {
         a = this;
     }
-    public RestConnect Contatos;
+    public static RestConnect Contatos;
     public static JSONArray DATA;
-    private static Context context;
 
-    public static Context getContext() {
-        return context;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
-        this.Contatos = new RestConnect();
-        context = this;
+        Contatos = new RestConnect();
+
     }
 
     @Override
@@ -54,22 +51,22 @@ public class Lista extends Activity {
 
         /* LÊ O CAMPO DA CIDADE */
         EditText edit = (EditText)findViewById(R.id.cidade);
-        this.Contatos.setCidade(edit.getText().toString());
-        this.Contatos.setOP(1);
+        Contatos.setCidade(edit.getText().toString());
+        Contatos.setOP(1);
 
         try {
-            this.Contatos.setResponse(Contatos.execute().get());
+            Contatos.setResponse(Contatos.execute().get());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // QUEBRA JSON
-        JSONArray ContatosArray = new JSONArray(this.Contatos.getResponse());
+        JSONArray ContatosArray = new JSONArray(Contatos.getResponse());
         final ArrayList<String> list = new ArrayList<String>();
 
         if (ContatosArray.length() > 0) {
 
-            DATA = new JSONArray(this.Contatos.getResponse());
+            DATA = new JSONArray(Contatos.getResponse());
 
             for (int i = 0; i < ContatosArray.length(); i++) {
                 JSONObject nodo = ContatosArray.getJSONObject(i);
@@ -90,7 +87,7 @@ public class Lista extends Activity {
                                         int position, long id) {
                 try {
                      JSONObject contato = DATA.getJSONObject(position);
-                     Toast.makeText(getApplicationContext(), contato.getString("codigo").toString(), Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getApplicationContext(), contato.getString("codigo"), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -109,8 +106,9 @@ public class Lista extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.novo:
+                Contatos.setOP(1);
                 Intent i = new Intent(getApplicationContext(), Formulario.class);
-                startActivityForResult(i,100);
+                startActivity(i);
                 break;
             case R.id.conf:
                 Toast.makeText(getApplicationContext(),"eee",Toast.LENGTH_SHORT).show();
@@ -121,5 +119,6 @@ public class Lista extends Activity {
         }
         return true;
     }
+
 
 }

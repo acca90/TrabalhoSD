@@ -5,16 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class Formulario extends Activity {
 
-
+    private RestConnect Contatos;
 
     public void Confirmar (View view) throws Exception {
+        try {
+            this.Contatos.setOP(2);
+            this.Contatos.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        RestConnect.setOP(2);
+        Toast.makeText(getApplicationContext(),this.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
 
-
+        finish();
     }
 
 
@@ -22,6 +29,7 @@ public class Formulario extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
+        this.Contatos = new RestConnect();
     }
 
     @Override
@@ -30,6 +38,8 @@ public class Formulario extends Activity {
         getMenuInflater().inflate(R.menu.menu_formulario, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
