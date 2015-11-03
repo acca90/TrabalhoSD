@@ -52,11 +52,10 @@ public class Lista extends Activity {
 
     public void listar(View view) throws JSONException {
 
-        /* EXECUTA A FUNÇÃO */
-
         /* LÊ O CAMPO DA CIDADE */
         EditText edit = (EditText)findViewById(R.id.cidade);
         this.Contatos.setCidade(edit.getText().toString());
+        this.Contatos.setOP(1);
 
         try {
             this.Contatos.setResponse(Contatos.execute().get());
@@ -64,39 +63,40 @@ public class Lista extends Activity {
             e.printStackTrace();
         }
 
-        DATA = new JSONArray(this.Contatos.getResponse());
-
         // QUEBRA JSON
         JSONArray ContatosArray = new JSONArray(this.Contatos.getResponse());
         final ArrayList<String> list = new ArrayList<String>();
 
-        for (int i=0;i<ContatosArray.length();i++) {
-            JSONObject nodo = ContatosArray.getJSONObject(i);
-            list.add(nodo.getString("nome"));
-        }
+        if (ContatosArray.length() > 0) {
 
-        // ADICIONA PARA A LISTA
-        ListView lista = (ListView)findViewById(R.id.lista);
+            DATA = new JSONArray(this.Contatos.getResponse());
 
-        final StableArrayAdapter adapter =
-                new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+            for (int i = 0; i < ContatosArray.length(); i++) {
+                JSONObject nodo = ContatosArray.getJSONObject(i);
+                list.add(nodo.getString("nome"));
+            }
 
-        lista.setAdapter(adapter);
+            // ADICIONA PARA A LISTA
+            ListView lista = (ListView) findViewById(R.id.lista);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
+            final StableArrayAdapter adapter =
+                    new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
 
+            lista.setAdapter(adapter);
+
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
                 try {
-                    JSONObject contato = DATA.getJSONObject(position);
-                    Toast.makeText(getApplicationContext(), contato.getString("codigo").toString(), Toast.LENGTH_SHORT).show();
+                     JSONObject contato = DATA.getJSONObject(position);
+                     Toast.makeText(getApplicationContext(), contato.getString("codigo").toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

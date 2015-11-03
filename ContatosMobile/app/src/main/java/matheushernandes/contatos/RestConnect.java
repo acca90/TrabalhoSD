@@ -18,12 +18,20 @@ public class RestConnect extends AsyncTask<String, String, String> {
     private String ContatosJson;
     private String response;
     private String Cidade;
+    private static int op = 1;
+
 
     @Override
     protected String doInBackground(String... params) {
         String retorno = "{'response':'null'}";
         try {
-            retorno = this.Listar();
+            switch(op) {
+                case 1:
+                    retorno = this.Listar();
+                    break;
+                case 2:
+                    retorno = this.novo();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,6 +40,11 @@ public class RestConnect extends AsyncTask<String, String, String> {
         setContatosJson(retorno);
 
         return retorno;
+    }
+
+    private String novo() {
+
+        return null;
     }
 
     @Override
@@ -46,7 +59,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
         //StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
         //StrictMode.setThreadPolicy(tp);
 
-        String url = "http://192.168.1.104/wsRest/index.php/contato";
+        String url = "http://192.168.0.102/wsRest/index.php/contato";
 
         if (!this.Cidade.equals("")) {
             url += "/" + this.Cidade;
@@ -78,6 +91,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
 
 
 
+    public static void setOP(int OP) { OP = OP; }
     public String getContatosJson() { return this.ContatosJson;  }
     public void setContatosJson(String contatosJson) { this.ContatosJson = contatosJson; }
     public String getResponse() {
