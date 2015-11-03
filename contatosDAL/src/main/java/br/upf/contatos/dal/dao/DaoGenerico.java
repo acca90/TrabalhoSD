@@ -10,8 +10,8 @@ import javax.persistence.EntityManager;
  */
 public class DaoGenerico<T> implements Dao<T> {
 
-    private Class classe;
-    private String nomeClasse;
+    private final Class classe;
+    private final String nomeClasse;
 
     public DaoGenerico(Class classe) {
         super();
@@ -28,7 +28,6 @@ public class DaoGenerico<T> implements Dao<T> {
             em.persist(instancia);
             em.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -45,7 +44,6 @@ public class DaoGenerico<T> implements Dao<T> {
             em.getTransaction().commit();
             return instancia;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -61,7 +59,6 @@ public class DaoGenerico<T> implements Dao<T> {
             em.remove(em.merge(instancia));
             em.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -77,7 +74,6 @@ public class DaoGenerico<T> implements Dao<T> {
             em.remove(em.find(classe, id));
             em.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -91,7 +87,6 @@ public class DaoGenerico<T> implements Dao<T> {
         try {
             return (T) em.find(classe, id);
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -107,7 +102,6 @@ public class DaoGenerico<T> implements Dao<T> {
             List<T> lista = em.createQuery(hql).getResultList();
             return lista;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -125,7 +119,6 @@ public class DaoGenerico<T> implements Dao<T> {
             List<T> lista = em.createQuery(hql).getResultList();
             return lista;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -144,7 +137,6 @@ public class DaoGenerico<T> implements Dao<T> {
             List<T> lista = em.createQuery(hql).getResultList();
             return lista;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -166,7 +158,6 @@ public class DaoGenerico<T> implements Dao<T> {
                     setFirstResult(posicaoInicial).getResultList();
             return lista;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             em.close();
@@ -177,7 +168,7 @@ public class DaoGenerico<T> implements Dao<T> {
         String r = "";
         if (strAtributo != null && !strAtributo.trim().isEmpty()
                 && strValor != null && !strValor.trim().isEmpty()) {
-            r = " where upper(" + strAtributo + " ) like upper('%" + strValor + "%')";
+            r = " where upper(t." + strAtributo + ") like '%" + strValor.toUpperCase() + "%'";
         }
         return r;
     }
@@ -185,7 +176,7 @@ public class DaoGenerico<T> implements Dao<T> {
     private String setOrderBy(String strOrdem) {
         String r = "";
         if (strOrdem != null && !strOrdem.trim().isEmpty()) {
-            r = " order by " + strOrdem;
+            r = " order by t." + strOrdem;
         }
         return r;
     }

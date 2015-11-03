@@ -58,7 +58,15 @@ public class ContatoRest {
     
     @DELETE
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Contato delete(@PathParam("id") Integer id) {
         return service.delete(id);
+    }
+    
+    @DELETE
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Contato delete(Contato c) {
+        return service.delete(c);
     }
 }

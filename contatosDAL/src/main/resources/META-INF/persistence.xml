@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="contatos" transaction-type="JTA">
-        <provider>com.objectdb.jpa.Provider</provider>
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="$objectdb/db/contatos.odb"/>
-            <property name="javax.persistence.jdbc.user" value="admin"/>
-            <property name="javax.persistence.jdbc.password" value="admin"/>
-            <property name="eclipselink.logging.logger" value="ServerLogger"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="contatos" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>br.upf.contatos.dal.model.Contato</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://pellefant.db.elephantsql.com:5432/biypodln"/>
+      <property name="javax.persistence.jdbc.user" value="biypodln"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="-AgAxfNj6-LhDOZ55-RqI_UB-vsN4v2d"/>
+    </properties>
+  </persistence-unit>
 </persistence>
