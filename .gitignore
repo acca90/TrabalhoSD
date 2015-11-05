@@ -25,3 +25,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+/wsRest/nbproject/private/
+/ContatoDao/nbproject/private/
+/ContatoDao/build/
+/ContatoDao/dist/
+/wsRest/build/
+/WebServiceRest/nbproject/private/
+/wsRest/dist/
