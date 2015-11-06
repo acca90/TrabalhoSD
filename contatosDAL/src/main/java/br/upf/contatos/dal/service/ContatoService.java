@@ -46,6 +46,15 @@ public class ContatoService {
         return null;
     }
     
+    public List<Contato> getByEmail(String email) {
+        try {
+            return dao.getList("id", "email", email);
+        } catch (Exception ex) {
+            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public Contato add(Contato c) {
         try {
             dao.persist(c);

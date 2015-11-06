@@ -31,30 +31,23 @@ public class ContatoRest {
     }
     
     /**
+     * Atributo pode ser um código ou a cidade, retornando a lista, de acordo com o atributo
      * Consulta: retorna os dados de um contato. Caso o contato não exista no BD, retornar essa informação
-     * @param id
-     * @return 
-     */
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("id") Integer id) {
-        return Response.ok(new GenericEntity<Contato>(service.getById(id)){}).build();
-    }
-    
-    
-    /**
      * ListaCidade: deve ser recebida a cidade e retornar uma lista contendo o código, nome e e-mail de todos os contatos no BD de uma determinada cidade
-     * @param cidade
+     * @param atributo
      * @return 
      */
     @GET
-    @Path("c-{cidade}")
+    @Path("{atributo}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getByCidade(@PathParam("cidade") String cidade) {
-        return Response.ok(new GenericEntity<List<Contato>>(service.getByCidade(cidade)){}).build();
+    public Response getByAtributo(@PathParam("atributo") String atributo) {
+        try{
+            Integer codigo = Integer.parseInt(atributo);
+            return Response.ok(new GenericEntity<Contato>(service.getById(codigo)){}).build();
+        }catch(NumberFormatException nfe){
+            return Response.ok(new GenericEntity<List<Contato>>(service.getByCidade(atributo)){}).build();
+        }
     }
-
     
     /**
      * Adiciona: adiciona contatos ao BD. Caso código do contato ou e-mail já exista, não adicionar e informar um erro
@@ -65,8 +58,11 @@ public class ContatoRest {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response insert(Contato c) {
-        if(service.add(c) != null)
-            return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        if(service.getById(c.getId()) == null && service.getByEmail(c.getEmail()).isEmpty()){
+            if(service.add(c) != null){
+                return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+            }
+        }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GenericEntity<List<Contato>>(service.getAll()){}).build();
     }
     
