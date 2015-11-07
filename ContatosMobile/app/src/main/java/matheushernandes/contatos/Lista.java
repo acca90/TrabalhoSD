@@ -27,6 +27,11 @@ public class Lista extends Activity {
     }
     public static RestConnect Contatos;
     public static JSONArray DATA;
+    public static String url;
+
+    public static void setUrl(String urln) {
+        url = urln;
+    }
 
 
     @Override
@@ -34,7 +39,8 @@ public class Lista extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
         Contatos = new RestConnect();
-
+        url = "http://192.168.0.102/wsRest/index.php/contato";
+        Contatos.setUrl(url);
     }
 
     @Override
@@ -101,7 +107,6 @@ public class Lista extends Activity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
-        Toast.makeText(getApplicationContext(), " aaa", Toast.LENGTH_SHORT).show();
     }
 
     @Override

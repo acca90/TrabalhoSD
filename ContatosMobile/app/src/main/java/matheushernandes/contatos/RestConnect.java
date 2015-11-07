@@ -19,7 +19,11 @@ public class RestConnect extends AsyncTask<String, String, String> {
     private String response;
     private String Cidade;
     private static int op = 1;
+    private String url;
 
+    public void setUrl(String urln) {
+        this.url = urln;
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -59,13 +63,11 @@ public class RestConnect extends AsyncTask<String, String, String> {
         //StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
         //StrictMode.setThreadPolicy(tp);
 
-        String url = "http://172.30.65.212/wsRest/index.php/contato";
-
         if (!this.Cidade.equals("")) {
-            url += "/" + this.Cidade;
+            this.url += "/" + this.Cidade;
         }
 
-        URL obj = new URL(url);
+        URL obj = new URL(this.url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod("GET");

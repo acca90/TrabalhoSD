@@ -5,14 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Configuracoes extends Activity {
+
+    EditText ref_url;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activicty_conf);
+
+        this.ref_url = (EditText)findViewById(R.id.editText1);
+        this.ref_url.setText(Lista.url);
     }
 
     @Override
@@ -23,10 +31,13 @@ public class Configuracoes extends Activity {
     }
 
     public void Confirmar (View view) throws Exception {
-
+        Lista.setUrl(this.ref_url.getText().toString());
         finish();
     }
 
+    public void Cancelar (View view) throws Exception {
+        finish();
+    }
 
 
     @Override
