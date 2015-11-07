@@ -76,6 +76,8 @@ public class Lista extends Activity {
             // ADICIONA PARA A LISTA
             ListView lista = (ListView) findViewById(R.id.lista);
 
+            JSONObject A = new JSONObject("{'aaaa':'a'}");
+
             final StableArrayAdapter adapter =
                     new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
 
@@ -111,7 +113,8 @@ public class Lista extends Activity {
                 startActivity(i);
                 break;
             case R.id.conf:
-                Toast.makeText(getApplicationContext(),"eee",Toast.LENGTH_SHORT).show();
+                Intent y = new Intent(getApplicationContext(), Configuracoes.class);
+                startActivity(y);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -5,5 +5,8 @@
     <string name="voltar">Voltar</string>
     <string name="action_settings">Configurar</string>
     <string name="title_activity_formulario">Contato</string>
+    <string name="title_activity_configuracoes">Configurações</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

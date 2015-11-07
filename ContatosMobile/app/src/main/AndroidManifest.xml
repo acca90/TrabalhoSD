@@ -21,10 +21,14 @@
         </activity>
         <activity
             android:name=".Formulario"
-            android:label="@string/title_activity_formulario">
+            android:label="@string/title_activity_formulario" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="matheushernandes.contatos.Lista" />
+        </activity>
+        <activity
+            android:name=".Configuracoes"
+            android:label="@string/title_activity_configuracoes" >
         </activity>
     </application>
 

@@ -59,7 +59,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
         //StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
         //StrictMode.setThreadPolicy(tp);
 
-        String url = "http://192.168.0.102/wsRest/index.php/contato";
+        String url = "http://172.30.65.212/wsRest/index.php/contato";
 
         if (!this.Cidade.equals("")) {
             url += "/" + this.Cidade;
