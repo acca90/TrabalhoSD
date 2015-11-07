@@ -28,6 +28,8 @@ public class Lista extends Activity {
     public static RestConnect Contatos;
     public static JSONArray DATA;
     public static String url;
+    public static JSONObject contato;
+
 
     public static void setUrl(String urln) {
         url = urln;
@@ -95,7 +97,7 @@ public class Lista extends Activity {
                                         int position, long id) {
                 try {
                     Contatos.setOP(2);
-                    JSONObject contato = DATA.getJSONObject(position);
+                    contato = DATA.getJSONObject(position);
                     Intent i = new Intent(getApplicationContext(), Formulario.class);
                     startActivity(i);
                 } catch (Exception e) {

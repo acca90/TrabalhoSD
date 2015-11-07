@@ -4,11 +4,17 @@ package matheushernandes.contatos;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by virgilio on 28/10/15.
@@ -20,6 +26,7 @@ public class RestConnect extends AsyncTask<String, String, String> {
     private String Cidade;
     private static int op = 1;
     private String url;
+    private String contatoJson;
 
     public void setUrl(String urln) {
         this.url = urln;
@@ -52,12 +59,43 @@ public class RestConnect extends AsyncTask<String, String, String> {
         return retorno;
     }
 
-    private String Novo() {
-        return "Novo";
+    private String Novo() throws Exception{
+
+        URL obj = new URL(this.url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setReadTimeout(10000);
+        con.setConnectTimeout(15000);
+        con.setRequestMethod("POST");
+        con.setDoInput(true);
+        con.setDoOutput(true);
+
+
+        OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
+        writer.write(this.contatoJson);
+        writer.flush();
+
+        con.connect();
+
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = rd.readLine()) != null) {
+            response.append(inputLine);
+        }
+        rd.close();
+        writer.close();
+
+        return response.toString();
+
+        //return this.url;
     }
 
     private String Editar() {
-        return "Editar";
+        return this.contatoJson;
     }
 
     private String Excluir() {
@@ -120,6 +158,10 @@ public class RestConnect extends AsyncTask<String, String, String> {
     public void setCidade(String cidade) { this.Cidade = cidade; }
     public String getOP() {
         return String.valueOf(op);
+    }
+
+    public void setContatoJson(String contatoJson) {
+        this.contatoJson = contatoJson;
     }
 }
 
