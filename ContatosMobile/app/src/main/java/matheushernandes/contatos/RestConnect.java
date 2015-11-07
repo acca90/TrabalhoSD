@@ -103,7 +103,6 @@ public class RestConnect extends AsyncTask<String, String, String> {
         this.response = response;
     }
     public void setCidade(String cidade) { this.Cidade = cidade; }
-
     public String getOP() {
         return String.valueOf(op);
     }

@@ -142,6 +142,15 @@
             android:onClick="Confirmar"
             android:layout_alignParentEnd="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excluír"
+            android:onClick="Excluir"
+            android:id="@+id/excluir"
+            android:layout_alignParentEnd="true" />
+
+
     </LinearLayout>
 
 </LinearLayout>

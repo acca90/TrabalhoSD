@@ -94,8 +94,10 @@ public class Lista extends Activity {
                 public void onItemClick(AdapterView<?> parent, final View view,
                                         int position, long id) {
                 try {
-                     JSONObject contato = DATA.getJSONObject(position);
-                     Toast.makeText(getApplicationContext(), contato.getString("codigo"), Toast.LENGTH_SHORT).show();
+                    Contatos.setOP(2);
+                    JSONObject contato = DATA.getJSONObject(position);
+                    Intent i = new Intent(getApplicationContext(), Formulario.class);
+                    startActivity(i);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

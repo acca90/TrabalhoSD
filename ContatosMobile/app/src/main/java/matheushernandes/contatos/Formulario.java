@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Formulario extends Activity {
@@ -30,6 +31,10 @@ public class Formulario extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
         this.Contatos = new RestConnect();
+        if (Lista.Contatos.getOP().equals("1")) {
+            Button exclui = (Button)findViewById(R.id.excluir);
+                exclui.setVisibility(View.GONE);
+        }
     }
 
     @Override
