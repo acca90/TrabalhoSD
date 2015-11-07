@@ -59,11 +59,9 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response insert(Contato c) {
         if(service.getById(c.getId()) == null && service.getByEmail(c.getEmail()).isEmpty()){
-            if(service.add(c) != null){
-                return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-            }
+            service.add(c);
         }
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
     }
     
     /**
@@ -76,9 +74,8 @@ public class ContatoRest {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(Contato c) {
-        if(service.update(c) != null)
-            return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        service.update(c);
+        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
     }
     
     /**
@@ -90,9 +87,8 @@ public class ContatoRest {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") Integer id) {
-        if(service.delete(id) != null)
-            return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        service.delete(id);
+        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
     }
     
     /**
@@ -101,13 +97,13 @@ public class ContatoRest {
      * @param c
      * @return 
      *
-     * @DELETE
-     * @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-     * @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-     * public Response delete(Contato c) {
-     *     if(service.delete(c) != null)
-     *         return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-     *     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-     * }
-    */
+     */ 
+      @DELETE
+      @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+      @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+      public Response delete(Contato c) {
+          service.delete(c);
+          return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+      }
+    
 }
