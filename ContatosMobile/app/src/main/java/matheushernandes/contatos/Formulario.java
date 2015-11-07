@@ -11,10 +11,15 @@ import android.widget.Toast;
 public class Formulario extends Activity {
 
     private RestConnect Contatos;
+    private int codigo;
 
     public void Confirmar (View view) throws Exception {
         try {
-            this.Contatos.setOP(2);
+            if (Lista.Contatos.getOP().equals("1")) {
+                this.Contatos.setOP(2);
+            } else {
+                this.Contatos.setOP(3);
+            }
             this.Contatos.execute().get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -22,6 +27,14 @@ public class Formulario extends Activity {
 
         Toast.makeText(getApplicationContext(),this.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
 
+        finish();
+    }
+
+
+    public void Excluir(View view) throws Exception {
+        this.Contatos.setOP(4);
+        this.Contatos.execute().get();
+        Toast.makeText(getApplicationContext(), this.Contatos.getResponse(), Toast.LENGTH_SHORT).show();
         finish();
     }
 

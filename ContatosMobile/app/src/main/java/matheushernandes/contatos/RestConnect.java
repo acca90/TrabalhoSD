@@ -34,7 +34,13 @@ public class RestConnect extends AsyncTask<String, String, String> {
                     retorno = this.Listar();
                     break;
                 case 2:
-                    retorno = this.novo();
+                    retorno = this.Novo();
+                    break;
+                case 3:
+                    retorno = this.Editar();
+                    break;
+                case 4:
+                    retorno = this.Excluir();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,10 +52,19 @@ public class RestConnect extends AsyncTask<String, String, String> {
         return retorno;
     }
 
-    private String novo() {
-
-        return "OII";
+    private String Novo() {
+        return "Novo";
     }
+
+    private String Editar() {
+        return "Editar";
+    }
+
+    private String Excluir() {
+        return "Excluir";
+    }
+
+
 
     @Override
     protected void onPostExecute(String result) {
