@@ -11,11 +11,13 @@ package com.principal;
  */
 public class service {
 
-    public  String hello(java.lang.String name) {
+    public java.util.List<com.service.Contato> getAll() {
         com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
         com.service.ServidorSoap port = service.getServidorSoapPort();
-        return port.hello(name);
-    }   
+        return port.getAll();
+    }
+
+   
     
     
 }
