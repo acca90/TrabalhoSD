@@ -19,27 +19,42 @@ import javax.jws.WebParam;
 @WebService(serviceName = "servidorSoap")
 public class servidorSoap {
     
-    //instacia do objeto servico_contato
+    //instacia do objeto
     ContatoService service = new ContatoService();
     
-
     /**
-     * This is a sample web service operation
+     * Operação de Web service que retorna todos os contatos
      */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
+    @WebMethod(operationName = "getAll")
+    public java.util.List<Contato> getAll() {
+        return service.getAll();
     }
-
+    
     /**
-     * Operação de Web service
+     * Operação de Web service que retorna os dados de um contato através do parametro id
      */
     @WebMethod(operationName = "getById")
     public Contato getById(@WebParam(name = "id") int id) {
        return service.getById(id);
     }
+
+    /**
+     * Operação de Web service
+     */
+    @WebMethod(operationName = "delete")
+    public Contato delete(@WebParam(name = "id") Integer id) {
+        return service.delete(id);
+    }
+
+    /**
+     * Operação de Web service
+     */
+    @WebMethod(operationName = "insert")
+    public Contato insert(@WebParam(name = "c") Contato c) {
+        return service.add(c);
+    }
+
     
     
-    
-    
+        
 }
