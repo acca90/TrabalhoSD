@@ -22,6 +22,8 @@ public class servidorSoap {
     //instacia do objeto
     ContatoService service = new ContatoService();
     
+    //instancia do objeto erro;
+    
     /**
      * Operação de Web service que retorna todos os contatos
      */
@@ -50,9 +52,25 @@ public class servidorSoap {
      * Operação de Web service
      */
     @WebMethod(operationName = "insert")
-    public Contato insert(@WebParam(name = "c") Contato c) {
-        return service.add(c);
+    public classeErro insert(@WebParam(name = "c") Contato c) {
+        Contato retorno =  service.add(c); 
+        
+        //instancia objeto erro
+        classeErro e = new classeErro();
+        
+        if(retorno == null){
+           e.setCodigo(1);
+           e.setMsg("Erro ao Inserir");
+        }else{
+           e.setCodigo(2);
+           e.setMsg("Contato Inserido com Sucesso");
+        }
+        
+        return e;
     }
+    
+    
+    
 
     
     
