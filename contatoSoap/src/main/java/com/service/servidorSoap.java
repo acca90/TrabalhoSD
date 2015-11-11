@@ -44,8 +44,20 @@ public class servidorSoap {
      * Operação de Web service
      */
     @WebMethod(operationName = "delete")
-    public Contato delete(@WebParam(name = "id") Integer id) {
-        return service.delete(id);
+    public classeErro delete(@WebParam(name = "id") Integer id) {
+        Contato retorno = service.delete(id);
+        
+        classeErro e = new classeErro();
+        
+        if(retorno == null){
+           e.setCodigo(1);
+           e.setMsg("Erro ao apagar o contato, ou esse Código não existe!!!");
+        }else{
+           e.setCodigo(2);
+           e.setMsg("Contato Apagado com Sucesso");
+        }
+        
+        return e;
     }
 
     /**
