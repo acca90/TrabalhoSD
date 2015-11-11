@@ -5,6 +5,7 @@
  */
 package com.principal;
 
+import com.service.ClasseErro;
 import dao.service;
 import com.service.Contato;
 import java.beans.PropertyVetoException;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,6 +47,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setExtendedState(MAXIMIZED_BOTH);
@@ -70,6 +73,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Apagar Contato");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -100,6 +111,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jdesk.add(jcadastro);
         jcadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        String id = JOptionPane.showInputDialog("Informe o código do contato que deseja apagar:");
+        ClasseErro retorno = new ClasseErro();
+        Contato c = new Contato();
+        retorno = dao.delete(Integer.parseInt(id)); 
+        if(retorno.getCodigo() == 2){
+            JOptionPane.showMessageDialog(this, "O Contato foi apagado com sucesso!!!");
+        }
+        if(retorno.getCodigo() == 1){
+            JOptionPane.showMessageDialog(this, retorno.getMsg());
+        }
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +170,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JDesktopPane jdesk;
     // End of variables declaration//GEN-END:variables
  service dao = new service();

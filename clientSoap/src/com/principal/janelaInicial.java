@@ -5,11 +5,15 @@
  */
 package com.principal;
 
+import com.service.ClasseErro;
 import dao.service;
 import com.service.Contato;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,8 +28,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     public janelaInicial() {
         initComponents();
         
-        List<Contato> listaDao = dao.getAll();
-        list.addAll(listaDao);    
+         List<Contato> listaDao = dao.getAll();
+         list.addAll(listaDao);
     }
 
     /**
@@ -61,7 +65,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         campoEndereco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         campoComplemento = new javax.swing.JTextField();
-        campoEstado = new javax.swing.JComboBox<>();
+        campoEstado = new javax.swing.JComboBox<String>();
+        botaoAPagar = new javax.swing.JButton();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -115,6 +120,13 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         jLabel2.setText("Nome:");
 
         jLabel3.setText("Email:");
+
+        campoCódigo.setEditable(false);
+        campoCódigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCódigoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,7 +184,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Endereço");
 
-        campoEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        campoEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         campoEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEstadoActionPerformed(evt);
@@ -233,6 +245,13 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        botaoAPagar.setText("Apagar");
+        botaoAPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAPagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,7 +259,9 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(68, 68, 68)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoAPagar)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(106, Short.MAX_VALUE))
@@ -253,7 +274,9 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addComponent(botaoAPagar)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -289,9 +312,41 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoEstadoActionPerformed
 
+    private void botaoAPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAPagarActionPerformed
+        Contato c = list.get(tabela.getSelectedRow());
+        ClasseErro retorno = new ClasseErro();
+        
+        int input = JOptionPane.showConfirmDialog(campoComplemento, "Deseja realmente Apagar o contato: " + c.getNome());
+        if(input == 0){
+            retorno = dao.delete(c.getCodigo());       
+        }
+        
+        try {
+            AtualizaTabela(evt);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(janelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(retorno.getCodigo() == 2){
+            JOptionPane.showMessageDialog(campoComplemento, "O Contato " + c.getNome() + " foi apagado com sucesso!!!");
+        }
+        if(retorno.getCodigo() == 1){
+            JOptionPane.showMessageDialog(campoComplemento, retorno.getMsg());
+        }
+    }//GEN-LAST:event_botaoAPagarActionPerformed
+
+    private void campoCódigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCódigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCódigoActionPerformed
+
+    private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
+         List<Contato> listaDao = dao.getAll();
+         list.clear();
+         list.addAll(listaDao);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoEmail;
+    private javax.swing.JButton botaoAPagar;
     private javax.swing.JTextField campoCep;
     private javax.swing.JTextField campoCidade;
     private javax.swing.JTextField campoComplemento;

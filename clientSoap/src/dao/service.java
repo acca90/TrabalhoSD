@@ -26,6 +26,12 @@ public class service {
         return port.insert(c);
     }
 
+    public ClasseErro delete(java.lang.Integer id) {
+        com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
+        com.service.ServidorSoap port = service.getServidorSoapPort();
+        return port.delete(id);
+    }
+
    
 
    
