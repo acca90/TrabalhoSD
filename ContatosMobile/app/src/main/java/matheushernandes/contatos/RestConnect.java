@@ -61,55 +61,116 @@ public class RestConnect extends AsyncTask<String, String, String> {
 
     private String Novo() throws Exception{
 
-        URL obj = new URL(this.url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        URL url = new URL(this.url);
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
 
-        con.setReadTimeout(10000);
-        con.setConnectTimeout(15000);
-        con.setRequestMethod("POST");
-        con.setDoInput(true);
         con.setDoOutput(true);
+        con.setRequestMethod("POST");
 
-
-        OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
-        writer.write(this.contatoJson);
-        writer.flush();
-
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.addRequestProperty("Connection", "Keep-Alive");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.connect();
 
+        String params = this.contatoJson;
+        con.getOutputStream().write(params.getBytes());
+        con.getOutputStream().flush();
+        con.getOutputStream().close();
+        String code = String.valueOf(con.getResponseCode());
 
-        BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        if (code.equals("200")) {
+            String retorno = "";
+            BufferedReader buffer = new BufferedReader(new InputStreamReader((con.getInputStream()), "UTF-8"));
+            String r = "";
+            while ((r = buffer.readLine()) != null) {
+                retorno = r;
+            }
+            return retorno;
 
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = rd.readLine()) != null) {
-            response.append(inputLine);
+        } else {
+            return "{\"code\":\""+code+"\"}";
         }
-        rd.close();
-        writer.close();
-
-        return response.toString();
-
-        //return this.url;
     }
 
-    private String Editar() {
-        return this.contatoJson;
+    private String Editar() throws Exception {
+
+        URL url = new URL(this.url);
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+        con.setDoOutput(true);
+        con.setRequestMethod("PUT");
+
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.addRequestProperty("Connection", "Keep-Alive");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        con.connect();
+
+        String params = this.contatoJson;
+        con.getOutputStream().write(params.getBytes());
+        con.getOutputStream().flush();
+        con.getOutputStream().close();
+        String code = String.valueOf(con.getResponseCode());
+
+        if (code.equals("200")) {
+            String retorno = "";
+            BufferedReader buffer = new BufferedReader(new InputStreamReader((con.getInputStream()), "UTF-8"));
+            String r = "";
+            while ((r = buffer.readLine()) != null) {
+                retorno = r;
+            }
+            return retorno;
+
+        } else {
+            return "{\"code\":\""+code+"\"}";
+        }
+
     }
 
-    private String Excluir() {
-        return "Excluir";
-    }
+    private String Excluir() throws Exception {
 
+        URL url = new URL(this.url);
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+        con.setDoOutput(true);
+        con.setRequestMethod("DELETE");
+
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.addRequestProperty("Connection", "Keep-Alive");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        con.connect();
+
+        String params = this.contatoJson;
+        con.getOutputStream().write(params.getBytes());
+        con.getOutputStream().flush();
+        con.getOutputStream().close();
+        String code = String.valueOf(con.getResponseCode());
+
+        if (code.equals("200")) {
+            String retorno = "";
+            BufferedReader buffer = new BufferedReader(new InputStreamReader((con.getInputStream()), "UTF-8"));
+            String r = "";
+            while ((r = buffer.readLine()) != null) {
+                retorno = r;
+            }
+            return retorno;
+
+        } else {
+            return "{\"code\":\""+code+"\"}";
+        }
+
+    }
 
 
     @Override
     protected void onPostExecute(String result) {
         this.setResponse(result);
     }
-
-
 
     public String Listar() throws Exception {
 

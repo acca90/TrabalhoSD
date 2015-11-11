@@ -11,42 +11,52 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class Formulario extends Activity {
 
-    private int codigo;
+    private String codigo;
     private EditText enome, eemail, eemail_alter, eendereco, ecomp, ecep, ecidade, eestado;
 
 
     public void Confirmar (View view) throws Exception {
+
+        Lista.Contatos = new RestConnect();
+        Lista.Contatos.setOP(Lista.getOP());
+        Lista.Contatos.setUrl(Lista.url);
+
         try {
             if (Lista.Contatos.getOP().equals("1")) {
                 Lista.Contatos.setOP(2);
 
-                String json = "{\"nome\":\"\"" + enome.getText().toString() + "\"\","
-                            + "\"email\":\"\"" + eemail.getText().toString() + "\"\","
-                            + "\"email_alter\":\"\"" + eemail_alter.getText().toString() + "\"\","
-                            + "\"endereco\":\"\"" + eendereco.getText().toString() + "\"\","
-                            + "\"complemento\":\"\"" + ecomp.getText().toString() + "\"\","
-                            + "\"cep\":\"\"" + ecep.getText().toString() + "\"\","
-                            + "\"cidade\":\"\"" + ecidade.getText().toString() + "\"\","
-                            + "\"estado\":\" \"" + eestado.getText().toString() + "\"\"}";
+                String json = "{\"codigo\":\"\","
+                            + "\"nome\":\""         + enome.getText().toString()         + "\","
+                            + "\"email\":\""        + eemail.getText().toString()        + "\","
+                            + "\"email_alter\":\""  + eemail_alter.getText().toString()  + "\","
+                            + "\"endereco\":\""     + eendereco.getText().toString()     + "\","
+                            + "\"complemento\":\""  + ecomp.getText().toString()         + "\","
+                            + "\"cep\":\""          + ecep.getText().toString()          + "\","
+                            + "\"cidade\":\""       + ecidade.getText().toString()       + "\","
+                            + "\"estado\":\""       + eestado.getText().toString()       + "\"}";
 
                 Lista.Contatos.setContatoJson(json);
 
             } else {
+
                 Lista.Contatos.setOP(3);
 
-                String json = "{\"codigo\":\"" + String.valueOf(codigo) + "\","
-                        + "\"nome\":\"\"" + enome.getText().toString() + "\"\","
-                        + "\"email\":\"\"" + eemail.getText().toString() + "\"\","
-                        + "\"email_alter\":\"\"" + eemail_alter.getText().toString() + "\"\","
-                        + "\"endereco\":\"\"" + eendereco.getText().toString() + "\"\","
-                        + "\"complemento\":\"\"" + ecomp.getText().toString() + "\"\","
-                        + "\"cep\":\"\"" + ecep.getText().toString() + "\"\","
-                        + "\"cidade\":\"\"" + ecidade.getText().toString() + "\"\","
-                        + "\"estado\":\" \"" + eestado.getText().toString() + "\"\"}";
+                String json = "{\"codigo\":\""  + codigo                             + "\","
+                        + "\"nome\":\""         + enome.getText().toString()         + "\","
+                        + "\"email\":\""        + eemail.getText().toString()        + "\","
+                        + "\"email_alter\":\""  + eemail_alter.getText().toString()  + "\","
+                        + "\"endereco\":\""     + eendereco.getText().toString()     + "\","
+                        + "\"complemento\":\""  + ecomp.getText().toString()         + "\","
+                        + "\"cep\":\""          + ecep.getText().toString()          + "\","
+                        + "\"cidade\":\""       + ecidade.getText().toString()       + "\","
+                        + "\"estado\":\""       + eestado.getText().toString()       + "\"}";
+
 
                 Lista.Contatos.setContatoJson(json);
             }
@@ -57,14 +67,31 @@ public class Formulario extends Activity {
 
         Toast.makeText(getApplicationContext(),Lista.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
 
+        Lista.Contatos = null;
+
         finish();
     }
 
 
     public void Excluir(View view) throws Exception {
+
+        String json = "{\"codigo\":\""  + codigo                             + "\","
+                + "\"nome\":\""         + enome.getText().toString()         + "\","
+                + "\"email\":\""        + eemail.getText().toString()        + "\","
+                + "\"email_alter\":\""  + eemail_alter.getText().toString()  + "\","
+                + "\"endereco\":\""     + eendereco.getText().toString()     + "\","
+                + "\"complemento\":\""  + ecomp.getText().toString()         + "\","
+                + "\"cep\":\""          + ecep.getText().toString()          + "\","
+                + "\"cidade\":\""       + ecidade.getText().toString()       + "\","
+                + "\"estado\":\""       + eestado.getText().toString()       + "\"}";
+
+        Lista.Contatos = new RestConnect();
+        Lista.Contatos.setContatoJson(json);
+        Lista.Contatos.setUrl(Lista.url);
         Lista.Contatos.setOP(4);
         Lista.Contatos.execute().get();
         Toast.makeText(getApplicationContext(), Lista.Contatos.getResponse(), Toast.LENGTH_SHORT).show();
+        Lista.Contatos = null;
         finish();
     }
 
@@ -80,6 +107,12 @@ public class Formulario extends Activity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+        try {
+            codigo = Lista.contato.getString("codigo");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         this.enome = (EditText)findViewById(R.id.edit_nome);
         this.eemail  = (EditText)findViewById(R.id.edit_email);
         this.eemail_alter = (EditText)findViewById(R.id.edit_email_alter);
@@ -89,7 +122,7 @@ public class Formulario extends Activity {
         this.ecidade = (EditText)findViewById(R.id.edit_cidade);
         this.eestado = (EditText)findViewById(R.id.edit_estado);
 
-        if (Lista.Contatos.getOP().equals("1")) {
+        if (Lista.getOP() == 1) {
             Button exclui = (Button)findViewById(R.id.excluir);
             exclui.setVisibility(View.GONE);
         } else {
@@ -108,6 +141,11 @@ public class Formulario extends Activity {
             }
 
         }
+    }
+
+
+    public void voltar(View view) {
+        finish();
     }
 
     @Override
