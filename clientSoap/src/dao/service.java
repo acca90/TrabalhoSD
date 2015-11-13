@@ -5,8 +5,9 @@
  */
 package dao;
 
-import com.service.ClasseErro;
+
 import com.service.Contato;
+import com.service.Retorno;
 
 /**
  *
@@ -20,17 +21,19 @@ public class service {
         return port.getAll();
     }
 
-    public ClasseErro insert(com.service.Contato c) {
+    public Retorno insert(com.service.Contato c) {
         com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
         com.service.ServidorSoap port = service.getServidorSoapPort();
         return port.insert(c);
     }
 
-    public ClasseErro delete(java.lang.Integer id) {
+    public Retorno delete(java.lang.Integer id) {
         com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
         com.service.ServidorSoap port = service.getServidorSoapPort();
         return port.delete(id);
     }
+
+  
 
    
 

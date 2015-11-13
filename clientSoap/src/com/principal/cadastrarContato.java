@@ -5,8 +5,9 @@
  */
 package com.principal;
 
-import com.service.ClasseErro;
+
 import com.service.Contato;
+import com.service.Retorno;
 import com.service.ServidorSoap_Service;
 import dao.service;
 import javax.swing.JOptionPane;
@@ -57,6 +58,26 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
+
+        setClosable(true);
+        setTitle("Adicionar Contato");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel1.setText("Nome:");
 
@@ -210,16 +231,18 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
        c.setCidade(campoCidade.getText());
        c.setComplemento(campoComplemento.getText());
        
-        ClasseErro retorno   = dao.insert(c);
+        Retorno retorno   = dao.insert(c);
         
         int erro = retorno.getCodigo();
+        
+        c = retorno.getContato();
         
         if(erro == 1){
             JOptionPane.showMessageDialog(this, "Erro ao inserir o contato. Por Favor tente Novamente!");
         }
         
         if(erro == 2){
-            JOptionPane.showMessageDialog(this, "Contato Inserido com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Contato"+c.getNome()+" Inserido com Sucesso!");
             campoCep.setText("");
             campoCodigo.setText("");
             campoCidade.setText("");
@@ -236,6 +259,11 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
        
        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        JOptionPane.showMessageDialog(this, "saindo");
+        jinical.setVisible(true);        
+    }//GEN-LAST:event_formInternalFrameClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -262,4 +290,5 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 service dao = new service();
+ janelaInicial jinical = new janelaInicial();
 }

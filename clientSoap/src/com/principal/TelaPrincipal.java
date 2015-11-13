@@ -5,9 +5,10 @@
  */
 package com.principal;
 
-import com.service.ClasseErro;
+
 import dao.service;
 import com.service.Contato;
+import com.service.Retorno;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,11 +115,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         String id = JOptionPane.showInputDialog("Informe o código do contato que deseja apagar:");
-        ClasseErro retorno = new ClasseErro();
+        Retorno retorno = new Retorno();
         Contato c = new Contato();
+        
         retorno = dao.delete(Integer.parseInt(id)); 
+        c = retorno.getContato();
+         
         if(retorno.getCodigo() == 2){
-            JOptionPane.showMessageDialog(this, "O Contato foi apagado com sucesso!!!");
+            JOptionPane.showMessageDialog(this, "O Contato"+c.getNome()+" foi apagado com sucesso!!!");
         }
         if(retorno.getCodigo() == 1){
             JOptionPane.showMessageDialog(this, retorno.getMsg());

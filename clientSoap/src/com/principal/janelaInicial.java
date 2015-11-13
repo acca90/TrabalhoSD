@@ -5,9 +5,10 @@
  */
 package com.principal;
 
-import com.service.ClasseErro;
+
 import dao.service;
 import com.service.Contato;
+import com.service.Retorno;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -314,7 +315,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
 
     private void botaoAPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAPagarActionPerformed
         Contato c = list.get(tabela.getSelectedRow());
-        ClasseErro retorno = new ClasseErro();
+        Retorno retorno = new Retorno();
         
         int input = JOptionPane.showConfirmDialog(campoComplemento, "Deseja realmente Apagar o contato: " + c.getNome());
         if(input == 0){
