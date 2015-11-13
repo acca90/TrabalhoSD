@@ -397,9 +397,10 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botaoConsultarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      List<Contato> listaDao = dao.getAll();
-    list.addAll(listaDao);
-    campoBusca.setText("");
+        List<Contato> listaDao = dao.getAll();
+        list.clear();
+        list.addAll(listaDao);
+        campoBusca.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
