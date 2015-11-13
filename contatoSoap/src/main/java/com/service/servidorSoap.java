@@ -22,7 +22,9 @@ public class servidorSoap {
     //instacia do objeto
     ContatoService service = new ContatoService();
     
-    //instancia do objeto erro;
+    //instancia do objeto retorno
+    retorno r = new retorno();
+
     
     /**
      * Operação de Web service que retorna todos os contatos
@@ -44,41 +46,38 @@ public class servidorSoap {
      * Operação de Web service
      */
     @WebMethod(operationName = "delete")
-    public classeErro delete(@WebParam(name = "id") Integer id) {
+    public retorno delete(@WebParam(name = "id") Integer id) {
         Contato retorno = service.delete(id);
         
-        classeErro e = new classeErro();
-        
         if(retorno == null){
-           e.setCodigo(1);
-           e.setMsg("Erro ao apagar o contato, ou esse Código não existe!!!");
+           r.setCodigo(1);
+           r.setMsg("Erro ao apagar o contato, ou esse Código não existe!!!");
         }else{
-           e.setCodigo(2);
-           e.setMsg("Contato Apagado com Sucesso");
+           r.setCodigo(2);
+           r.setMsg("Contato Apagado com Sucesso");
+           r.setContato(retorno);
         }
         
-        return e;
+        return r;
     }
 
     /**
      * Operação de Web service
      */
     @WebMethod(operationName = "insert")
-    public classeErro insert(@WebParam(name = "c") Contato c) {
+    public retorno insert(@WebParam(name = "c") Contato c) {
         Contato retorno =  service.add(c); 
         
-        //instancia objeto erro
-        classeErro e = new classeErro();
-        
         if(retorno == null){
-           e.setCodigo(1);
-           e.setMsg("Erro ao Inserir");
+           r.setCodigo(1);
+           r.setMsg("Erro ao Inserir");
         }else{
-           e.setCodigo(2);
-           e.setMsg("Contato Inserido com Sucesso");
+           r.setCodigo(2);
+           r.setMsg("Contato Inserido com Sucesso");
+           r.setContato(retorno);
         }
         
-        return e;
+        return r;
     }
     
     

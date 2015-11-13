@@ -5,13 +5,16 @@
  */
 package com.service;
 
+import br.upf.contatos.dal.model.Contato;
+
 /**
  *
  * @author joaov
  */
-public class classeErro {
+public class retorno {
     private int codigo;
     private String msg;
+    private Contato contato;
 
     public int getCodigo() {
         return codigo;
@@ -28,6 +31,22 @@ public class classeErro {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+    public Contato getContato() {
+        return contato;
+    }
+
+    public void setContato(Contato contato) {
+        this.contato = contato;
+    }
+
+    @Override
+    public String toString() {
+        return codigo + " " + msg + " " + contato;
+    }
+
+   
+    
     
     
 }
