@@ -72,7 +72,7 @@
 
 <xs:complexType name="getByIdResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:contato" minOccurs="0"/>
+<xs:element name="return" type="tns:retorno" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

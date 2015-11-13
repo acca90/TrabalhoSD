@@ -33,6 +33,12 @@ public class service {
         return port.delete(id);
     }
 
+    public Retorno getById(int id) {
+        com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
+        com.service.ServidorSoap port = service.getServidorSoapPort();
+        return port.getById(id);
+    }
+
   
 
    
