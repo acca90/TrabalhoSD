@@ -38,8 +38,21 @@ public class servidorSoap {
      * Operação de Web service que retorna os dados de um contato através do parametro id
      */
     @WebMethod(operationName = "getById")
-    public Contato getById(@WebParam(name = "id") int id) {
-       return service.getById(id);
+    public retorno getById(@WebParam(name = "id") int id) {
+       Contato retorno = service.getById(id);
+       
+       retorno r = new retorno();
+       
+        if(retorno == null){
+           r.setCodigo(1);
+           r.setMsg("Erro na Consulta");
+        }else{
+           r.setCodigo(2);
+           r.setMsg("Sucesso na Consulta");
+           r.setContato(retorno);
+        }
+        
+        return r;
     }
 
     /**
@@ -78,12 +91,7 @@ public class servidorSoap {
         }
         
         return r;
-    }
-    
-    
-    
-
-    
+    }  
     
         
 }
