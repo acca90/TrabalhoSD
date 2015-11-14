@@ -2,6 +2,7 @@ package matheushernandes.contatos;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,10 +66,13 @@ public class Formulario extends Activity {
             e.printStackTrace();
         }
 
-        Toast.makeText(getApplicationContext(),Lista.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),Lista.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
+
 
         Lista.Contatos = null;
 
+        Intent intent = new Intent();
+        setResult(RESULT_OK,intent );
         finish();
     }
 
@@ -90,8 +94,10 @@ public class Formulario extends Activity {
         Lista.Contatos.setUrl(Lista.url);
         Lista.Contatos.setOP(4);
         Lista.Contatos.execute().get();
-        Toast.makeText(getApplicationContext(), Lista.Contatos.getResponse(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), Lista.Contatos.getResponse(), Toast.LENGTH_SHORT).show();
         Lista.Contatos = null;
+        Intent intent = new Intent();
+        setResult(RESULT_OK,intent );
         finish();
     }
 
@@ -107,12 +113,6 @@ public class Formulario extends Activity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        try {
-            codigo = Lista.contato.getString("codigo");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         this.enome = (EditText)findViewById(R.id.edit_nome);
         this.eemail  = (EditText)findViewById(R.id.edit_email);
         this.eemail_alter = (EditText)findViewById(R.id.edit_email_alter);
@@ -123,11 +123,23 @@ public class Formulario extends Activity {
         this.eestado = (EditText)findViewById(R.id.edit_estado);
 
         if (Lista.getOP() == 1) {
+
+            codigo = "";
+            this.enome.setText("");
+            this.eemail.setText("");
+            this.eemail_alter.setText("");
+            this.eendereco.setText("");
+            this.ecomp.setText("");
+            this.ecep.setText("");
+            this.ecidade.setText("");
+            this.eestado.setText("");
+
             Button exclui = (Button)findViewById(R.id.excluir);
             exclui.setVisibility(View.GONE);
         } else {
-
             try {
+                codigo = Lista.contato.getString("codigo");
+
                 this.enome.setText(Lista.contato.getString("nome").toString());
                 this.eemail.setText(Lista.contato.getString("email").toString());
                 this.eemail_alter.setText(Lista.contato.getString("email_alter").toString());
@@ -141,10 +153,13 @@ public class Formulario extends Activity {
             }
 
         }
+
     }
 
 
     public void voltar(View view) {
+        Intent intent = new Intent();
+        setResult(RESULT_OK,intent );
         finish();
     }
 

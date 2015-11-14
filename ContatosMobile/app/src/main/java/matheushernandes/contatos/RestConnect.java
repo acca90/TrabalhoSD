@@ -130,6 +130,8 @@ public class RestConnect extends AsyncTask<String, String, String> {
 
     }
 
+
+
     private String Excluir() throws Exception {
 
         URL url = new URL(this.url);

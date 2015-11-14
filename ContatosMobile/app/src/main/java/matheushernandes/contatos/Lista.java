@@ -53,8 +53,19 @@ public class Lista extends Activity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Do your work here in ActivityA
 
+        try {
+            this.Atualiza();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
 
     public void listar(View view) throws JSONException {
 
@@ -104,7 +115,85 @@ public class Lista extends Activity {
                             setOP(2);
                             contato = DATA.getJSONObject(position);
                             Intent i = new Intent(getApplicationContext(), Formulario.class);
-                            startActivity(i);
+                            startActivityForResult(i, 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        } else {
+
+            final ArrayList<String> list = new ArrayList<String>();
+
+            list.add("Nada encontrado");
+
+            // ADICIONA PARA A LISTA
+            ListView lista = (ListView) findViewById(R.id.lista);
+            final StableArrayAdapter adapter =
+                    new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+
+            lista.setAdapter(adapter);
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+
+                }
+            });
+        }
+        Contatos = null;
+    }
+
+    public void Atualiza() throws Exception {
+
+        Contatos = new RestConnect();
+        Contatos.setUrl(url);
+
+        /* LÊ O CAMPO DA CIDADE */
+        EditText edit = (EditText)findViewById(R.id.cidade);
+        Contatos.setCidade(edit.getText().toString());
+        Contatos.setOP(1);
+
+        try {
+            Contatos.setResponse(Contatos.execute().get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!Contatos.getResponse().equals("{\"codigo\":0}")) {
+
+            // QUEBRA JSON
+            JSONArray ContatosArray = new JSONArray(Contatos.getResponse());
+
+            final ArrayList<String> list = new ArrayList<String>();
+
+            if (ContatosArray.length() > 0) {
+
+                DATA = new JSONArray(Contatos.getResponse());
+
+                for (int i = 0; i < ContatosArray.length(); i++) {
+                    JSONObject nodo = ContatosArray.getJSONObject(i);
+                    list.add(nodo.getString("nome"));
+                }
+
+                // ADICIONA PARA A LISTA
+                ListView lista = (ListView) findViewById(R.id.lista);
+
+                final StableArrayAdapter adapter =
+                        new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+
+                lista.setAdapter(adapter);
+
+                lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view,
+                                            int position, long id) {
+                        try {
+                            setOP(2);
+                            contato = DATA.getJSONObject(position);
+                            Intent i = new Intent(getApplicationContext(), Formulario.class);
+                            startActivityForResult(i, 0);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -145,7 +234,7 @@ public class Lista extends Activity {
             case R.id.novo:
                 setOP(1);
                 Intent i = new Intent(getApplicationContext(), Formulario.class);
-                startActivity(i);
+                startActivityForResult(i,0);
                 break;
             case R.id.conf:
                 Intent y = new Intent(getApplicationContext(), Configuracoes.class);
