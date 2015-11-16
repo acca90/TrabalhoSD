@@ -15,7 +15,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("contatos")
+@Path("contato")
 public class ContatoRest {
     
     private ContatoService service = new ContatoService();
