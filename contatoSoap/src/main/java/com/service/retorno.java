@@ -6,6 +6,7 @@
 package com.service;
 
 import br.upf.contatos.dal.model.Contato;
+import java.util.List;
 
 /**
  *
@@ -15,6 +16,7 @@ public class retorno {
     private int codigo;
     private String msg;
     private Contato contato;
+    private List<Contato> lista;
 
     public int getCodigo() {
         return codigo;
@@ -40,10 +42,17 @@ public class retorno {
         this.contato = contato;
     }
 
-    @Override
-    public String toString() {
-        return codigo + " " + msg + " " + contato;
+    public List<Contato> getLista() {
+        return lista;
     }
+
+    public void setLista(List<Contato> lista) {
+        this.lista = lista;
+    }
+    
+    
+
+    
 
    
     
