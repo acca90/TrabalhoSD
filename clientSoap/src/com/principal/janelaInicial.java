@@ -382,18 +382,29 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_campoCódigoActionPerformed
 
     private void botaoConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarActionPerformed
-        int busca = Integer.parseInt(campoBusca.getText());
+        String busca = campoBusca.getText();
+        Retorno retorno = new Retorno();
         
-        Retorno retorno = dao.getById(busca);
-        Contato c = retorno.getContato();
+        boolean r = busca.matches("[-+]?\\d*\\.?\\d+");
         
-         
-        if(retorno.getCodigo() == 1){
-            JOptionPane.showMessageDialog(campoComplemento, retorno.getMsg());
+        if(r == true){
+            retorno = dao.getById(Integer.parseInt(busca));
+        }else{
+            retorno = dao.getByEmail(busca);
+            
+        }   
+        
+        
+        if(retorno.getCodigo() == 3){
+            JOptionPane.showMessageDialog(this, "Nenhum Contato foi Encontrado");
+        }else{            
+            list.clear();
+            list.addAll(retorno.getLista());
         }
         
-        list.clear();
-        list.add(c);
+        
+        
+        
     }//GEN-LAST:event_botaoConsultarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
