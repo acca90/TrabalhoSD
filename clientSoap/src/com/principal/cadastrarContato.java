@@ -261,8 +261,9 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        JOptionPane.showMessageDialog(this, "saindo");
-        jinical.setVisible(true);        
+        controleTelas.getJdesk().removeAll();
+        controleTelas.getJdesk().add(jinical);
+        controleTelas.getJdesk().repaint();
     }//GEN-LAST:event_formInternalFrameClosed
 
 

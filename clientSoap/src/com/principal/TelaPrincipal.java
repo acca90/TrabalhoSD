@@ -28,8 +28,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() throws PropertyVetoException {
         initComponents();
+        controleTelas.setJdesk(jdesk);
         janelaInicial j = new janelaInicial();
-        jdesk.add(j);
+        //jdesk.add(j);;
+        controleTelas.getJdesk().add(j);
         j.setMaximum(true);        
         j.setVisible(true);
         
@@ -106,11 +108,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.out.println("Chegou . . .");        
         jdesk.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        jdesk.removeAll();
-        jdesk.add(jcadastro);
+        jdesk.removeAll();        
+        controleTelas.getJdesk().add(jcadastro);
         jcadastro.setVisible(true);
+        jdesk.repaint();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
