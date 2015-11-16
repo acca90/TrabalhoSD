@@ -12,6 +12,7 @@ import com.service.Retorno;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +81,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         setRequestFocusEnabled(false);
         setVisible(true);
 
+        tabela.setAutoCreateRowSorter(true);
+
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, tabela);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigo}"));
         columnBinding.setColumnName("Codigo");
@@ -110,7 +113,6 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaMouseClicked(evt);
@@ -389,18 +391,22 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         
         if(r == true){
             retorno = dao.getById(Integer.parseInt(busca));
+            list.clear();
+            list.add(retorno.getContato());
         }else{
             retorno = dao.getByEmail(busca);
+            
+            if(retorno.getCodigo() == 3){
+                JOptionPane.showMessageDialog(this, "Nenhum Contato foi Encontrado");
+            }else{            
+                list.clear();
+                list.addAll(retorno.getLista());
+            }
             
         }   
         
         
-        if(retorno.getCodigo() == 3){
-            JOptionPane.showMessageDialog(this, "Nenhum Contato foi Encontrado");
-        }else{            
-            list.clear();
-            list.addAll(retorno.getLista());
-        }
+        
         
         
         

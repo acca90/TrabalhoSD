@@ -237,8 +237,14 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
             campoEndereco.setText("");
             campoEstado.setSelectedItem("");
             campoNome.setText("");
-            campoCodigo.requestFocus();
+            campoCodigo.requestFocus();           
+            
+            int r = JOptionPane.showConfirmDialog(campoComplemento, "Deseja Inserir um novo Contato ?");
+            System.out.println(r);
         }
+        
+        
+       
        
         //JOptionPane.showMessageDialog(this, retorno.getCodigo() + retorno.getMsg());
        
