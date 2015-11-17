@@ -1,4 +1,3 @@
-
 		var app = angular.module('clientRest', [])
 		.controller('lista', ['$scope', 'loadLista', '$rootScope', 'loadContato', '$http', 'loadUrl', function($scope, loadLista, $rootScope, loadContato, $http, loadUrl) {
 			
@@ -30,8 +29,14 @@
 					method: 'POST',
 					data: {contato:contato,acao:$scope.acao,url:$scope.url}
 				}).success(function (response) {
-					loadLista.setContatos(response);
-					$('#confirma').modal('toggle');
+					if (response.erro.length > 0) {
+						$('#mensagem_corpo').html("Erro: " + response.erro);
+						$('#mensagem').modal('toggle');
+					}
+					else {
+				  	 	loadLista.setContatos(response.contatos);
+				  	 	$('#confirma').modal('toggle');
+					}
 				}).error(function (response){
 					alert('Falha');
 				});
@@ -65,7 +70,13 @@
 					data: {contato:$scope.contato,acao:'listar',url:$scope.url}
 				}).success(function (response) {
 					//alert(response);
-				  	loadLista.setContatos(response);
+					if (response.erro.length > 0) {
+						$('#mensagem_corpo').html("Erro: " + response.erro);
+						$('#mensagem').modal('toggle');
+					}
+					else {
+				  	 	loadLista.setContatos(response.contatos);
+					}
 				});
 			};
 			
@@ -130,8 +141,15 @@
 					data: {contato:$scope.contatoForm,acao:$scope.acao,url:$scope.url}
 				}).success(function (response) {
 					//alert(response);
-					loadLista.setContatos(response);
-					$('#myModal').modal('toggle');
+					if (response.erro.length > 0) {
+						$('#myModal').modal('toggle');
+						$('#mensagem_corpo').html("Erro: " + response.erro);
+						$('#mensagem').modal('toggle');
+					}
+					else {
+				  	 	loadLista.setContatos(response.contatos);
+				  	 	$('#myModal').modal('toggle');
+					}
 				}).error(function (response){
 					alert('Falha');
 				});
@@ -202,7 +220,7 @@
 		}])
 		.service('loadUrl',['$rootScope', function($rootScope){
 
-			var url = "http://localhost:8080/contatos/rest/contatos";
+			var url = "http://localhost/wsRest/index.php/contato";
 
 			return {
 				setOld: function(urlNova) {
@@ -220,3 +238,5 @@
 			}
 
 		}]);
+
+
