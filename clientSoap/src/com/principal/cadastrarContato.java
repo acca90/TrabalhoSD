@@ -10,6 +10,9 @@ import com.service.Contato;
 import com.service.Retorno;
 import com.service.ServidorSoap_Service;
 import dao.service;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javafx.stage.Screen;
 import javax.swing.JOptionPane;
 import javax.xml.ws.Service;
 
@@ -51,7 +54,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         campoComplemento = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         campoEstado = new javax.swing.JComboBox<>();
         campoCep = new javax.swing.JTextField();
         campoCodigo = new javax.swing.JTextField();
@@ -102,13 +104,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         campoEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel9.setText("Código");
@@ -153,10 +148,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
+                            .addComponent(jButton1)
                             .addComponent(campoComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -205,20 +197,13 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(campoComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        cadastrarContato c = new cadastrarContato();
-        c.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        Contato c = new Contato();
@@ -242,7 +227,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         }
         
         if(erro == 2){
-            JOptionPane.showMessageDialog(this, "Contato"+c.getNome()+" Inserido com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Contato "+c.getNome()+" Inserido com Sucesso!");
             campoCep.setText("");
             campoCodigo.setText("");
             campoCidade.setText("");
@@ -252,8 +237,14 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
             campoEndereco.setText("");
             campoEstado.setSelectedItem("");
             campoNome.setText("");
-            campoCodigo.requestFocus();
+            campoCodigo.requestFocus();           
+            
+            int r = JOptionPane.showConfirmDialog(campoComplemento, "Deseja Inserir um novo Contato ?");
+            System.out.println(r);
         }
+        
+        
+       
        
         //JOptionPane.showMessageDialog(this, retorno.getCodigo() + retorno.getMsg());
        
@@ -261,8 +252,10 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        JOptionPane.showMessageDialog(this, "saindo");
-        jinical.setVisible(true);        
+        jinical.setSize(screenSize.width, screenSize.height);        
+        controleTelas.getJdesk().removeAll();
+        controleTelas.getJdesk().add(jinical);
+        controleTelas.getJdesk().repaint();
     }//GEN-LAST:event_formInternalFrameClosed
 
 
@@ -277,7 +270,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> campoEstado;
     private javax.swing.JTextField campoNome;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -291,4 +283,5 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 service dao = new service();
  janelaInicial jinical = new janelaInicial();
+  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 }

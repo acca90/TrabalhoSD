@@ -9,6 +9,8 @@ package com.principal;
 import dao.service;
 import com.service.Contato;
 import com.service.Retorno;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() throws PropertyVetoException {
         initComponents();
+        controleTelas.setJdesk(jdesk);
         janelaInicial j = new janelaInicial();
-        jdesk.add(j);
+        //jdesk.add(j);;
+        controleTelas.getJdesk().add(j);
         j.setMaximum(true);        
         j.setVisible(true);
         
@@ -106,11 +110,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.out.println("Chegou . . .");        
         jdesk.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        jdesk.removeAll();
-        jdesk.add(jcadastro);
+        jdesk.removeAll();        
+        controleTelas.getJdesk().add(jcadastro);
         jcadastro.setVisible(true);
+        jcadastro.setAlignmentX(CENTER_ALIGNMENT);
+        jcadastro.setAlignmentY(CENTER_ALIGNMENT);
+        jdesk.repaint();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -180,4 +186,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
  service dao = new service();
  janelaInicial jinical = new janelaInicial();
  cadastrarContato jcadastro = new cadastrarContato();
+  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 }

@@ -10,6 +10,14 @@
 
 <xs:element name="getAllResponse" type="tns:getAllResponse"/>
 
+<xs:element name="getByCidade" type="tns:getByCidade"/>
+
+<xs:element name="getByCidadeResponse" type="tns:getByCidadeResponse"/>
+
+<xs:element name="getByEmail" type="tns:getByEmail"/>
+
+<xs:element name="getByEmailResponse" type="tns:getByEmailResponse"/>
+
 <xs:element name="getById" type="tns:getById"/>
 
 <xs:element name="getByIdResponse" type="tns:getByIdResponse"/>
@@ -34,6 +42,7 @@
 <xs:sequence>
 <xs:element name="codigo" type="xs:int"/>
 <xs:element name="contato" type="tns:contato" minOccurs="0"/>
+<xs:element name="lista" type="tns:contato" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="msg" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -52,6 +61,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="getByCidade">
+<xs:sequence>
+<xs:element name="cidade" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getByCidadeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:retorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="insert">
 <xs:sequence>
 <xs:element name="c" type="tns:contato" minOccurs="0"/>
@@ -59,6 +80,18 @@
 </xs:complexType>
 
 <xs:complexType name="insertResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:retorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getByEmail">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getByEmailResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:retorno" minOccurs="0"/>
 </xs:sequence>

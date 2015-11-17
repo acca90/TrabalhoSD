@@ -12,6 +12,7 @@ import com.service.Retorno;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,12 +67,15 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         campoEndereco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         campoComplemento = new javax.swing.JTextField();
-        campoEstado = new javax.swing.JComboBox<>();
+        campoEstado = new javax.swing.JComboBox<String>();
         botaoAPagar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         campoBusca = new javax.swing.JTextField();
         botaoConsultar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        campoBuscaCidade = new javax.swing.JTextField();
+        botaoConsultarCidade = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -79,6 +83,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         setFocusCycleRoot(false);
         setRequestFocusEnabled(false);
         setVisible(true);
+
+        tabela.setAutoCreateRowSorter(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, tabela);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigo}"));
@@ -110,7 +116,6 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaMouseClicked(evt);
@@ -189,7 +194,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Endereço");
 
-        campoEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        campoEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         campoEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEstadoActionPerformed(evt);
@@ -259,6 +264,12 @@ public class janelaInicial extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Email ou Id do Contato que deseja Buscar:");
 
+        campoBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoBuscaActionPerformed(evt);
+            }
+        });
+
         botaoConsultar.setText("Consultar");
         botaoConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,6 +284,21 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             }
         });
 
+        campoBuscaCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoBuscaCidadeActionPerformed(evt);
+            }
+        });
+
+        botaoConsultarCidade.setText("Consultar");
+        botaoConsultarCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConsultarCidadeActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Nome da Cidade que deseja buscar:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -283,24 +309,31 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botaoAPagar)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(botaoAPagar)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(campoBuscaCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(campoBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(botaoConsultarCidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(botaoConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
                         .addGap(0, 96, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoConsultar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,6 +345,12 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                     .addComponent(botaoConsultar)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(campoBuscaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11))
+                    .addComponent(botaoConsultarCidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +358,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addComponent(botaoAPagar)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -382,18 +421,33 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_campoCódigoActionPerformed
 
     private void botaoConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarActionPerformed
-        int busca = Integer.parseInt(campoBusca.getText());
+        String busca = campoBusca.getText();
+        Retorno retorno = new Retorno();
         
-        Retorno retorno = dao.getById(busca);
-        Contato c = retorno.getContato();
+        boolean r = busca.matches("[-+]?\\d*\\.?\\d+");
         
-         
-        if(retorno.getCodigo() == 1){
-            JOptionPane.showMessageDialog(campoComplemento, retorno.getMsg());
-        }
+        if(r == true){
+            retorno = dao.getById(Integer.parseInt(busca));
+            list.clear();
+            list.add(retorno.getContato());
+        }else{
+            retorno = dao.getByEmail(busca);
+            
+            if(retorno.getCodigo() == 3){
+                JOptionPane.showMessageDialog(this, "Nenhum Contato foi Encontrado");
+            }else{            
+                list.clear();
+                list.addAll(retorno.getLista());
+            }
+            
+        }   
         
-        list.clear();
-        list.add(c);
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_botaoConsultarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -402,6 +456,31 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         list.addAll(listaDao);
         campoBusca.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void campoBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoBuscaActionPerformed
+
+    private void campoBuscaCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoBuscaCidadeActionPerformed
+
+    private void botaoConsultarCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarCidadeActionPerformed
+        String busca = campoBuscaCidade.getText();
+        Retorno retorno = new Retorno();
+        
+        retorno = dao.getByCidade(busca);
+            list.clear();
+            list.add(retorno.getContato());
+          
+            
+            if(retorno.getCodigo() == 3){
+                JOptionPane.showMessageDialog(this, "Nenhuma Cidade foi Encontrado!!!");
+            }else{            
+                list.clear();
+                list.addAll(retorno.getLista());
+            }
+    }//GEN-LAST:event_botaoConsultarCidadeActionPerformed
 
     private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
          List<Contato> listaDao = dao.getAll();
@@ -413,7 +492,9 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     private javax.swing.JTextField CampoEmail;
     private javax.swing.JButton botaoAPagar;
     private javax.swing.JButton botaoConsultar;
+    private javax.swing.JButton botaoConsultarCidade;
     private javax.swing.JTextField campoBusca;
+    private javax.swing.JTextField campoBuscaCidade;
     private javax.swing.JTextField campoCep;
     private javax.swing.JTextField campoCidade;
     private javax.swing.JTextField campoComplemento;
@@ -425,6 +506,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
