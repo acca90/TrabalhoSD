@@ -29,6 +29,7 @@
 					method: 'POST',
 					data: {contato:contato,acao:$scope.acao,url:$scope.url}
 				}).success(function (response) {
+					//alert(response);
 					if (response.erro.length > 0) {
 						$('#mensagem_corpo').html("Erro: " + response.erro);
 						$('#mensagem').modal('toggle');

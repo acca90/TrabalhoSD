@@ -4,10 +4,12 @@
 
 		private $contato 	=	array();
 		private $url;
+		private $delete;
 
 		public function __construct($contato,$url) {
 			$this->contato 	= json_encode($contato);
 			$this->url 		= $url;
+			$this->delete 	= false;
 		}
 
 		/* CONEXÃO COM WEBSERVICE */
@@ -19,6 +21,7 @@
 
 			$urlSperador = "";
 			$cidade 	 = "";
+			$id 		 = "";
 
 			if ($GET) {
 				$this->contato = json_decode($this->contato);
@@ -27,7 +30,14 @@
 				$cidade 	 = $this->contato->cidade;
 			}
 
-		   	$curl = curl_init($this->url.$urlSperador.$cidade);
+			if ($this->delete) {
+				$contato 		= 	json_decode($this->contato);
+				$id 			=	$contato->codigo;
+				$urlSperador 	=	'/';
+			}
+
+
+	   		$curl = curl_init($this->url.$urlSperador.$cidade.$id);
 
 		   	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		   	/* PARA METODOS POST, PUT e DELETE */
@@ -53,6 +63,7 @@
 
 		/* DELETA CONTATO */
 		public function delete() {
+			$this->delete = true;
 			return $this->curl_contato(CURLOPT_CUSTOMREQUEST,"DELETE"); 
 		}
 
