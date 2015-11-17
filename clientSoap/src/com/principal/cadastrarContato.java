@@ -227,7 +227,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         }
         
         if(erro == 2){
-            JOptionPane.showMessageDialog(this, "Contato"+c.getNome()+" Inserido com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Contato "+c.getNome()+" Inserido com Sucesso!");
             campoCep.setText("");
             campoCodigo.setText("");
             campoCidade.setText("");

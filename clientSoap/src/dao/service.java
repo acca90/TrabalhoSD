@@ -45,6 +45,14 @@ public class service {
         return port.getByEmail(email);
     }
 
+    public Retorno getByCidade(java.lang.String cidade) {
+        com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
+        com.service.ServidorSoap port = service.getServidorSoapPort();
+        return port.getByCidade(cidade);
+    }
+    
+
+    
   
 
    
