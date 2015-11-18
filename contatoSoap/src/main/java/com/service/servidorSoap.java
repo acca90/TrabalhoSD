@@ -92,6 +92,45 @@ public class servidorSoap {
         
         return r;
     }  
+
+    /**
+     * Operação de Web service
+     */
+    @WebMethod(operationName = "getByEmail")
+    public retorno getByEmail(@WebParam(name = "email") String email) {
+            r.setLista(service.getByEmail(email));           
+            
+            if(r.getLista() == null){
+                r.setCodigo(3);
+                r.setMsg("Nenhum Contato foi Encontrado com esse e-mail");
+            }else{
+                r.setCodigo(1);
+                r.setMsg("Ok");
+            }
+            return r;
+        
+    }
+
+    /**
+     * Operação de Web service
+     */
+    @WebMethod(operationName = "getByCidade")
+    public retorno getByCidade(@WebParam(name = "cidade") String cidade) {
+        r.setLista(service.getByCidade(cidade));
+        
+        if(r.getLista() == null){
+                r.setCodigo(3);
+                r.setMsg("Nenhuma Cidade encontrada com esse nome!!!");
+            }else{
+                r.setCodigo(1);
+                r.setMsg("Ok");
+            }
+        
+        return r;     
+    }
+
     
         
 }
+
+

@@ -7,6 +7,7 @@ package br.upf.contatos.dal.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,7 +27,9 @@ public class Contato implements Serializable {
     @Id
     @XmlElement(name = "codigo")
     private Integer id;
+    @Column(nullable = false)
     private String nome;
+    @Column(unique = true, nullable = false)
     private String email;
     private String endereco;
     private String complemento;
