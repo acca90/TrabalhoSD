@@ -100,9 +100,9 @@ public class servidorSoap {
     public retorno getByEmail(@WebParam(name = "email") String email) {
             r.setLista(service.getByEmail(email));           
             
-            if(r.getLista() == null){
+            if(r.getLista().isEmpty()){
                 r.setCodigo(3);
-                r.setMsg("Nenhum Contato foi Encontrado com esse e-mail");
+                r.setMsg("Nenhum Contato está vinculado a esse e-mail");
             }else{
                 r.setCodigo(1);
                 r.setMsg("Ok");
@@ -118,12 +118,13 @@ public class servidorSoap {
     public retorno getByCidade(@WebParam(name = "cidade") String cidade) {
         r.setLista(service.getByCidade(cidade));
         
-        if(r.getLista() == null){
+        if(r.getLista().isEmpty()){
                 r.setCodigo(3);
-                r.setMsg("Nenhuma Cidade encontrada com esse nome!!!");
+                r.setMsg("Nenhum Contato está vinculado a essa cidade!!!");
+                r.getLista().clear();
             }else{
                 r.setCodigo(1);
-                r.setMsg("Ok");
+                r.setMsg("Ok");                
             }
         
         return r;     
