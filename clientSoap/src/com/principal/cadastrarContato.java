@@ -252,7 +252,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        jinical.setSize(screenSize.width, screenSize.height);        
+        //jinical.setSize(screenSize.width, screenSize.height);        
         controleTelas.getJdesk().removeAll();
         controleTelas.getJdesk().add(jinical);
         controleTelas.getJdesk().repaint();

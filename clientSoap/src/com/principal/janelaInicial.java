@@ -67,7 +67,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         campoEndereco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         campoComplemento = new javax.swing.JTextField();
-        campoEstado = new javax.swing.JComboBox<String>();
+        campoEstado = new javax.swing.JComboBox<>();
         botaoAPagar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         campoBusca = new javax.swing.JTextField();
@@ -194,7 +194,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Endereço");
 
-        campoEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        campoEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         campoEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEstadoActionPerformed(evt);
@@ -352,7 +352,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                     .addComponent(botaoConsultarCidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -374,20 +374,53 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             c.setEstado("Nenhum Estado Selecionado");
         }
         
-        c.setEstado(c.getEstado().toUpperCase());
-        System.out.println(c.getEstado());
+        c.setEstado(c.getEstado().toUpperCase());        
         
         campoCódigo.setText(Integer.toString(c.getCodigo()));
         campoNome.setText(c.getNome());
         CampoEmail.setText(c.getEmail());
-        campoEmailAlter.setText(c.getEmailAlter());
-        campoCep.setText(Integer.toString(c.getCep()));
-        campoCidade.setText(c.getCidade());
-        campoEndereco.setText(c.getEndereco());
-        campoEstado.setSelectedItem(c.getEstado());
-        campoComplemento.setText(c.getComplemento());
+        System.out.println(c.getEstado());
         
-        System.out.println("chegou");
+        if(c.getEmailAlter()== null){
+            campoEmailAlter.setText("");
+        }else{            
+            campoEmailAlter.setText(c.getEmailAlter());
+        }
+        
+        if(c.getCep() == null){
+            campoCep.setText("");
+        }else{
+            campoCep.setText(Integer.toString(c.getCep()));
+           
+        }
+        
+        if(c.getCidade()== null){
+            campoCidade.setText("");
+        }else{
+            campoCidade.setText(c.getCidade());
+            
+        }
+        
+        if(c.getEndereco()== null){
+            campoEndereco.setText("");
+        }else{
+            campoEndereco.setText(c.getEndereco());
+            
+        }
+        
+        if(c.getEstado() == null || c.getEstado() == ""){
+            campoEstado.setSelectedItem("Nenhum Estado Selecionado");          
+        }else{
+            campoEstado.setSelectedItem(c.getEstado());
+        }
+        
+        if(c.getComplemento()== null){
+            campoComplemento.setText("");
+        }else{
+            campoComplemento.setText(c.getComplemento());
+            
+        }       
+        
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void campoEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoEstadoActionPerformed
@@ -461,26 +494,31 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoBuscaActionPerformed
 
-    private void campoBuscaCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoBuscaCidadeActionPerformed
-
     private void botaoConsultarCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarCidadeActionPerformed
-        String busca = campoBuscaCidade.getText();
-        Retorno retorno = new Retorno();
-        
-        retorno = dao.getByCidade(busca);
-            list.clear();
-            list.add(retorno.getContato());
-          
+        if(campoBuscaCidade.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Preencha o campo Cidade !");
+            campoBuscaCidade.requestFocus();
+            return;
+        }
             
+            String busca = campoBuscaCidade.getText();
+            Retorno retorno = new Retorno();
+
+            retorno = dao.getByCidade(busca);
+
+            //erro
             if(retorno.getCodigo() == 3){
-                JOptionPane.showMessageDialog(this, "Nenhuma Cidade foi Encontrado!!!");
+                JOptionPane.showMessageDialog(this, "Nenhum contato está vinculado a cidade: "+busca);
             }else{            
                 list.clear();
                 list.addAll(retorno.getLista());
             }
+        
     }//GEN-LAST:event_botaoConsultarCidadeActionPerformed
+
+    private void campoBuscaCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoBuscaCidadeActionPerformed
 
     private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
          List<Contato> listaDao = dao.getAll();
