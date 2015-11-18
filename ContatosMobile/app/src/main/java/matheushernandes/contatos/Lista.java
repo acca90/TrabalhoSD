@@ -67,82 +67,12 @@ public class Lista extends Activity {
 
     }
 
-    public void listar(View view) throws JSONException {
-
-        Contatos = new RestConnect();
-        Contatos.setUrl(url);
-
-        /* LÊ O CAMPO DA CIDADE */
-        EditText edit = (EditText)findViewById(R.id.cidade);
-        Contatos.setCidade(edit.getText().toString());
-        Contatos.setOP(1);
-
+    public void listar(View view) {
         try {
-            Contatos.setResponse(Contatos.execute().get());
+            this.Atualiza();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (!Contatos.getResponse().equals("{\"codigo\":0}")) {
-
-            // QUEBRA JSON
-            JSONArray ContatosArray = new JSONArray(Contatos.getResponse());
-
-            final ArrayList<String> list = new ArrayList<String>();
-
-            if (ContatosArray.length() > 0) {
-
-                DATA = new JSONArray(Contatos.getResponse());
-
-                for (int i = 0; i < ContatosArray.length(); i++) {
-                    JSONObject nodo = ContatosArray.getJSONObject(i);
-                    list.add(nodo.getString("nome"));
-                }
-
-                // ADICIONA PARA A LISTA
-                ListView lista = (ListView) findViewById(R.id.lista);
-
-                final StableArrayAdapter adapter =
-                        new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-
-                lista.setAdapter(adapter);
-
-                lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view,
-                                            int position, long id) {
-                        try {
-                            setOP(2);
-                            contato = DATA.getJSONObject(position);
-                            Intent i = new Intent(getApplicationContext(), Formulario.class);
-                            startActivityForResult(i, 0);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        } else {
-
-            final ArrayList<String> list = new ArrayList<String>();
-
-            list.add("Nada encontrado");
-
-            // ADICIONA PARA A LISTA
-            ListView lista = (ListView) findViewById(R.id.lista);
-            final StableArrayAdapter adapter =
-                    new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-
-            lista.setAdapter(adapter);
-            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, final View view,
-                                        int position, long id) {
-
-                }
-            });
-        }
-        Contatos = null;
     }
 
     public void Atualiza() throws Exception {
@@ -163,14 +93,21 @@ public class Lista extends Activity {
 
         if (!Contatos.getResponse().equals("{\"codigo\":0}")) {
 
+
+            JSONObject resposta = new JSONObject(Contatos.getResponse());
+
+            String conta = resposta.getString("contatos");
+
+            //Toast.makeText(getApplicationContext(),conta,Toast.LENGTH_LONG).show();
             // QUEBRA JSON
-            JSONArray ContatosArray = new JSONArray(Contatos.getResponse());
+            JSONArray ContatosArray = new JSONArray(conta);
+
 
             final ArrayList<String> list = new ArrayList<String>();
 
             if (ContatosArray.length() > 0) {
 
-                DATA = new JSONArray(Contatos.getResponse());
+                DATA = new JSONArray(conta);
 
                 for (int i = 0; i < ContatosArray.length(); i++) {
                     JSONObject nodo = ContatosArray.getJSONObject(i);

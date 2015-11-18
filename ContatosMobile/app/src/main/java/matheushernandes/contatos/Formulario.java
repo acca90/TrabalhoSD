@@ -21,7 +21,6 @@ public class Formulario extends Activity {
     private String codigo;
     private EditText enome, eemail, eemail_alter, eendereco, ecomp, ecep, ecidade, eestado;
 
-
     public void Confirmar (View view) throws Exception {
 
         Lista.Contatos = new RestConnect();
