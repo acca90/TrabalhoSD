@@ -43,7 +43,7 @@ public class MediadorRest {
                 while ((line = br.readLine()) != null) {
                     resultado.append(line);
                 }
-
+                System.out.println(resultado.toString());
                 Type collectionType = new TypeToken<List<Contato>>(){}.getType();
                 listaContatos = jsonContatos.fromJson(resultado.toString(), collectionType);
             }

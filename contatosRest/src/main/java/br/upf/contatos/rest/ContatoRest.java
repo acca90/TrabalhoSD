@@ -79,8 +79,6 @@ public class ContatoRest {
         Retorno resposta = new Retorno();
         if(service.getById(c.getId()) == null && service.getByEmail(c.getEmail()).isEmpty()){
             Contato contato = service.add(c);
-            if(contato == null)
-                System.out.println("está nulo");
             if(contato.equals(c)){
                 resposta.setErro("");
             }

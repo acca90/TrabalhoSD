@@ -410,6 +410,7 @@ public class FormularioDeImportacaoDeContatos extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         MediadorRest mediador = new MediadorRest();
+        mediador.getContatos();
         mediador.postContatos(form2.contatos);
     }//GEN-LAST:event_jButton11ActionPerformed
 

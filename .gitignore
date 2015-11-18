@@ -104,4 +104,8 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+<<<<<<< HEAD
 /IntegracaoComAPIsDeContatos/nbproject/private/
+=======
+/clientSoap/nbproject/private/
+>>>>>>> origin/master

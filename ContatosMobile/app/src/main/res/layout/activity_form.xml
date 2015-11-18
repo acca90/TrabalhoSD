@@ -15,11 +15,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Nome"
-            android:id="@+id/textView"  />
+            android:id="@+id/edit_nome323"  />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText1"
+            android:id="@+id/edit_nome"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -34,7 +34,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
+            android:id="@+id/edit_email"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -50,7 +50,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
+            android:id="@+id/edit_email_alter"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -65,7 +65,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
+            android:id="@+id/edit_endereco"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -80,7 +80,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText6"
+            android:id="@+id/edit_comp"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -96,7 +96,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText7"
+            android:id="@+id/edit_cep"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -111,7 +111,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText8"
+            android:id="@+id/edit_cidade"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -127,7 +127,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText5"
+            android:id="@+id/edit_estado"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -140,6 +140,21 @@
             android:layout_height="wrap_content"
             android:text="Confirmar"
             android:onClick="Confirmar"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excluir"
+            android:onClick="Excluir"
+            android:id="@+id/excluir"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voltar"
+            android:onClick="voltar"
             android:layout_alignParentEnd="true" />
 
     </LinearLayout>
