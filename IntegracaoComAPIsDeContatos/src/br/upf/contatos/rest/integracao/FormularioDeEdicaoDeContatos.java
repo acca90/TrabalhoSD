@@ -8,6 +8,7 @@ package br.upf.contatos.rest.integracao;
 import br.upf.contatos.rest.integracao.modelo.Contato;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.List;
 public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
 
     List<Contato> contatos = new ArrayList();
+    FormularioDeImportacaoDeContatos form1;
     Integer pos = 0;
     
     /**
@@ -51,9 +53,9 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -69,16 +71,16 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome");
+        jLabel1.setText("Nome *");
 
-        jButton1.setText("Contato Anterior");
+        jButton1.setText("Salvar Este Contato");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Email");
+        jLabel2.setText("Email *");
 
         jLabel3.setText("Endereço");
 
@@ -86,23 +88,22 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
 
         jLabel5.setText("CEP");
 
-        jLabel6.setText("Cidade");
+        jLabel6.setText("Cidade *");
 
-        jLabel7.setText("Estado");
+        jLabel7.setText("Estado *");
 
-        jLabel8.setText("Email Alternativo");
-
-        jButton2.setText("Contato Posterior");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jTextField8ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Inserir Novo Contato");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jLabel8.setText("Email Alternativo");
+
+        jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -110,39 +111,33 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField8)
-                            .addComponent(jTextField7)
-                            .addComponent(jTextField6)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                                .addComponent(jButton2)))
-                        .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,9 +177,7 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -195,32 +188,14 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        //Salva o contato que está atualmente em edição
-        //Insere novo contato na lista de contatos
-        //Pega a posição deste contato vazio, no caso o fim da lista
-        //Por fim, chama carregar(), que ira carregar as informações deste contato nos campos de texto
-        try{
-            salvar();
-            contatos.add(new Contato());
-            pos = contatos.size()-1;
-            carregar();
-        }catch(Exception e){
-            
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Este código pega o valor dos campos de texto e atualiza valor dos atributos do contato
-        //Depois pega e seta a posição para contato anterior
-        //E por fim, chama carregar(), para carregar os atributos do objeto anterior nos campos de texto
-        try{
-            salvar();
-            if(pos > 0)
-                pos--;
-            carregar();
-        }catch(Exception e){
-            
+        if(campoVazio()){
+            JOptionPane.showMessageDialog(rootPane, "Existem campos vazios! Campos Nome e Email são obrigatórios!");
+        }else{
+            salvarContato();
+            limparCampo();
+            form1.atualizar();
+            this.setVisible(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -228,24 +203,37 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Este código pega o valor dos campos de texto e atualiza valor dos atributos do contato
-        //Depois pega e seta a posição para contato posterior
-        //E por fim, chama carregar(), para carregar os atributos do objeto posterior nos campos de texto
-        try{
-            salvar();
-            if(pos < contatos.size()-1)
-                pos++;
-            carregar();
-        }catch(Exception e){
-            
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        salvar();
-        this.setVisible(false);
+        Integer opt = JOptionPane.showConfirmDialog(rootPane, "Deseja salvar este contato?");
+        if(opt == 0){
+            if(campoVazio()){
+                JOptionPane.showMessageDialog(rootPane, "Existem campos vazios! Campos Nome e Email são obrigatórios!");
+            }
+            else{
+                salvarContato();
+                limparCampo();
+                form1.atualizar();
+                this.setVisible(false);
+            }
+        }else{
+            limparCampo();
+            form1.atualizar();
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try{
+            limparCampo();
+            form1.atualizar();
+            this.setVisible(false);
+        }catch(Exception e){
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,8 +272,7 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -303,26 +290,27 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
-
-    void carregar() {
-        //Carrega os atributos de um contato da lista para os campos de texto
-        try{
-            Contato contato = contatos.get(pos);
-            jTextField1.setText(contato.getNome());
-            jTextField2.setText(contato.getEmail());
-            jTextField3.setText(contato.getEndereco());
-            jTextField4.setText(contato.getComplemento());
-            jTextField5.setText(contato.getCep().toString());
-            jTextField6.setText(contato.getCidade());
-            jTextField7.setText(contato.getEstado());
-            jTextField8.setText(contato.getEmail_alter());
-        }catch(Exception e){
-        }
-    }
-    void salvar(){
-        //Salva o contato na lista de contatos
-        try{
+    void carregar(Integer pos){
         Contato contato = contatos.get(pos);
+        jTextField1.setText(contato.getNome());
+        jTextField2.setText(contato.getEmail());
+        jTextField3.setText(contato.getEndereco());
+        jTextField4.setText(contato.getComplemento());
+        jTextField5.setText(contato.getCep().toString());
+        jTextField6.setText(contato.getCidade());
+        jTextField7.setText(contato.getEstado());
+        jTextField8.setText(contato.getEmail_alter());
+    }
+
+    private boolean campoVazio() {
+        return jTextField1.getText().equalsIgnoreCase("") || 
+               jTextField2.getText().equalsIgnoreCase("") || 
+               jTextField6.getText().equalsIgnoreCase("") ||
+               jTextField7.getText().equalsIgnoreCase("");
+    }
+    private void salvarContato(){
+        Contato contato = contatos.get(pos);
+        contato.setCodigo(54);
         contato.setNome(jTextField1.getText());
         contato.setEmail(jTextField2.getText());
         contato.setEndereco(jTextField3.getText());
@@ -332,7 +320,15 @@ public class FormularioDeEdicaoDeContatos extends javax.swing.JFrame {
         contato.setEstado(jTextField7.getText());
         contato.setEmail_alter(jTextField8.getText());
         contatos.set(pos, contato);
-        }catch(Exception e){
-        }
+    }
+    private void limparCampo(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
     }
 }

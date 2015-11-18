@@ -29,7 +29,7 @@ public class MediadorRest {
         List<Contato> listaContatos = new ArrayList<>();
         Gson jsonContatos = new Gson();
         try {
-            HttpURLConnection con = (HttpURLConnection) (new URL("http://localhost:8080/wsrest")).openConnection();
+            HttpURLConnection con = (HttpURLConnection) (new URL("http://localhost:8080/contatos/rest/contato")).openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");
 
@@ -52,12 +52,12 @@ public class MediadorRest {
         return listaContatos;
     }
     
-    public List<Contato> putContatos(List<Contato> contatos){
+    public void postContatos(List<Contato> contatos){
         try {
             for (Contato contato : contatos) {
-                HttpURLConnection con = (HttpURLConnection) (new URL("http://localhost:8080/wsrest")).openConnection();
+                HttpURLConnection con = (HttpURLConnection) (new URL("http://localhost:8080/contatos/rest/contato")).openConnection();
                 con.setDoOutput(true);
-                con.setRequestMethod("PUT");
+                con.setRequestMethod("POST");
                 con.setRequestProperty("Content-Type", "application/json");
 
                 OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
@@ -67,6 +67,5 @@ public class MediadorRest {
             }
         }catch(Exception e){
         }
-        return getContatos();
     }
 }

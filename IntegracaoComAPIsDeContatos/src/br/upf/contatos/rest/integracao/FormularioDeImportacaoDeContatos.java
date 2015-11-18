@@ -5,13 +5,14 @@
  */
 package br.upf.contatos.rest.integracao;
 
+import br.upf.contatos.rest.integracao.modelo.Contato;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaLinkedin;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaGmail;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaLive;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaFacebook;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaTwitter;
 import br.upf.contatos.rest.integracao.socialapiconect.ContatoImportaYahoo;
-import com.sun.xml.internal.ws.api.message.Message;
+import br.upf.contatos.rest.integracao.webservicerestconect.MediadorRest;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,12 +20,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author jonas
  */
-public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame {
+public class FormularioDeImportacaoDeContatos extends javax.swing.JFrame {
 
     ContatoImportaYahoo importarYahoo = new ContatoImportaYahoo();
     ContatoImportaTwitter importarTwitter = new ContatoImportaTwitter();
@@ -38,7 +40,8 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
     /**
      * Creates new form FormularioDeImportacaoDeContatosDoYahoo
      */
-    public FormularioDeImportacaoDeContatosDoYahoo() {
+    public FormularioDeImportacaoDeContatos() {
+        this.form2.form1 = this;
         initComponents();
     }
 
@@ -65,6 +68,8 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 310));
@@ -77,7 +82,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
 
         jLabel1.setText("Importação de contatos do Yahoo para sua lista de contatos. Preencha com seu login e senha e aceite as condições.");
 
-        jButton1.setText("Confirmar e Importar");
+        jButton1.setText("Importar Contatos");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -86,11 +91,6 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
 
         jLabel2.setText("Digite o código de acesso:");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
 
@@ -115,7 +115,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
             }
         });
 
-        jButton5.setText("Editar Contatos");
+        jButton5.setText("Editar Selecionado");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
@@ -160,13 +160,39 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
             }
         });
 
+        jButton10.setText("Inserir Contato");
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton10MouseClicked(evt);
+            }
+        });
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jButton11.setText("Enviar para o registro");
+        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton11MouseClicked(evt);
+            }
+        });
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1)
+                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -183,13 +209,14 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
                                         .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2)))
-                .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +224,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
                 .addGap(6, 6, 6)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
@@ -211,17 +238,22 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
                             .addComponent(jButton3)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton8)
+                            .addComponent(jButton10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton7)
-                            .addComponent(jButton5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton5)))
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton6)
                             .addComponent(jButton9))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                    .addComponent(jButton11, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -266,6 +298,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         form2.contatos.addAll(importarFacebook.getContatos());
         form2.contatos.addAll(importarLive.getContatos());
         jList1.setListData(form2.contatos.toArray());
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -274,9 +307,9 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         try {
             Desktop.getDesktop().browse(new URL(importarYahoo.getAuthURL()).toURI());
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -286,7 +319,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         try {
             Desktop.getDesktop().browse(new URL(importarTwitter.getAuthURL()).toURI());
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -296,7 +329,7 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         try {
             Desktop.getDesktop().browse(new URL(importarGmail.getAuthURL()).toURI());
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -305,8 +338,12 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        form2.carregar();
-        form2.setVisible(true);
+        if(jList1.isSelectionEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Selecione algum contato para ser editado!");
+        }else{
+            form2.carregar(jList1.getSelectedIndex());
+            form2.setVisible(true);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -314,10 +351,10 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         importarLinkedin.initialLinkedinConnection();
         try {
             Desktop.getDesktop().browse(new URL(importarLinkedin.getAuthURL()).toURI());
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+        }  catch (MalformedURLException ex) {
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -327,9 +364,9 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         try {
             Desktop.getDesktop().browse(new URL(importarFacebook.getAuthURL()).toURI());
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -339,9 +376,9 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
         try {
             Desktop.getDesktop().browse(new URL(importarLive.getAuthURL()).toURI());
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -356,6 +393,25 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
             jList1.setListData(this.form2.contatos.toArray());
         }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10MouseClicked
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        form2.contatos.add(new Contato(0,"Sem Nome","sem@endereco.com","","",0,"","",""));
+        form2.pos = form2.contatos.size()-1;
+        atualizar();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11MouseClicked
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        MediadorRest mediador = new MediadorRest();
+        mediador.postContatos(form2.contatos);
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,26 +430,29 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatosDoYahoo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioDeImportacaoDeContatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormularioDeImportacaoDeContatosDoYahoo().setVisible(true);
+                new FormularioDeImportacaoDeContatos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -408,4 +467,8 @@ public class FormularioDeImportacaoDeContatosDoYahoo extends javax.swing.JFrame 
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    void atualizar() {
+        jList1.setListData(form2.contatos.toArray());
+    }
 }
