@@ -2,6 +2,7 @@ package br.upf.contatos.rest;
 
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,7 +16,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("contatos")
+@Path("contato")
 public class ContatoRest {
     
     private ContatoService service = new ContatoService();
@@ -27,7 +28,12 @@ public class ContatoRest {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll() {
-        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        Retorno resposta = new Retorno();
+        resposta.setErro("");
+        resposta.setContatos(service.getAll());
+        if(resposta.getContatos().size() < 1)
+            resposta.setErro("Nenhum contato encontrado!");
+        return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
     /**
@@ -41,11 +47,23 @@ public class ContatoRest {
     @Path("{atributo}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getByAtributo(@PathParam("atributo") String atributo) {
+        Retorno resposta = new Retorno();
         try{
             Integer codigo = Integer.parseInt(atributo);
-            return Response.ok(new GenericEntity<Contato>(service.getById(codigo)){}).build();
+            List<Contato> selecionado = new ArrayList<>();
+            Contato contato = service.getById(codigo);
+            if(contato == null)
+                resposta.setErro("Nenhum contato encontrado com esse código!");
+            else
+                selecionado.add(contato);
+            resposta.setContatos(selecionado);
+            return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
         }catch(NumberFormatException nfe){
-            return Response.ok(new GenericEntity<List<Contato>>(service.getByCidade(atributo)){}).build();
+            resposta.setErro("");
+            resposta.setContatos(service.getByCidade(atributo));
+            if(resposta.getContatos().size() < 1)
+                resposta.setErro("Nenhum contato encontrado nesta cidade!");
+            return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
         }
     }
     
@@ -58,10 +76,22 @@ public class ContatoRest {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response insert(Contato c) {
-        if(service.getById(c.getId()) == null && service.getByEmail(c.getEmail()).isEmpty()){
-            service.add(c);
+        Retorno resposta = new Retorno();
+        if(service.getByEmail(c.getEmail()).isEmpty()){
+            Contato contato = service.add(c);
+            if(contato.equals(c)){
+                resposta.setErro("");
+            }
+            else
+            {
+                resposta.setErro("Erro ao inserir contato!");
+            }
+        }else
+        {
+            resposta.setErro("Já existe um contato registrado com mesmo email!");
         }
-        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        resposta.setContatos(service.getAll());
+        return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
     /**
@@ -74,8 +104,18 @@ public class ContatoRest {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(Contato c) {
-        service.update(c);
-        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        Retorno resposta = new Retorno();
+        Contato contato = service.update(c);
+        if(contato.equals(c))
+        {
+            resposta.setErro("");
+        }
+        else
+        {
+            resposta.setErro("Erro ao atualizar contato!");
+        }
+        resposta.setContatos(service.getAll());
+        return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
     /**
@@ -87,23 +127,15 @@ public class ContatoRest {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") Integer id) {
-        service.delete(id);
-        return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
+        Retorno resposta = new Retorno();
+        Contato contato = service.delete(id);
+        if(contato == null){
+            resposta.setErro("Erro ao excluir contato!");
+        }
+        else{
+            resposta.setErro("");
+        }
+        resposta.setContatos(service.getAll());
+        return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
-    
-    /**
-     * Excluir: apaga um contato no BD. Deve-se informar o código do contato. Caso o contato não exista no BD, retornar essa informação
-     * Esse código não funciona. Pesquisei, e acho que o DELETE não aceita nenhum tipo de entrada no corpo da mensagem, apenas saída
-     * @param c
-     * @return 
-     *
-     */ 
-      @DELETE
-      @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-      @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-      public Response delete(Contato c) {
-          service.delete(c);
-          return Response.ok(new GenericEntity<List<Contato>>(service.getAll()){}).build();
-      }
-    
 }
