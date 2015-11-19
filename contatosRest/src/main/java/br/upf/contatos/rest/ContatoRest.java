@@ -77,7 +77,7 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response insert(Contato c) {
         Retorno resposta = new Retorno();
-        if(service.getById(c.getId()) == null && service.getByEmail(c.getEmail()).isEmpty()){
+        if(service.getByEmail(c.getEmail()).isEmpty()){
             Contato contato = service.add(c);
             if(contato.equals(c)){
                 resposta.setErro("");
@@ -88,7 +88,7 @@ public class ContatoRest {
             }
         }else
         {
-            resposta.setErro("Já existe um contato registrado com mesmo código ou email!");
+            resposta.setErro("Já existe um contato registrado com mesmo email!");
         }
         resposta.setContatos(service.getAll());
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();

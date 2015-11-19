@@ -64,6 +64,7 @@ public class MediadorRest {
                 out.write(new Gson().toJson(contato));
                 out.flush();
                 out.close();
+                System.out.println(con.getResponseMessage());
             }
         }catch(Exception e){
         }
