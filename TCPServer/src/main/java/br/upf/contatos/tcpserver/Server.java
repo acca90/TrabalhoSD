@@ -18,11 +18,13 @@ import java.util.logging.Logger;
 public class Server {
     private final int PORTA;
     private final int FILA;
+    private final int TIMEOUT;
     private final Logger logger;
     
-    public Server(int porta, int fila) {
+    public Server(int porta, int fila, int timeout) {
         this.PORTA = porta;
         this.FILA = fila;
+        this.TIMEOUT = timeout;
         logger = Logger.getLogger(Server.class.getName());
     }
     
@@ -32,6 +34,7 @@ public class Server {
             logger.log(Level.INFO, "Aguardando conexão");
             for(;;) {
                 Socket conn = socket.accept();
+                conn.setSoTimeout(TIMEOUT);
                 new Thread(new ServerHandler(conn)).start();
             }
         } catch (IOException ex) {
@@ -41,6 +44,6 @@ public class Server {
     }
     
     public static void main(String args[]) {
-        new Server(2005, 10).iniciar();
+        new Server(2005, 10, 300000).iniciar();
     }
 }

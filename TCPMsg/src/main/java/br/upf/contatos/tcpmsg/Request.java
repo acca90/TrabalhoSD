@@ -11,50 +11,18 @@ import java.io.Serializable;
 
 /**
  *
- * @author Mauricley
+ * @author mauricley
  */
-public class Request implements Serializable {
-    private final Operacao operacao;
-    private int idContato;
-    private String cidade = null;
-    private ContatoBean contato;
-    
-    public Request(Operacao operacao) {
-        this.operacao = operacao;
-    }
-
-    public Request(Operacao operacao, int id) {
-        this.operacao = operacao;
-        this.idContato = id;
-    }
-
-    public Request(Operacao operacao, String cidade) {
-        this.operacao = operacao;
-        this.cidade = cidade;
-    }
-
-    public Request(Operacao operacao, ContatoBean contato) {
-        this.operacao = operacao;
-        this.contato = contato;
-    }
-
-    public Operacao getOperacao() {
-        return operacao;
-    }
-
-    public int getIdContato() {
-        return idContato;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public ContatoBean getContato() {
-        return contato;
-    }
-    
-    
+public interface Request extends Serializable {
+    public Request getAll();
+    public Request getById(Integer id);
+    public Request getByCidade(String cidade);
+    public Request insert(ContatoBean c);
+    public Request update(ContatoBean c);
+    public Request delete(Integer id);
+    public Request disconnect();
+    public Operacao getOperacao();
+    public Integer getId();
+    public ContatoBean getContato();
+    public String getCidade();
 }
-
-

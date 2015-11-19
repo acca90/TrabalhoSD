@@ -6,17 +6,16 @@
 package br.upf.contatos.tcpserver;
 
 import br.upf.contatos.dal.service.ContatoService;
+import br.upf.contatos.tcpmsg.Request;
+import br.upf.contatos.tcpmsg.Response;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import br.upf.contatos.tcpmsg.Request;
-import br.upf.contatos.tcpmsg.Response;
 import br.upf.contatos.tcpmsg.model.ContatoBean;
-import br.upf.contatos.tcpmsg.model.Operacao;
-import br.upf.contatos.tcpmsg.model.Status;
+import java.net.SocketTimeoutException;
 
 /**
  *
@@ -44,23 +43,28 @@ public class ServerHandler implements Runnable {
     public void run() {
         boolean conectado = true;
         Request req;
+        
         while(conectado) {
             try {
                 req = (Request) in.readObject();
+            } catch (SocketTimeoutException ex) {
+                logger.log(Level.SEVERE, "O tempo de espera pela requisição expirou!", ex);
+                break;
             } catch (IOException ex) {
                 logger.log(Level.SEVERE, "Não foi possível receber a requisição do cliente!", ex);
                 break;
             } catch (ClassNotFoundException ex) {
-                logger.log(Level.SEVERE, "A requisição é inválida!", ex);
+                logger.log(Level.WARNING, "A requisição é inválida!", ex);
                 continue;
             }
             try {
                 conectado = processaRequest(req);
             } catch (IOException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.log(Level.WARNING, "Não foi possível enviar a resposta!", ex);
             }
         }
         try {
+            logger.log(Level.INFO, "Thread: " + (++threadId) + "\tCliente " + conexao.getInetAddress().getHostName() + " será desconectado!");
             conexao.close();
         } catch (IOException ex) {
             logger.log(Level.WARNING, "Não foi possível fechar a conexão com o cliente", ex);
@@ -70,6 +74,7 @@ public class ServerHandler implements Runnable {
     private boolean processaRequest(Request req) throws IOException {
         boolean conectado = true;
         Response resp;
+        
         switch(req.getOperacao()) {
             case DISCONECT:
                 conectado = false;
@@ -79,7 +84,7 @@ public class ServerHandler implements Runnable {
                 resp = getAll();
                 break;
             case GETBYID:
-                resp = getById(req.getIdContato());
+                resp = getById(req.getId());
                 break;
             case GETBYCIDADE:
                 resp = getByCidade(req.getCidade());
@@ -91,40 +96,44 @@ public class ServerHandler implements Runnable {
                 resp = update(req.getContato());
                 break;
             case DELETE:
-                resp = delete(req.getIdContato());
+                resp = delete(req.getId());
                 break;
             default:
-                resp = new Response(req.getOperacao(), "Operação inválida!");
+                resp = badRequest();
         }
         out.writeObject(resp);
         return conectado;
     }
 
     private Response disconnect() {
-        return new Response(Operacao.DISCONECT);
+        return new ResponseImpl().toDisconnect();
     }
 
     private Response getAll() {
-        return new Response(Operacao.GETALL, ContatoWrapper.jpa2tcp(service.getAll()));
+        return new ResponseImpl().toGetAll(ContatoWrapper.jpa2tcp(service.getAll()));
     }
 
-    private Response getById(int idContato) {
-        return new Response(Operacao.GETBYID, ContatoWrapper.jpa2tcp(service.getById(idContato)));
+    private Response getById(Integer idContato) {
+        return new ResponseImpl().toGetById(ContatoWrapper.jpa2tcp(service.getById(idContato)));
     }
 
     private Response getByCidade(String cidade) {
-        return new Response(Operacao.GETBYCIDADE, ContatoWrapper.jpa2tcp(service.getByCidade(cidade)));
+        return new ResponseImpl().toGetByCidade(ContatoWrapper.jpa2tcp(service.getByCidade(cidade)));
     }
 
     private Response insert(ContatoBean contato) {
-        return new Response(Operacao.INSERT, ContatoWrapper.jpa2tcp(service.add(ContatoWrapper.tcp2jpa(contato))));
+        return new ResponseImpl().toInsert(ContatoWrapper.jpa2tcp(service.add(ContatoWrapper.tcp2jpa(contato))));
     }
 
     private Response update(ContatoBean contato) {
-        return new Response(Operacao.UPDATE, ContatoWrapper.jpa2tcp(service.update(ContatoWrapper.tcp2jpa(contato))));
+        return new ResponseImpl().toUpdate(ContatoWrapper.jpa2tcp(service.update(ContatoWrapper.tcp2jpa(contato))));
     }
 
-    private Response delete(int idContato) {
-        return new Response(Operacao.INSERT, ContatoWrapper.jpa2tcp(service.delete(idContato)));
+    private Response delete(Integer idContato) {
+        return new ResponseImpl().toDelete(ContatoWrapper.jpa2tcp(service.delete(idContato)));
+    }
+
+    private Response badRequest() {
+        return new ResponseImpl().toBadRequest();
     }
 }
