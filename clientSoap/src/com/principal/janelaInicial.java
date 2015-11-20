@@ -479,7 +479,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             }else{            
                 list.clear();
                 list.addAll(retorno.getLista());
-            }
+            }   
         
     }//GEN-LAST:event_botaoConsultarCidadeActionPerformed
 
