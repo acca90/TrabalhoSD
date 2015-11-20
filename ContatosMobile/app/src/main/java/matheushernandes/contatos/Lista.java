@@ -93,8 +93,9 @@ public class Lista extends Activity {
 
         if (!Contatos.getResponse().equals("{\"codigo\":0}")) {
 
-
             JSONObject resposta = new JSONObject(Contatos.getResponse());
+
+            String erro = resposta.getString("erro");
 
             String conta = resposta.getString("contatos");
 
@@ -124,8 +125,7 @@ public class Lista extends Activity {
 
                 lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, final View view,
-                                            int position, long id) {
+                    public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                         try {
                             setOP(2);
                             contato = DATA.getJSONObject(position);
@@ -137,6 +137,7 @@ public class Lista extends Activity {
                     }
                 });
             }
+
         } else {
 
             final ArrayList<String> list = new ArrayList<String>();
@@ -151,8 +152,7 @@ public class Lista extends Activity {
             lista.setAdapter(adapter);
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, final View view,
-                                        int position, long id) {
+                public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
 
                 }
             });

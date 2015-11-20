@@ -147,10 +147,6 @@ public class RestConnect extends AsyncTask<String, String, String> {
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.connect();
 
-        String params = this.contatoJson;
-        con.getOutputStream().write(params.getBytes());
-        con.getOutputStream().flush();
-        con.getOutputStream().close();
         String code = String.valueOf(con.getResponseCode());
 
         if (code.equals("200")) {
@@ -226,6 +222,8 @@ public class RestConnect extends AsyncTask<String, String, String> {
     public void setContatoJson(String contatoJson) {
         this.contatoJson = contatoJson;
     }
+
+
 }
 
 
