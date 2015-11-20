@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -65,32 +66,24 @@ public class Formulario extends Activity {
             e.printStackTrace();
         }
 
-        //Toast.makeText(getApplicationContext(),Lista.Contatos.getResponse(),Toast.LENGTH_SHORT).show();
-
-
+        JSONObject resposta = new JSONObject(Lista.Contatos.getResponse());
+        String erro = resposta.getString("erro");
         Lista.Contatos = null;
 
-        Intent intent = new Intent();
-        setResult(RESULT_OK,intent );
-        finish();
+        if (erro.equals("")) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(),erro,Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     public void Excluir(View view) throws Exception {
-
-        String json = "{\"codigo\":\""  + codigo                             + "\","
-                + "\"nome\":\""         + enome.getText().toString()         + "\","
-                + "\"email\":\""        + eemail.getText().toString()        + "\","
-                + "\"email_alter\":\""  + eemail_alter.getText().toString()  + "\","
-                + "\"endereco\":\""     + eendereco.getText().toString()     + "\","
-                + "\"complemento\":\""  + ecomp.getText().toString()         + "\","
-                + "\"cep\":\""          + ecep.getText().toString()          + "\","
-                + "\"cidade\":\""       + ecidade.getText().toString()       + "\","
-                + "\"estado\":\""       + eestado.getText().toString()       + "\"}";
-
         Lista.Contatos = new RestConnect();
-        Lista.Contatos.setContatoJson(json);
-        Lista.Contatos.setUrl(Lista.url);
+        Lista.Contatos.setUrl(Lista.url + "/" + String.valueOf(codigo));
+        //Toast.makeText(getApplicationContext(),Lista.url + "/" + String.valueOf(codigo),Toast.LENGTH_SHORT).show();
         Lista.Contatos.setOP(4);
         Lista.Contatos.execute().get();
         //Toast.makeText(getApplicationContext(), Lista.Contatos.getResponse(), Toast.LENGTH_SHORT).show();
