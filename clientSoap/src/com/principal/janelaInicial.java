@@ -76,13 +76,15 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         campoBuscaCidade = new javax.swing.JTextField();
         botaoConsultarCidade = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        botaoAtualizar = new javax.swing.JButton();
 
-        setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        setBorder(new javax.swing.border.SoftBevelBorder(1));
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setTitle("Lista de Contatos");
         setFocusCycleRoot(false);
         setRequestFocusEnabled(false);
         setVisible(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabela.setAutoCreateRowSorter(true);
 
@@ -122,6 +124,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tabela);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 103, 806, 239));
 
         jLabel4.setText("Email Secundário:");
 
@@ -183,6 +187,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(campoEmailAlter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 354, -1, -1));
 
         jLabel9.setText("Complemeno");
 
@@ -255,111 +261,72 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 354, -1, -1));
+
+        botaoAPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/del.png"))); // NOI18N
         botaoAPagar.setText("Apagar");
         botaoAPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAPagarActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoAPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 531, -1, -1));
 
         jLabel10.setText("Email ou Id do Contato que deseja Buscar:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 17, -1, -1));
 
         campoBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoBuscaActionPerformed(evt);
             }
         });
+        getContentPane().add(campoBusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 12, 170, -1));
 
+        botaoConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/identifcation.png"))); // NOI18N
         botaoConsultar.setText("Consultar");
         botaoConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConsultarActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 3, -1, -1));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/all.png"))); // NOI18N
         jButton1.setText("Buscar Todos Contatos");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(609, 3, -1, -1));
 
         campoBuscaCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoBuscaCidadeActionPerformed(evt);
             }
         });
+        getContentPane().add(campoBuscaCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 62, 170, -1));
 
+        botaoConsultarCidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/city.png"))); // NOI18N
         botaoConsultarCidade.setText("Consultar");
         botaoConsultarCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConsultarCidadeActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoConsultarCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 53, -1, -1));
 
-        jLabel11.setText("Nome da Cidade que deseja buscar:");
+        jLabel11.setText("Buscar Contatos da Cidade:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 67, 287, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(botaoAPagar)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoBuscaCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                                    .addComponent(campoBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(botaoConsultarCidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botaoConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
-                        .addGap(0, 96, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(campoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoConsultar)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(campoBuscaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11))
-                    .addComponent(botaoConsultarCidade))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
-                .addComponent(botaoAPagar)
-                .addGap(31, 31, 31))
-        );
+        botaoAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/refresh.png"))); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAtualizarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botaoAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(417, 531, -1, -1));
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -512,13 +479,33 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             }else{            
                 list.clear();
                 list.addAll(retorno.getLista());
-            }
+            }   
         
     }//GEN-LAST:event_botaoConsultarCidadeActionPerformed
 
     private void campoBuscaCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaCidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoBuscaCidadeActionPerformed
+
+    private void botaoAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAtualizarMouseClicked
+        Contato tab = list.get(tabela.getSelectedRow());        
+        Contato c = new Contato();
+        
+        c.setNome(campoNome.getText());
+        c.setEstado(campoEstado.getSelectedItem().toString());
+        c.setEndereco(CampoEmail.getText());
+        c.setEmailAlter(campoEmailAlter.getText());
+        c.setEmail(CampoEmail.getText());
+        c.setCodigo(Integer.parseInt(campoCódigo.getText()));
+        c.setCidade(campoCidade.getText());
+        c.setCep(Integer.parseInt(campoCep.getText()));
+        
+        if(tab.getClass() == c.getClass()){
+            JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Altere pelo menos algum dado do Cliente");
+        }else{
+            JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "atualizando . . ");
+        }
+    }//GEN-LAST:event_botaoAtualizarMouseClicked
 
     private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
          List<Contato> listaDao = dao.getAll();
@@ -529,6 +516,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoEmail;
     private javax.swing.JButton botaoAPagar;
+    private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoConsultar;
     private javax.swing.JButton botaoConsultarCidade;
     private javax.swing.JTextField campoBusca;

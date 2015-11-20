@@ -32,7 +32,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         controleTelas.setJdesk(jdesk);
         janelaInicial j = new janelaInicial();
-        //jdesk.add(j);;
         controleTelas.getJdesk().add(j);
         j.setMaximum(true);        
         j.setVisible(true);
@@ -65,12 +64,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         jdeskLayout.setVerticalGroup(
             jdeskLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 282, Short.MAX_VALUE)
+            .add(0, 266, Short.MAX_VALUE)
         );
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/file.png"))); // NOI18N
         jMenu1.setText("Arquivo");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/add-newpcontact.png"))); // NOI18N
         jMenuItem1.setText("Adicionar Contato");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +80,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/removecontact.png"))); // NOI18N
         jMenuItem2.setText("Apagar Contato");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +91,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgens/about.png"))); // NOI18N
         jMenu2.setText("Sobre");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -142,7 +145,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-       JOptionPane.showInternalMessageDialog(jdesk, "tesadafsd fsd");
+       JOptionPane.showInternalMessageDialog(jdesk, "Software de Gestão de Contatos \n "
+               + "Desenvolvido por João Antunes e Anderson Coronetti \n"
+               + "Um projeto com base em Web-Service Soap. \n"
+               + "Versão 1.0");
     }//GEN-LAST:event_jMenu2MouseClicked
 
     /**
