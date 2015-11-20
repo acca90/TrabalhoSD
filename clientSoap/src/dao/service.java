@@ -8,6 +8,14 @@ package dao;
 
 import com.service.Contato;
 import com.service.Retorno;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.annotation.XmlAccessOrder;
 
 /**
  *
@@ -49,15 +57,7 @@ public class service {
         com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
         com.service.ServidorSoap port = service.getServidorSoapPort();
         return port.getByCidade(cidade);
-    }
-    
-
-    
-  
-
-   
-
-   
+    }   
     
     
 }
