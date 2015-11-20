@@ -4,30 +4,6 @@
 <xsd:import namespace="http://service.com/" schemaLocation="http://localhost:8080/contatoSoap/servidorSoap?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="delete">
-<part name="parameters" element="tns:delete"/>
-</message>
-<message name="deleteResponse">
-<part name="parameters" element="tns:deleteResponse"/>
-</message>
-<message name="insert">
-<part name="parameters" element="tns:insert"/>
-</message>
-<message name="insertResponse">
-<part name="parameters" element="tns:insertResponse"/>
-</message>
-<message name="getAll">
-<part name="parameters" element="tns:getAll"/>
-</message>
-<message name="getAllResponse">
-<part name="parameters" element="tns:getAllResponse"/>
-</message>
-<message name="getById">
-<part name="parameters" element="tns:getById"/>
-</message>
-<message name="getByIdResponse">
-<part name="parameters" element="tns:getByIdResponse"/>
-</message>
 <message name="getByEmail">
 <part name="parameters" element="tns:getByEmail"/>
 </message>
@@ -40,23 +16,37 @@
 <message name="getByCidadeResponse">
 <part name="parameters" element="tns:getByCidadeResponse"/>
 </message>
+<message name="getById">
+<part name="parameters" element="tns:getById"/>
+</message>
+<message name="getByIdResponse">
+<part name="parameters" element="tns:getByIdResponse"/>
+</message>
+<message name="getAll">
+<part name="parameters" element="tns:getAll"/>
+</message>
+<message name="getAllResponse">
+<part name="parameters" element="tns:getAllResponse"/>
+</message>
+<message name="update">
+<part name="parameters" element="tns:update"/>
+</message>
+<message name="updateResponse">
+<part name="parameters" element="tns:updateResponse"/>
+</message>
+<message name="delete">
+<part name="parameters" element="tns:delete"/>
+</message>
+<message name="deleteResponse">
+<part name="parameters" element="tns:deleteResponse"/>
+</message>
+<message name="insert">
+<part name="parameters" element="tns:insert"/>
+</message>
+<message name="insertResponse">
+<part name="parameters" element="tns:insertResponse"/>
+</message>
 <portType name="servidorSoap">
-<operation name="delete">
-<input wsam:Action="http://service.com/servidorSoap/deleteRequest" message="tns:delete"/>
-<output wsam:Action="http://service.com/servidorSoap/deleteResponse" message="tns:deleteResponse"/>
-</operation>
-<operation name="insert">
-<input wsam:Action="http://service.com/servidorSoap/insertRequest" message="tns:insert"/>
-<output wsam:Action="http://service.com/servidorSoap/insertResponse" message="tns:insertResponse"/>
-</operation>
-<operation name="getAll">
-<input wsam:Action="http://service.com/servidorSoap/getAllRequest" message="tns:getAll"/>
-<output wsam:Action="http://service.com/servidorSoap/getAllResponse" message="tns:getAllResponse"/>
-</operation>
-<operation name="getById">
-<input wsam:Action="http://service.com/servidorSoap/getByIdRequest" message="tns:getById"/>
-<output wsam:Action="http://service.com/servidorSoap/getByIdResponse" message="tns:getByIdResponse"/>
-</operation>
 <operation name="getByEmail">
 <input wsam:Action="http://service.com/servidorSoap/getByEmailRequest" message="tns:getByEmail"/>
 <output wsam:Action="http://service.com/servidorSoap/getByEmailResponse" message="tns:getByEmailResponse"/>
@@ -65,10 +55,30 @@
 <input wsam:Action="http://service.com/servidorSoap/getByCidadeRequest" message="tns:getByCidade"/>
 <output wsam:Action="http://service.com/servidorSoap/getByCidadeResponse" message="tns:getByCidadeResponse"/>
 </operation>
+<operation name="getById">
+<input wsam:Action="http://service.com/servidorSoap/getByIdRequest" message="tns:getById"/>
+<output wsam:Action="http://service.com/servidorSoap/getByIdResponse" message="tns:getByIdResponse"/>
+</operation>
+<operation name="getAll">
+<input wsam:Action="http://service.com/servidorSoap/getAllRequest" message="tns:getAll"/>
+<output wsam:Action="http://service.com/servidorSoap/getAllResponse" message="tns:getAllResponse"/>
+</operation>
+<operation name="update">
+<input wsam:Action="http://service.com/servidorSoap/updateRequest" message="tns:update"/>
+<output wsam:Action="http://service.com/servidorSoap/updateResponse" message="tns:updateResponse"/>
+</operation>
+<operation name="delete">
+<input wsam:Action="http://service.com/servidorSoap/deleteRequest" message="tns:delete"/>
+<output wsam:Action="http://service.com/servidorSoap/deleteResponse" message="tns:deleteResponse"/>
+</operation>
+<operation name="insert">
+<input wsam:Action="http://service.com/servidorSoap/insertRequest" message="tns:insert"/>
+<output wsam:Action="http://service.com/servidorSoap/insertResponse" message="tns:insertResponse"/>
+</operation>
 </portType>
 <binding name="servidorSoapPortBinding" type="tns:servidorSoap">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="delete">
+<operation name="getByEmail">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -77,16 +87,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insert">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getAll">
+<operation name="getByCidade">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -104,7 +105,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getByEmail">
+<operation name="getAll">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -113,7 +114,25 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getByCidade">
+<operation name="update">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="delete">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insert">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

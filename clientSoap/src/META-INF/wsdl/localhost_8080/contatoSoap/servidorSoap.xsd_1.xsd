@@ -26,6 +26,10 @@
 
 <xs:element name="insertResponse" type="tns:insertResponse"/>
 
+<xs:element name="update" type="tns:update"/>
+
+<xs:element name="updateResponse" type="tns:updateResponse"/>
+
 <xs:complexType name="delete">
 <xs:sequence>
 <xs:element name="id" type="xs:int" minOccurs="0"/>
@@ -68,6 +72,18 @@
 </xs:complexType>
 
 <xs:complexType name="getByCidadeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:retorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="update">
+<xs:sequence>
+<xs:element name="contato" type="tns:contato" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:retorno" minOccurs="0"/>
 </xs:sequence>
