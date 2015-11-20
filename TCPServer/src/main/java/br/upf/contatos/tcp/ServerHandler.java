@@ -3,18 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpserver;
+package br.upf.contatos.tcp;
 
 import br.upf.contatos.dal.service.ContatoService;
 import br.upf.contatos.tcpmsg.Request;
 import br.upf.contatos.tcpmsg.Response;
+import br.upf.contatos.tcpmsg.ResponseImpl;
+import br.upf.contatos.tcpmsg.model.ContatoBean;
+import static br.upf.contatos.tcpmsg.model.Operacao.DELETE;
+import static br.upf.contatos.tcpmsg.model.Operacao.DISCONECT;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETALL;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETBYCIDADE;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETBYID;
+import static br.upf.contatos.tcpmsg.model.Operacao.INSERT;
+import static br.upf.contatos.tcpmsg.model.Operacao.UPDATE;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import br.upf.contatos.tcpmsg.model.ContatoBean;
 import java.net.SocketTimeoutException;
 
 /**

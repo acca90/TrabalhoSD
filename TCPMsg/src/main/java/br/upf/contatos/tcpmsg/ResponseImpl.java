@@ -3,11 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpserver;
+package br.upf.contatos.tcpmsg;
 
 import br.upf.contatos.tcpmsg.Response;
 import br.upf.contatos.tcpmsg.model.ContatoBean;
 import br.upf.contatos.tcpmsg.model.Operacao;
+import static br.upf.contatos.tcpmsg.model.Operacao.DELETE;
+import static br.upf.contatos.tcpmsg.model.Operacao.DISCONECT;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETALL;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETBYCIDADE;
+import static br.upf.contatos.tcpmsg.model.Operacao.GETBYID;
+import static br.upf.contatos.tcpmsg.model.Operacao.INSERT;
+import static br.upf.contatos.tcpmsg.model.Operacao.UPDATE;
 import br.upf.contatos.tcpmsg.model.Status;
 import java.util.List;
 
