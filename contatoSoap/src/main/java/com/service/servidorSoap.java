@@ -135,14 +135,21 @@ public class servidorSoap {
      */
     @WebMethod(operationName = "update")
     public retorno update(@WebParam(name = "contato") Contato contato) {
-        r.setContato(service.update(contato));
+        r.setContato(service.getById(contato.getId()));
         
-        if (r.getContato() == null){
-            r.setCodigo(3);
-            r.setMsg("Erro ao atualizar o contato!!!");
+        if(r == null || r.getContato() == null || r.getContato().equals("")){
+            r.setCodigo(33);
+            r.setMsg("Contato não existe");
         }else{
-            r.setCodigo(1);
-            r.setMsg("Ok!!!");
+            r.setContato(service.update(contato));
+
+            if (r.getContato() == null){
+                r.setCodigo(3);
+                r.setMsg("Erro ao atualizar o contato!!!");
+            }else{
+                r.setCodigo(1);
+                r.setMsg("Ok!!!");
+            }
         }
         
         return r;
