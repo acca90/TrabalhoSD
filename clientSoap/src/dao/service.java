@@ -58,6 +58,12 @@ public class service {
         com.service.ServidorSoap port = service.getServidorSoapPort();
         return port.getByCidade(cidade);
     }   
+
+    public Retorno update(com.service.Contato contato) {
+        com.service.ServidorSoap_Service service = new com.service.ServidorSoap_Service();
+        com.service.ServidorSoap port = service.getServidorSoapPort();
+        return port.update(contato);
+    }
     
     
 }
