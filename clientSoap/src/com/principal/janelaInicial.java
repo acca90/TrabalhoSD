@@ -6,6 +6,7 @@
 package com.principal;
 
 
+import dao.controleTelas;
 import dao.service;
 import com.service.Contato;
 import com.service.Retorno;
@@ -78,7 +79,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         botaoAtualizar = new javax.swing.JButton();
 
-        setBorder(new javax.swing.border.SoftBevelBorder(1));
+        setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setTitle("Lista de Contatos");
         setFocusCycleRoot(false);
@@ -428,8 +429,13 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         
         if(r == true){
             retorno = dao.getById(Integer.parseInt(busca));
-            list.clear();
-            list.add(retorno.getContato());
+            
+            if(retorno.getCodigo() == 1){
+                JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Nenhum Contato foi encontrado com esse ID!");
+            }else{
+                list.clear();
+                list.add(retorno.getContato());
+            }
         }else{
             retorno = dao.getByEmail(busca);
             
@@ -479,7 +485,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             }else{            
                 list.clear();
                 list.addAll(retorno.getLista());
-            }   
+            }
         
     }//GEN-LAST:event_botaoConsultarCidadeActionPerformed
 
@@ -500,7 +506,13 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         c.setCidade(campoCidade.getText());
         c.setCep(Integer.parseInt(campoCep.getText()));
         
-        if(tab.getClass() == c.getClass()){
+        System.out.println(tab.equals(c));
+        
+        if(tab.getCep() == c.getCep() && tab.getCidade() == c.getCidade() &&
+                tab.getComplemento() == c.getComplemento() && tab.getEmail() == c.getComplemento() &&
+                tab.getEmail() == c.getEmail() && tab.getEmailAlter() == c.getEmailAlter() &&
+                tab.getEndereco() == c.getEndereco() && tab.getEstado() == c.getEstado() &&
+                tab.getNome() == c.getNome()){
             JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Altere pelo menos algum dado do Cliente");
         }else{
             JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "atualizando . . ");
@@ -548,5 +560,6 @@ public class janelaInicial extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabela;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-service dao = new service();
+
+    service dao = new service();    
 }

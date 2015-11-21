@@ -6,9 +6,11 @@
 package com.principal;
 
 
+import dao.controleTelas;
 import dao.service;
 import com.service.Contato;
 import com.service.Retorno;
+import dao.controleLista;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
@@ -30,7 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() throws PropertyVetoException {
         initComponents();
-        controleTelas.setJdesk(jdesk);
+        controleTelas.setJdesk(jdesk);        
         janelaInicial j = new janelaInicial();
         controleTelas.getJdesk().add(j);
         j.setMaximum(true);        
@@ -119,7 +121,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jdesk.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        jdesk.removeAll();        
+        jdesk.removeAll();
+        jinical.dispose();
         controleTelas.getJdesk().add(jcadastro);
         jcadastro.setVisible(true);
         jcadastro.setAlignmentX(CENTER_ALIGNMENT);

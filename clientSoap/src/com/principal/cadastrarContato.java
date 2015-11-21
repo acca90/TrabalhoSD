@@ -6,9 +6,11 @@
 package com.principal;
 
 
+import dao.controleTelas;
 import com.service.Contato;
 import com.service.Retorno;
 import com.service.ServidorSoap_Service;
+import dao.controleLista;
 import dao.service;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -133,6 +135,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        Contato c = new Contato();
+        int r = 0;
        c.setCodigo(Integer.parseInt(campoCodigo.getText()));
        c.setCep(Integer.parseInt(campoCep.getText()));
        c.setNome(campoNome.getText());
@@ -166,9 +169,17 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
             campoNome.setText("");
             campoCodigo.requestFocus();           
             
-            int r = JOptionPane.showConfirmDialog(campoComplemento, "Deseja Inserir um novo Contato ?");
+            r = JOptionPane.showConfirmDialog(campoComplemento, "Deseja Inserir um novo Contato ?");
             System.out.println(r);
         }
+        
+        if(r == 1){
+            controleTelas.getJdesk().removeAll();
+            controleTelas.getJdesk().add(jinical);
+            controleTelas.getJdesk().repaint();
+        }
+        
+        
         
         
        
