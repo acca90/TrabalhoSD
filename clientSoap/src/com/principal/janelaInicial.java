@@ -87,6 +87,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         setVisible(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         tabela.setAutoCreateRowSorter(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, tabela);
@@ -126,7 +128,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 103, 806, 239));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 806, 239));
 
         jLabel4.setText("Email Secundário:");
 
@@ -327,6 +329,11 @@ public class janelaInicial extends javax.swing.JInternalFrame {
                 botaoAtualizarMouseClicked(evt);
             }
         });
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(417, 531, -1, -1));
 
         getAccessibleContext().setAccessibleDescription("");
@@ -518,6 +525,36 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "atualizando . . ");
         }
     }//GEN-LAST:event_botaoAtualizarMouseClicked
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        Contato c = new Contato();
+        
+        if(campoCódigo.getText() == ""){
+            JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Você deve selecionar um contato na tabela, e depois alterar o que for necessario!");
+        }
+        
+        c.setCep(Integer.parseInt(campoCep.getText()));
+        c.setCidade(campoCidade.getText());
+        c.setCodigo(Integer.parseInt(campoCódigo.getText()));
+        c.setComplemento(campoComplemento.getText());
+        c.setEmail(CampoEmail.getText());
+        c.setEmailAlter(campoEmailAlter.getText());
+        c.setEndereco(campoEndereco.getText());
+        c.setEstado(campoEstado.getSelectedItem().toString());
+        c.setNome(campoNome.getText());
+        
+        Retorno retorno = dao.update(c);
+        
+        if(retorno.getCodigo() == 3){
+            JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Erro ao atualizar o Contato, tente novamente!");
+        }else{
+            JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Contato: "+retorno.getContato().getNome()+" foi atualizado com sucesso!");
+            
+            list.clear();
+            list.addAll(dao.getAll());            
+        }
+        
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void AtualizaTabela(ActionEvent evt) throws ClassNotFoundException {
          List<Contato> listaDao = dao.getAll();
