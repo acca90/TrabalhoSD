@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpmsg;
+package br.upf.contatos.msg;
 
-import br.upf.contatos.tcpmsg.Response;
-import br.upf.contatos.tcpmsg.model.ContatoBean;
-import br.upf.contatos.tcpmsg.model.Operacao;
-import static br.upf.contatos.tcpmsg.model.Operacao.DELETE;
-import static br.upf.contatos.tcpmsg.model.Operacao.DISCONECT;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETALL;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETBYCIDADE;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETBYID;
-import static br.upf.contatos.tcpmsg.model.Operacao.INSERT;
-import static br.upf.contatos.tcpmsg.model.Operacao.UPDATE;
-import br.upf.contatos.tcpmsg.model.Status;
+import br.upf.contatos.msg.Response;
+import br.upf.contatos.msg.model.ContatoBean;
+import br.upf.contatos.msg.model.Operacao;
+import static br.upf.contatos.msg.model.Operacao.DELETE;
+import static br.upf.contatos.msg.model.Operacao.GETALL;
+import static br.upf.contatos.msg.model.Operacao.GETBYCIDADE;
+import static br.upf.contatos.msg.model.Operacao.GETBYID;
+import static br.upf.contatos.msg.model.Operacao.INSERT;
+import static br.upf.contatos.msg.model.Operacao.UPDATE;
+import br.upf.contatos.msg.model.Status;
 import java.util.List;
+import static br.upf.contatos.msg.model.Operacao.DISCONNECT;
 
 /**
  *
@@ -89,7 +89,7 @@ public class ResponseImpl implements Response {
     
     @Override
     public Response toDisconnect() {
-        this.operacao = Operacao.DISCONECT;
+        this.operacao = Operacao.DISCONNECT;
         setStatus();
         return this;
     }
@@ -132,7 +132,7 @@ public class ResponseImpl implements Response {
             case DELETE:
                 validaContato("Ocorreu um problema ao tentar excluir o contato!");
                 break;
-            case DISCONECT:
+            case DISCONNECT:
                 break;
             default:
                 this.errMsg = "Requisição inválida!";

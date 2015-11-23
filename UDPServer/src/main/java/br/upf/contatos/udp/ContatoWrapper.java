@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcp;
+package br.upf.contatos.udp;
 
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.msg.model.ContatoBean;

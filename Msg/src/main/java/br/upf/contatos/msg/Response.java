@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpmsg;
+package br.upf.contatos.msg;
 
-import br.upf.contatos.tcpmsg.model.ContatoBean;
-import br.upf.contatos.tcpmsg.model.Status;
+import br.upf.contatos.msg.model.ContatoBean;
+import br.upf.contatos.msg.model.Status;
 import java.io.Serializable;
 import java.util.List;
 

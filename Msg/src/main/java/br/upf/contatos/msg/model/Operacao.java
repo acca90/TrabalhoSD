@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpmsg.model;
+package br.upf.contatos.msg.model;
 
 /**
  *
  * @author Mauricley
  */
 public enum Operacao {
-    GETALL, GETBYID, GETBYCIDADE, INSERT, UPDATE, DELETE, DISCONECT;
+    GETALL, GETBYID, GETBYCIDADE, INSERT, UPDATE, DELETE, DISCONNECT;
 }

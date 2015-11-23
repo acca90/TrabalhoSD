@@ -6,17 +6,17 @@
 package br.upf.contatos.tcp;
 
 import br.upf.contatos.dal.service.ContatoService;
-import br.upf.contatos.tcpmsg.Request;
-import br.upf.contatos.tcpmsg.Response;
-import br.upf.contatos.tcpmsg.ResponseImpl;
-import br.upf.contatos.tcpmsg.model.ContatoBean;
-import static br.upf.contatos.tcpmsg.model.Operacao.DELETE;
-import static br.upf.contatos.tcpmsg.model.Operacao.DISCONECT;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETALL;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETBYCIDADE;
-import static br.upf.contatos.tcpmsg.model.Operacao.GETBYID;
-import static br.upf.contatos.tcpmsg.model.Operacao.INSERT;
-import static br.upf.contatos.tcpmsg.model.Operacao.UPDATE;
+import br.upf.contatos.msg.Request;
+import br.upf.contatos.msg.Response;
+import br.upf.contatos.msg.ResponseImpl;
+import br.upf.contatos.msg.model.ContatoBean;
+import static br.upf.contatos.msg.model.Operacao.DELETE;
+import static br.upf.contatos.msg.model.Operacao.DISCONNECT;
+import static br.upf.contatos.msg.model.Operacao.GETALL;
+import static br.upf.contatos.msg.model.Operacao.GETBYCIDADE;
+import static br.upf.contatos.msg.model.Operacao.GETBYID;
+import static br.upf.contatos.msg.model.Operacao.INSERT;
+import static br.upf.contatos.msg.model.Operacao.UPDATE;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -30,7 +30,7 @@ import java.net.SocketTimeoutException;
  * @author Mauricley
  */
 public class ServerHandler implements Runnable {
-    private static int threadId;
+    private final long threadId;
     private final Socket conexao;
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
@@ -44,7 +44,8 @@ public class ServerHandler implements Runnable {
         out = new ObjectOutputStream(conexao.getOutputStream());
         service = new ContatoService();
         logger = Logger.getLogger(ServerHandler.class.getName());
-        logger.log(Level.INFO, "Thread: " + (++threadId) + "\tCliente conectado: " + conexao.getInetAddress().getHostName());
+        threadId = Thread.currentThread().getId();
+        logger.log(Level.INFO, "Thread: " + (threadId) + "\tCliente conectado: " + conexao.getInetAddress().getHostName());
     }
     
     @Override
@@ -72,7 +73,7 @@ public class ServerHandler implements Runnable {
             }
         }
         try {
-            logger.log(Level.INFO, "Thread: " + (++threadId) + "\tCliente " + conexao.getInetAddress().getHostName() + " será desconectado!");
+            logger.log(Level.INFO, "Thread: " + threadId + "\tCliente " + conexao.getInetAddress().getHostName() + " será desconectado!");
             conexao.close();
         } catch (IOException ex) {
             logger.log(Level.WARNING, "Não foi possível fechar a conexão com o cliente", ex);
@@ -84,7 +85,7 @@ public class ServerHandler implements Runnable {
         Response resp;
         
         switch(req.getOperacao()) {
-            case DISCONECT:
+            case DISCONNECT:
                 conectado = false;
                 resp = disconnect();
                 break;

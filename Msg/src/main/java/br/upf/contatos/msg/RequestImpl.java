@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upf.contatos.tcpmsg;
+package br.upf.contatos.msg;
 
-import br.upf.contatos.tcpmsg.Request;
-import br.upf.contatos.tcpmsg.model.ContatoBean;
-import br.upf.contatos.tcpmsg.model.Operacao;
+import br.upf.contatos.msg.Request;
+import br.upf.contatos.msg.model.ContatoBean;
+import br.upf.contatos.msg.model.Operacao;
 
 /**
  *
@@ -62,7 +62,7 @@ public class RequestImpl implements Request {
 
     @Override
     public Request disconnect() {
-        operacao = Operacao.DISCONECT;
+        operacao = Operacao.DISCONNECT;
         return this;
     }
     
