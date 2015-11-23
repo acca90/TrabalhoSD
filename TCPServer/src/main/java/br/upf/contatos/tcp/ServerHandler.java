@@ -11,6 +11,7 @@ import br.upf.contatos.msg.Response;
 import br.upf.contatos.msg.ResponseImpl;
 import br.upf.contatos.msg.model.ContatoBean;
 import static br.upf.contatos.msg.model.Operacao.DELETE;
+import static br.upf.contatos.msg.model.Operacao.DISCONNECT;
 import static br.upf.contatos.msg.model.Operacao.GETALL;
 import static br.upf.contatos.msg.model.Operacao.GETBYCIDADE;
 import static br.upf.contatos.msg.model.Operacao.GETBYID;
@@ -23,7 +24,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.SocketTimeoutException;
-import static br.upf.contatos.msg.model.Operacao.DISCONNECT;
 
 /**
  *

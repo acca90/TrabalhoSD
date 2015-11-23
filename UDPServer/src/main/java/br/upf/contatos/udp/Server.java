@@ -27,6 +27,7 @@ public class Server {
         BlockingQueue<DatagramPacket> fila = new ArrayBlockingQueue(CAPACIDADE);
         try {
             DatagramSocket socket = new DatagramSocket(PORTA);
+            System.out.println("Servidor UDP (" + PORTA + "): aguardando requisições...");
             Thread produtor = new Thread(new Receiver(socket, fila));
             Thread consumidor = new Thread(new RequestProcessor(socket, fila));
             produtor.start();
