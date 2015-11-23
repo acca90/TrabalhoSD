@@ -31,8 +31,8 @@ public class Server {
     public void iniciar() {
         try {
             ServerSocket socket = new ServerSocket(PORTA, FILA);
-            logger.log(Level.INFO, "Aguardando conexão");
             for(;;) {
+                logger.log(Level.INFO, "Servidor (localhost:" + PORTA + "): aguardando conexão...");
                 Socket conn = socket.accept();
                 conn.setSoTimeout(TIMEOUT);
                 new Thread(new ServerHandler(conn)).start();
