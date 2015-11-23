@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Task List Example</title>
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div id="wrapper">
+    <p>Contatos</p>
+    <form id="taskform">
+        <input type="hidden" id="task_id" value="-1" />
+        Nome:<input type="text" id="task" placeholder="" /><br>
+        Email:<input type="text" id="email" placeholder="" /><br>
+        Email Alternativo:<input type="text" id="emailal" placeholder="" /><br>
+        Endereço:<input type="text" id="end" placeholder="" /><br>
+        Complemento:<input type="text" id="comp" placeholder="" /><br>
+        CEP:<input type="text" id="cep" placeholder="" /><br>
+        Cidade:<input type="text" id="cid" placeholder="" /><br>
+        Estado:<input type="text" id="est" placeholder="" /><br><br>
+        <input type="submit" value="Add" />
+    </form>
+
+    
+    <ul id="tasklist">
+        <table>
+            <thead>
+                <tr>
+                   <th>Name </th>
+                   <th>Email </th>
+                   <th>Email Alt. </th>
+                   <th>Endereço </th>
+                   <th>Compl. </th>
+                   <th>CEP </th>
+                   <th>Cidade </th>
+                   <th>Estado </th>
+                </tr>
+            </thead>
+        </table>
+    </ul>
+</div>
+<script src="js/zepto.min.js"></script>
+<script src="js/noServer.js"></script>
+</body>
+</html>
