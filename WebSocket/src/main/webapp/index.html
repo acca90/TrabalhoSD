@@ -4,13 +4,20 @@
     <head>
         <title>Contatos</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width">        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="core.js"></script>
     </head>
     <body>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
        
         <div>
-            <table>           
+                     
             <input style="display: none" id="op">
             
             <h1>Formulário de Contato</h1>
@@ -18,13 +25,51 @@
             <label>Nome</label><br><input id="nome" name="nome"><br>
             <label>E-mail</label><br><input id="email" name="email"><br>
             <label>E-mail Alternativo</label><br><input id="email_alter" name="email_alter"><br>
+            <label>Cep</label><br><input id="cep" name="nome"><br>
             <label>Estado</label><br><input id="estado" name="nome"><br>
             <label>Cidade</label><br><input id="cidade" name="cidade"><br>
             <label>Endereço</label><br><input id="endereco" name="cidade"><br>
             <label>Complemento</label><br><input id="complemento" name="complemento"><br>
-            <button type="button" onclick="insert();" >Adicionar Contato</button> <br><br><br>
+            <button type="button" id="adicionar" >Adicionar Contato</button> <br><br><br>
             
+            
+        </div>
+
+        <div>
+            <h1> AQUI </h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>E-mail Alternativo</th>
+                    <th>Cep</th>
+                    <th>Estado</th>
+                    <th>Cidade</th>
+                    <th>Endereço</th>
+                    <th>Complemento</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tr>
+                    <th> 1 </th>
+                    <th> João </th>
+                    <th> 1 </th>
+                    <th> 1 </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+
+                </tr>
+
+
+               
             </table>
+
         </div>
         
         

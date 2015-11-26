@@ -5,6 +5,7 @@
  */
 package com.mycompany.websocket;
 
+import br.upf.contatos.dal.model.Contato;
 import java.io.StringReader;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -17,16 +18,23 @@ import javax.websocket.EndpointConfig;
  *
  * @author joao
  */
-public class contatoDecoder implements Decoder.Text<contato> {
+public class contatoDecoder implements Decoder.Text<Contato> {
 
     @Override
-    public contato decode(String s) throws DecodeException {
+    public Contato decode(String s) throws DecodeException {
         
         JsonObject json = Json.createReader(new StringReader(s)).readObject();
         System.out.println(json.getInt("codigo"));
-        contato c = new contato();        
+        Contato c = new Contato();        
         c.setId(json.getInt("codigo"));
         c.setNome(json.getString("nome"));
+        c.setCep(json.getInt("cep"));
+        c.setCidade(json.getString("cidade"));
+        c.setComplemento(json.getString("complemento"));
+        c.setEmail(json.getString("email"));
+        c.setEmailAlternativo(json.getString("email_alter"));
+        c.setEstado(json.getString("estado"));
+        
         
         return c;
     }

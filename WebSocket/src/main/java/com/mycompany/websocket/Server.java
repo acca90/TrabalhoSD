@@ -4,9 +4,11 @@ package com.mycompany.websocket;
  *
  * @author Camila
  */
+import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
 import java.io.IOException;
 import static java.lang.Math.log;
+import java.nio.channels.SeekableByteChannel;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +38,7 @@ public class Server {
     private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
     
     ContatoService service = new ContatoService();
+    Contato c = new Contato();
     /**
      * @param session
      * @OnOpen allows us to intercept the creation of a new session.
@@ -64,8 +67,24 @@ public class Server {
      * @throws java.lang.CloneNotSupportedException
      */
     @OnMessage
-    public void onMessage(contato message, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
-        System.out.println(message.getNome());
+    public void onMessage(Contato c, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
+        c = service.add(c);
+        if(c != null){
+            String contato = "[{\n" +
+                                "\"codigo\":\"" +c.getId()+ "\",\n" +
+                                "\"nome\":\""+c.getNome()+"\",\n" +
+                                "\"email\":\""+c.getEmail()+"\",\n" +
+                                "\"emailAlter\":\""+c.getEmailAlternativo()+"\",\n" +
+                                "\"cep\":\""+c.getCep()+"\",\n" +
+                                "\"estado\":\""+c.getEstado()+"\",\n" +
+                                "\"cidade\":\""+c.getCidade()+"\",\n" +
+                                "\"endereco\":\""+c.getEndereco()+"\",\n" +
+                                "\"complemento\":\""+c.getComplemento()+"\"\n" +
+                                "}]";
+            for(Session s : peers){
+                s.getBasicRemote().sendText(contato);
+            }
+        }
         
         
         /*

@@ -1,5 +1,46 @@
-            //abre a conexão
-            openSocket(); 
+
+    $(document).ready(function(){
+        //abre a conexão            
+        openSocket(); 
+
+        //clique no botao add contato
+        $('#adicionar').click(function() {            
+            
+            obj = get_all_inputs();
+            send(obj);
+
+
+        });
+    });
+
+
+    function get_all_inputs(){
+        codigo =        $('#codigo').val();
+        nome =          $('#nome').val();
+        email =         $('#email').val();
+        email_alter =   $('#email_alter').val();
+        estado =        $('#estado').val();
+        cidade =        $('#cidade').val();
+        endereco =      $('#endereco').val();
+        complemento =   $('#complemento').val();
+        cep =           $('#cep').val();
+
+        var myObject = new Object();
+        myObject.codigo = parseFloat(codigo);
+        myObject.nome = nome;
+        myObject.email = email;
+        myObject.email_alter = email_alter;
+        myObject.cep = parseFloat(cep);
+        myObject.estado = estado;
+        myObject.cidade = cidade;
+        myObject.endereco = endereco;
+        myObject.complemento = complemento;
+
+        return myObject;
+
+    }
+
+            
             
                        
             var webSocket;
@@ -51,16 +92,10 @@
             /**
              * Sends the value of the text input to the server
              */
-            function send(){
+            function send(text){
+                console.log(text);
                 var op = document.getElementById("op").value;                
-                var obj = {
-                            codigo:  parseFloat(document.getElementById("codigo").value),
-                            "nome": document.getElementById("nome").value                             
-                            
-                            
-                        };
                 
-                console.log(obj);           
                 
                 
                 webSocket.send(JSON.stringify(obj));
