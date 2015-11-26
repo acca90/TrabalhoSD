@@ -5,6 +5,7 @@ import br.upf.contatos.dal.model.Contato;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.RollbackException;
 
 /**
  *
@@ -59,6 +60,8 @@ public class ContatoService {
         try {
             dao.persist(c);
             return c;
+        } catch (RollbackException ex) {
+            throw new RuntimeException("O email informado ("+c.getEmail()+") já está sendo usado!");
         } catch (Exception ex) {
             Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,6 +70,9 @@ public class ContatoService {
     
     public Contato update(Contato c) {
         try {
+            if (dao.getById(c.getId()) == null) {
+                throw new RuntimeException("Não existe contato com o código informado ("+c.getId()+")!");
+            }
             c = dao.merge(c);
             return c;
         } catch (Exception ex) {
