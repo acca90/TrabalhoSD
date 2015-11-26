@@ -4,12 +4,15 @@ package com.mycompany.websocket;
  *
  * @author Camila
  */
-import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
 import java.io.IOException;
-import java.util.List;
+import static java.lang.Math.log;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.websocket.DecodeException;
 import javax.websocket.EncodeException;
  
 import javax.websocket.OnClose;
@@ -25,11 +28,16 @@ import javax.websocket.server.ServerEndpoint;
  * "EchoChamber" is the name of the package
  * and "echo" is the address to access this class from the server
  */
-@ServerEndpoint("/echo") 
+@ServerEndpoint (
+    value = "/echo", decoders = {contatoDecoder.class})
 public class Server {
+    
+    //sincronizar
+    private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
     
     ContatoService service = new ContatoService();
     /**
+     * @param session
      * @OnOpen allows us to intercept the creation of a new session.
      * The session class allows us to send data to the user.
      * In the method onOpen, we'll let the user know that the handshake was 
@@ -40,19 +48,36 @@ public class Server {
        
         System.out.println(session.getId() + " has opened a connection"); 
         try {
-            session.getBasicRemote().sendText("Connection Established");
+            peers.add(session);
+            session.getBasicRemote().sendText("Conexão Estabelecida");
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
  
     /**
      * When a user sends a message to the server, this method will intercept the message
      * and allow us to react to it. For now the message is read as a String.
+     * @param message
+     * @param session
+     * @param json
+     * @throws javax.websocket.EncodeException
+     * @throws java.lang.CloneNotSupportedException
      */
     @OnMessage
-    public void onMessage(String message, Session session) throws EncodeException{
-        String contato;
+    public void onMessage(contato message, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
+        System.out.println(message.getNome());
+        
+        
+        /*
+        for(Session s : peers){
+            try {
+                s.getBasicRemote().sendText("olá Tudo bém");
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        /*
+        String contato;        
         //buscar todos os contatos
         if(message.contains("1")){
             
@@ -93,15 +118,23 @@ public class Server {
                  }
                 i++;
              }
-        }      
+        }
+        
+        //Adicionar Contato
+        if(message.contains("2")){
+           
+          
+            
+        }
         System.out.println("Message from " + session.getRequestURI()+ ": " + message);
+        */
         
-        
+        session.getBasicRemote().sendText("ta ai");
     }
  
     @OnClose
     public void onClose(Session session){
-        System.out.println("Session " +session.getId()+" has ended");
+        peers.remove(session);
     }
     
 }
