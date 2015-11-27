@@ -103,7 +103,7 @@ public class Server {
             }
         }
         
-        //consultar por cidada
+        //consultar por cidade
         if(aux.getOperacao() == 2){
             List<Contato> list = service.getByCidade(aux.getMsg());
             
@@ -136,7 +136,7 @@ public class Server {
                             "\"complemento\":\""+x.getComplemento()+"\"\n" +
                             "}"+vir+"";
                     //retorna somete para o cliente que solicitou
-                    session.getBasicRemote().sendObject(x);
+                    session.getBasicRemote().sendObject(retorno);
                     i++;
              }  
                 
@@ -146,8 +146,24 @@ public class Server {
                 
             }
         }
+    
+    
+    //consultar por ID
+        if(aux.getOperacao() == 3){
+            c = service.getById(Integer.parseInt(aux.getMsg()));
+            if(c == null){
+               retorno = "[{\n" +
+                                    "\"erro\":\"1\",\n" +                                    
+                                    "}]";
+            }else{
+                retorno = "contato encontrado";
+                        
+                //retorna somete para o cliente que solicitou
+                session.getBasicRemote().sendObject(retorno);
+            }
     }
- 
+}
+
     @OnClose
     public void onClose(Session session){
         peers.remove(session);

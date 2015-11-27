@@ -42,8 +42,6 @@ public class contato {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-     
-     
-     
-        
+
+ 
 }

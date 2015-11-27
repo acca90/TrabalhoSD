@@ -9,12 +9,9 @@
             obj = get_all_inputs();
             obj.operacao = 1;
             send(obj);
-
-
         });
         
           $('#buscar_por_cidade').click(function() {            
-            
             $cidade = $("#cidade_search").val();
             var myObject = new Object();
             myObject.busca_cidade = $cidade;
@@ -23,9 +20,17 @@
             console.log(myObject);
             
             send(myObject);
+        });
+        
+        $('#buscar_por_ID').click(function() {            
+            $codigo = $("#ID").val();
+            var myObject = new Object();
+            myObject.busca_ID = $codigo;
+            myObject.operacao = 3;
             
-
-
+            console.log(myObject);
+            
+            send(myObject);
         });
     });
 
@@ -72,6 +77,8 @@
                 var op = document.getElementById("op").value=2;       
                 send();
             }
+            
+            
            
            
             function openSocket(){

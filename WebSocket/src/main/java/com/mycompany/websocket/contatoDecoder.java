@@ -49,7 +49,10 @@ public class contatoDecoder implements Decoder.Text<contato> {
             c.setMsg(json.getString("busca_cidade"));
         }
         
-        
+        if(json.getInt("operacao") == 3){
+            c.setOperacao(3);
+            c.setMsg(json.getString("busca_ID"));
+        }
         return c;
     }
 
