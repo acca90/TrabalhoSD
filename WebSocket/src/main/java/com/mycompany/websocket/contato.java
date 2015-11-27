@@ -5,92 +5,38 @@
  */
 package com.mycompany.websocket;
 
+import br.upf.contatos.dal.model.Contato;
+
 /**
  *
  * @author joao
  */
 public class contato {
     
-    private Integer id;
-    private String nome;
-    private String email;
-    private String endereco;
-    private String complemento;
-    private Integer cep;
-    private String cidade;
-    private String estado;
-    private String emailAlternativo;
+    private Integer operacao;
+    Contato contato;
+    
 
-    public Integer getId() {
-        return id;
+    public Contato getContato() {
+        return contato;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setContato(Contato contato) {
+        this.contato = contato;
     }
 
-    public String getNome() {
-        return nome;
+    public Integer getOperacao() {
+        return operacao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setOperacao(Integer operacao) {
+        this.operacao = operacao;
     }
+    
+    
+    
+    
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public Integer getCep() {
-        return cep;
-    }
-
-    public void setCep(Integer cep) {
-        this.cep = cep;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getEmailAlternativo() {
-        return emailAlternativo;
-    }
-
-    public void setEmailAlternativo(String emailAlternativo) {
-        this.emailAlternativo = emailAlternativo;
-    }   
+    
     
 }

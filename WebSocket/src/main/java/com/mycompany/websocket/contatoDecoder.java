@@ -18,22 +18,32 @@ import javax.websocket.EndpointConfig;
  *
  * @author joao
  */
-public class contatoDecoder implements Decoder.Text<Contato> {
+public class contatoDecoder implements Decoder.Text<contato> {
 
     @Override
-    public Contato decode(String s) throws DecodeException {
+    public contato decode(String s) throws DecodeException {
+        
+        System.out.println(s);
         
         JsonObject json = Json.createReader(new StringReader(s)).readObject();
-        System.out.println(json.getInt("codigo"));
-        Contato c = new Contato();        
-        c.setId(json.getInt("codigo"));
-        c.setNome(json.getString("nome"));
-        c.setCep(json.getInt("cep"));
-        c.setCidade(json.getString("cidade"));
-        c.setComplemento(json.getString("complemento"));
-        c.setEmail(json.getString("email"));
-        c.setEmailAlternativo(json.getString("email_alter"));
-        c.setEstado(json.getString("estado"));
+        contato c = new contato();      
+        
+        if(json.getInt("operacao") == 1){
+            System.out.println(json.getInt("codigo"));
+              
+            c.contato.setId(json.getInt("codigo"));
+            c.contato.setNome(json.getString("nome"));
+            c.contato.setCep(json.getInt("cep"));
+            c.contato.setCidade(json.getString("cidade"));
+            c.contato.setComplemento(json.getString("complemento"));
+            c.contato.setEmail(json.getString("email"));
+            c.contato.setEmailAlternativo(json.getString("email_alter"));
+            c.contato.setEstado(json.getString("estado"));
+        }
+        
+        if(json.getInt("operacao") == 2){
+            return c;
+        }
         
         
         return c;
@@ -52,6 +62,16 @@ public class contatoDecoder implements Decoder.Text<Contato> {
     @Override
     public void destroy() {
     
+    }
+
+    @Override
+    public contato decode(String s) throws DecodeException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public contato decode(String s) throws DecodeException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

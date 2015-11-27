@@ -11,6 +11,21 @@
 
 
         });
+        
+          $('#buscar_por_cidade').click(function() {            
+            
+            $cidade = $("#cidade_search").val();
+            var myObject = new Object();
+            myObject.busca_cidade = $cidade;
+            myObject.operacao = 2;
+            
+            console.log(myObject);
+            
+            send(myObject);
+            
+
+
+        });
     });
 
 
@@ -92,12 +107,8 @@
             /**
              * Sends the value of the text input to the server
              */
-            function send(text){
-                console.log(text);
-                var op = document.getElementById("op").value;                
-                
-                
-                
+            function send(obj){
+                console.log(obj);
                 webSocket.send(JSON.stringify(obj));
             }
            

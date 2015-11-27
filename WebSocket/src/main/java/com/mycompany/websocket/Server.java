@@ -67,8 +67,11 @@ public class Server {
      * @throws java.lang.CloneNotSupportedException
      */
     @OnMessage
-    public void onMessage(Contato c, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
-        c = service.add(c);
+    public void onMessage(contato c, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
+        c = service.add(c.contato);
+        
+        contato asd = new contato();
+        asd.
         if(c != null){
             String contato = "[{\n" +
                                 "\"codigo\":\"" +c.getId()+ "\",\n" +
