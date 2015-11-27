@@ -7,6 +7,7 @@
         $('#adicionar').click(function() {            
             
             obj = get_all_inputs();
+            obj.operacao = 1;
             send(obj);
 
 
@@ -118,4 +119,9 @@
  
             function writeResponse(text){
                document.getElementById("messages").innerHTML+= "<br/>" + text;
+               
+                 var myObject = new Object();
+                 myObject = text;
+
+                console.log(text);
             }

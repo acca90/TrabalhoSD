@@ -6,6 +6,7 @@
 package com.mycompany.websocket;
 
 import br.upf.contatos.dal.model.Contato;
+import javax.swing.JDesktopPane;
 
 /**
  *
@@ -14,8 +15,8 @@ import br.upf.contatos.dal.model.Contato;
 public class contato {
     
     private Integer operacao;
-    Contato contato;
-    
+    private String msg;
+    public  Contato contato;
 
     public Contato getContato() {
         return contato;
@@ -23,7 +24,8 @@ public class contato {
 
     public void setContato(Contato contato) {
         this.contato = contato;
-    }
+    }   
+    
 
     public Integer getOperacao() {
         return operacao;
@@ -32,11 +34,16 @@ public class contato {
     public void setOperacao(Integer operacao) {
         this.operacao = operacao;
     }
-    
-    
-    
-    
 
-    
-    
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+     
+     
+     
+        
 }

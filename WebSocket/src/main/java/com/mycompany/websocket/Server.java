@@ -11,8 +11,10 @@ import static java.lang.Math.log;
 import java.nio.channels.SeekableByteChannel;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.websocket.DecodeException;
 import javax.websocket.EncodeException;
@@ -31,7 +33,7 @@ import javax.websocket.server.ServerEndpoint;
  * and "echo" is the address to access this class from the server
  */
 @ServerEndpoint (
-    value = "/echo", decoders = {contatoDecoder.class})
+    value = "/echo", decoders = {contatoDecoder.class}, encoders = {contatoEncoder.class})
 public class Server {
     
     //sincronizar
@@ -67,91 +69,83 @@ public class Server {
      * @throws java.lang.CloneNotSupportedException
      */
     @OnMessage
-    public void onMessage(contato c, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
-        c = service.add(c.contato);
+    public void onMessage(contato aux, Session session) throws EncodeException, CloneNotSupportedException, IOException, DecodeException{
+        Contato c = new Contato();
+        String retorno;
         
-        contato asd = new contato();
-        asd.
-        if(c != null){
-            String contato = "[{\n" +
-                                "\"codigo\":\"" +c.getId()+ "\",\n" +
-                                "\"nome\":\""+c.getNome()+"\",\n" +
-                                "\"email\":\""+c.getEmail()+"\",\n" +
-                                "\"emailAlter\":\""+c.getEmailAlternativo()+"\",\n" +
-                                "\"cep\":\""+c.getCep()+"\",\n" +
-                                "\"estado\":\""+c.getEstado()+"\",\n" +
-                                "\"cidade\":\""+c.getCidade()+"\",\n" +
-                                "\"endereco\":\""+c.getEndereco()+"\",\n" +
-                                "\"complemento\":\""+c.getComplemento()+"\"\n" +
-                                "}]";
-            for(Session s : peers){
-                s.getBasicRemote().sendText(contato);
-            }
-        }
-        
-        
-        /*
-        for(Session s : peers){
-            try {
-                s.getBasicRemote().sendText("olá Tudo bém");
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        /*
-        String contato;        
-        //buscar todos os contatos
-        if(message.contains("1")){
-            
-            List<Contato> list = service.getAll();
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println(list.size()); 
-            
-            int i = 0;            
-            for(Contato c : list){
+        //adicionar
+        if(aux.getOperacao() == 1){
+             c = service.add(aux.getContato());        
+            contato asd = new contato();
+            if(c != null){
+                retorno = "[{\n" +
+                                    "\"log\":\""+session.getRequestURI().getHost()+"\",\n" +
+                                    "\"erro\":\"0\",\n" +
+                                    "\"codigo\":\"" +c.getId()+ "\",\n" +
+                                    "\"nome\":\""+c.getNome()+"\",\n" +
+                                    "\"email\":\""+c.getEmail()+"\",\n" +
+                                    "\"emailAlter\":\""+c.getEmailAlternativo()+"\",\n" +
+                                    "\"cep\":\""+c.getCep()+"\",\n" +
+                                    "\"estado\":\""+c.getEstado()+"\",\n" +
+                                    "\"cidade\":\""+c.getCidade()+"\",\n" +
+                                    "\"endereco\":\""+c.getEndereco()+"\",\n" +
+                                    "\"complemento\":\""+c.getComplemento()+"\"\n" +
+                                    "}]";               
+            }else{
+                retorno = "[{\n" +
+                                    "\"erro\":\"1\",\n" +                                    
+                                    "}]";
                 
-                String col = "";
-                String vir = ",";
-                try {
-                    
+            }
+            
+            for(Session s : peers){
+                   s.getBasicRemote().sendText(retorno);
+            }
+        }
+        
+        //consultar por cidada
+        if(aux.getOperacao() == 2){
+            List<Contato> list = service.getByCidade(aux.getMsg());
+            
+            //se a lista não estiver vazia
+            if(!list.isEmpty()){
+                int i = 0;
+                
+                //percorro a lista
+                for(Contato x : list){
+                
+                    String col = "";
+                    String vir = ",";
                     if(i == 0){
                         col = "[";
                         
                     }
-                    
                     if(i == list.size()-1){
                         vir = "]";
                     }
-                    
-                    contato = ""+col+"{\n" +
-                                "\"codigo\":\"" +c.getId()+ "\",\n" +
-                                "\"nome\":\""+c.getNome()+"\",\n" +
-                                "\"email\":\""+c.getEmail()+"\",\n" +
-                                "\"emailAlter\":\""+c.getEmailAlternativo()+"\",\n" +
-                                "\"cep\":\""+c.getCep()+"\",\n" +
-                                "\"estado\":\""+c.getEstado()+"\",\n" +
-                                "\"cidade\":\""+c.getCidade()+"\",\n" +
-                                "\"endereco\":\""+c.getEndereco()+"\",\n" +
-                                "\"complemento\":\""+c.getComplemento()+"\"\n" +
-                                "}"+vir+"";
-                    session.getBasicRemote().sendText(contato);
-                 } catch (IOException ex) {
-                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                i++;
-             }
+                    retorno = ""+col+"{\n" +
+                            "\"log\":\""+session.getId()+"\",\n" +
+                            "\"codigo\":\"" +x.getId()+ "\",\n" +
+                            "\"nome\":\""+x.getNome()+"\",\n" +
+                            "\"email\":\""+x.getEmail()+"\",\n" +
+                            "\"emailAlter\":\""+x.getEmailAlternativo()+"\",\n" +
+                            "\"cep\":\""+x.getCep()+"\",\n" +
+                            "\"estado\":\""+x.getEstado()+"\",\n" +
+                            "\"cidade\":\""+x.getCidade()+"\",\n" +
+                            "\"endereco\":\""+x.getEndereco()+"\",\n" +
+                            "\"complemento\":\""+x.getComplemento()+"\"\n" +
+                            "}"+vir+"";
+                    //retorna somete para o cliente que solicitou
+                    session.getBasicRemote().sendObject(x);
+                    i++;
+             }  
+                
+                
+                
+            }else{
+                
+            }
         }
-        
-        //Adicionar Contato
-        if(message.contains("2")){
-           
-          
-            
-        }
-        System.out.println("Message from " + session.getRequestURI()+ ": " + message);
-        */
-        
-        session.getBasicRemote().sendText("ta ai");
     }
  
     @OnClose

@@ -22,27 +22,31 @@ public class contatoDecoder implements Decoder.Text<contato> {
 
     @Override
     public contato decode(String s) throws DecodeException {
-        
         System.out.println(s);
+        Contato dal = new Contato();
+        
         
         JsonObject json = Json.createReader(new StringReader(s)).readObject();
         contato c = new contato();      
         
+        // adicionar
         if(json.getInt("operacao") == 1){
-            System.out.println(json.getInt("codigo"));
-              
-            c.contato.setId(json.getInt("codigo"));
-            c.contato.setNome(json.getString("nome"));
-            c.contato.setCep(json.getInt("cep"));
-            c.contato.setCidade(json.getString("cidade"));
-            c.contato.setComplemento(json.getString("complemento"));
-            c.contato.setEmail(json.getString("email"));
-            c.contato.setEmailAlternativo(json.getString("email_alter"));
-            c.contato.setEstado(json.getString("estado"));
+            dal.setId(json.getInt("codigo"));
+            dal.setNome(json.getString("nome"));
+            dal.setCep(json.getInt("cep"));
+            dal.setCidade(json.getString("cidade"));
+            dal.setComplemento(json.getString("complemento"));
+            dal.setEmail(json.getString("email"));
+            dal.setEmailAlternativo(json.getString("email_alter"));
+            dal.setEstado(json.getString("estado"));
+            dal.setEndereco(json.getString("endereco"));
+            c.setOperacao(json.getInt("operacao"));
+            c.setContato(dal);
         }
         
         if(json.getInt("operacao") == 2){
-            return c;
+            c.setOperacao(2);
+            c.setMsg(json.getString("busca_cidade"));
         }
         
         
@@ -51,7 +55,13 @@ public class contatoDecoder implements Decoder.Text<contato> {
 
     @Override
     public boolean willDecode(String s) {
-        return true;
+         try {
+            // Check if incoming message is valid JSON
+            Json.createReader(new StringReader(s)).readObject();
+            return true;
+          } catch (Exception e) {
+            return false;
+          }
     }
 
     @Override
@@ -62,16 +72,6 @@ public class contatoDecoder implements Decoder.Text<contato> {
     @Override
     public void destroy() {
     
-    }
-
-    @Override
-    public contato decode(String s) throws DecodeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public contato decode(String s) throws DecodeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

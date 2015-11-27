@@ -5,45 +5,41 @@
  */
 package com.mycompany.websocket;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.math.BigDecimal;
+import br.upf.contatos.dal.model.Contato;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonWriter;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
-import org.json.simple.JSONObject;
 
 /**
  *
  * @author joao
  */
-class MenssagemEncoders implements Encoder.TextStream<contato> {
-    
+public class contatoEncoder implements Encoder.Text<contato>{
+
     @Override
-    public void encode(contato msg, Writer writer) throws EncodeException, IOException {        
+    public String encode(contato c) throws EncodeException {
         JsonObject json = Json.createObjectBuilder()
                 .add("action", "add")
-                .add("nome", msg.getContato().getNome() )
-                .add("codigo", msg.getContato().getId())
+                .add("nome", c.getContato().getNome() )
+                .add("codigo", c.getContato().getId())
                 .build();
-        try(JsonWriter jsonwrite = Json.createWriter(writer)){
-            jsonwrite.writeObject(json);
-        }
+      return json.toString();
     }
 
     @Override
     public void init(EndpointConfig config) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void destroy() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-   
+
    
     
 }
