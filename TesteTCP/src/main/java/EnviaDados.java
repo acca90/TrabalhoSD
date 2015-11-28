@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 import br.upf.contatos.dal.model.Contato;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -75,7 +68,7 @@ public class EnviaDados {
                     // cria a thread em cima deste objeto
                 // Thread t = new Thread(tratamento);
                 // inicia a thread
-              //  t.start();
+                //  t.start();
                 System.out.println("Conectou");
                 //Escreve a casca da saida, Ã© aqui que vocÃª define onde o que sera enviado vai ficar
                 ObjectOutputStream sai = new ObjectOutputStream(cliente.getOutputStream());
