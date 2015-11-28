@@ -31,7 +31,7 @@ public class Client {
         
       
       if (line.equals("help")) {    
-        System.out.println("listar, incluir, editar, deletar, parar");
+        System.out.println("op = [ listar, incluir, editar, deletar, parar, cidade ], label = valor");
         System.out.println("Para sair digite: parar");           
         return true;
     } else if (line.equals("parar")) {       
