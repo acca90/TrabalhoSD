@@ -6,6 +6,7 @@
 package br.upf.contatos.tcp;
 
 import br.upf.contatos.msg.model.ContatoBean;
+import java.util.ArrayList;
 import java.util.Scanner;
 import org.json.JSONObject;
 
@@ -19,6 +20,7 @@ public class Client {
     public static void main(String []args) throws RuntimeException {
         
         while (true) {
+        
         System.out.println("Digite help, para o menu");
         Scanner scanner = new Scanner(System.in);   
         String line = scanner.nextLine();
@@ -28,17 +30,22 @@ public class Client {
     } 
   public static boolean comando(String line){
        
-        
-      
+        ClientConnector tcpService = new ClientConnector(HOST, PORTA);
+       
+               
       if (line.equals("help")) {    
         System.out.println("op = [ listar, incluir, editar, deletar, parar, cidade ], label = valor");
         System.out.println("Para sair digite: parar");           
         return true;
     } else if (line.equals("parar")) {       
+        
+        tcpService.disconnect();
+      
         return false;
         
+        
     } else { 
-         ClientConnector tcpService = new ClientConnector(HOST, PORTA);
+        
         tcpService.connect();
         String[] chamadas = line.split(",");       
         String[] op = chamadas[0].split("=");    
@@ -47,10 +54,20 @@ public class Client {
              case "listar":  
         
                 for(ContatoBean cb: tcpService.getAll()) {
-                    System.out.println(new JSONObject(cb));
+                    //System.out.println(new JSONObject(cb));
+                    System.out.println("ID:" + cb.getId());
+                    System.out.println("Nome:" + cb.getNome());
+                    System.out.println("Email:" + cb.getEmail());
+                    System.out.println("Endereco:" + cb.getEndereco());
+                    System.out.println("Comp:" + cb.getComplemento());
+                    System.out.println("CEP:" + cb.getCep());
+                    System.out.println("Cidade:" + cb.getCidade());
+                    System.out.println("Estado:" + cb.getEstado());
+                    System.out.println("Email Alt.:" + cb.getEmailAlternativo());
+                    System.out.println("------------");
                 }
             
-                tcpService.disconnect();
+               
                 
                       
             break;
@@ -68,8 +85,7 @@ public class Client {
        
             Scanner scan = new Scanner (System.in); 
            
-            System.out.printf("Digite o id:");
-            id = scan.nextLine();
+            
             System.out.printf("Digite o nome:");
             nome = scan.nextLine();
             System.out.printf("Digite o email:");
@@ -87,8 +103,8 @@ public class Client {
         
             ContatoBean c = new ContatoBean();
             int numCep = Integer.parseInt(cep);
-            int numId = Integer.parseInt(id);
-            c.setId(numId);
+            
+            
             c.setNome(nome);
             c.setEmail(email);
             c.setEndereco(end);
@@ -103,7 +119,7 @@ public class Client {
                  System.out.println(e.getMessage());
              }
 
-             tcpService.disconnect();
+       
                 
              break;
                 
@@ -139,7 +155,13 @@ public class Client {
                 String cid2 = null;
                 String est2;
                 ContatoBean contact = new ContatoBean();
-                contact = tcpService.getById(numIdEdi);
+                
+                try {
+                 contact = tcpService.getById(numIdEdi);
+             } catch(RuntimeException e) {
+                 System.out.println(e.getMessage());
+             }
+                
                 
                 switch(opEditar) {        
                      case "id":
@@ -199,7 +221,7 @@ public class Client {
                  System.out.println(e.getMessage());
              }
 
-             tcpService.disconnect();
+            
                  
                 }else{
                 return false;
@@ -209,21 +231,23 @@ public class Client {
           
             case "cidade":
                 String cidade;
+                ArrayList cidade2 = new ArrayList();
                 Scanner scanner = new Scanner (System.in);
                 System.out.println("Informe a cidade à listar"); 
                 cidade = scanner.nextLine();
                 
-                ContatoBean cob = new ContatoBean();
-                cob.setCidade(cidade);
-                
+               
                 try {
-                 cob = tcpService.getByCidade(cob);
-                 System.out.println(new JSONObject(cob));
+                 cidade2 =  (ArrayList) tcpService.getByCidade(cidade);
+                // System.out.println(new JSONObject(cidade2));
+                  for(Object cb: cidade2) {
+                    System.out.println(new JSONObject(cb));
+                }
                 } catch(RuntimeException e) {
                  System.out.println(e.getMessage());
                 }
 
-             tcpService.disconnect();
+            
             break;
                 
             case "deletar":
@@ -241,7 +265,7 @@ public class Client {
                  System.out.println(e.getMessage());
              }
 
-             tcpService.disconnect();
+             
                 break;
          }   
             }
