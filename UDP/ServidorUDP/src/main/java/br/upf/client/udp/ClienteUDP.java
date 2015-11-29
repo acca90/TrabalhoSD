@@ -29,13 +29,13 @@ public class ClienteUDP {
                 String[] comandos = line.split(" ");
                 if (comandos[0].equals("help")) {    
                 System.out.println("Listar = Lista todos os contatos"
-                    + "incluir = Inclui um contato, necessita de label=valor"
-                    + "editar  = edita um contato, escrever ID=numero label=novoValor"
-                    + "deletar = deletar id=numero "
-                    + "parar   = finaliza conexao "
-                    + "cidade  = lista por cidade escrever cidade=nomeCidade"
-                    + "label   = valor a ser adicionado ou alterado ex label=nome nome=Joao");
-         
+                    + "incluir = Inclui um contato, incluir nome NOMEtudoJUNTO email EMAIL end ENDERECO comp COPM cep CEP cid CID est EST \n"
+                    + "editar  = edita um contato, escrever ID=numero label=novoValor\n"
+                    + "deletar = deletar id numero \n"
+                    + "parar   = finaliza conexao \n"
+                    + "cidade  = lista por cidade escrever cidade nomeCidade\n"
+                    + "Comandos seguidos de outras informacoes sempre separar por espaco, nomes tudo junto\n");
+                        
                 return true;
                 } else if (comandos[0].equals("parar")) {       
                 return false;
@@ -55,25 +55,28 @@ public class ClienteUDP {
                          ContatoBean cb = new ContatoBean();
                          if(comandos[1].equals("label=nome")){
                              cb.setNome(comandos[2]);
-                         } else if(comandos[1].equals("label=email")){
-                             cb.setEmail(comandos[2]);
-                         } else if(comandos[1].equals("label=endereco")){
-                             cb.setEndereco(comandos[2]);
-                         } else if(comandos[1].equals("label=complemento")){
-                             cb.setComplemento(comandos[2]);
-                         } else if(comandos[1].equals("label=cep")){
-                             cb.setCep(Integer.parseInt(comandos[2]));
-                         } else if(comandos[1].equals("label=cidade")){
-                             cb.setCidade(comandos[2]);
-                         } else if(comandos[1].equals("label=estado")){
-                             cb.setEstado(comandos[2]);
-                         } else if(comandos[1].equals("label=emailalternativo")){
-                             cb.setEmailAlternativo(comandos[2]);
-                         } 
-                         
-                         
-                         
-                         break;
+                         if(comandos[3].equals("label=email")){
+                             cb.setEmail(comandos[4]);
+                         if(comandos[5].equals("label=end")){
+                             cb.setEndereco(comandos[6]);
+                         if(comandos[7].equals("label=comp")){
+                             cb.setComplemento(comandos[8]);
+                         if(comandos[9].equals("label=cep")){
+                             cb.setCep(Integer.parseInt(comandos[10]));
+                         if(comandos[11].equals("label=cid")){
+                             cb.setCidade(comandos[12]);
+                         if(comandos[13].equals("label=est")){
+                             cb.setEstado(comandos[14]);
+                         }
+                         try {
+                                cb = ServidorUDP.insert(cb);
+                            } catch(RuntimeException e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                            ServidorUDP.disconnect();
+
+                            break;
                      }
                          
                          

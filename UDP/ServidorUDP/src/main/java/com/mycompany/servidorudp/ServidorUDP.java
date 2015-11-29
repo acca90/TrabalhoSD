@@ -12,7 +12,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.LinkedList;
 import java.util.Queue;
-import EnviaRecebe.Receptor;
+//import EnviaRecebe.Receptor;
+import br.upf.contatos.msg.model.ContatoBean;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.BlockingQueue;
@@ -56,7 +57,7 @@ public class ServidorUDP {
             
             bq.add(pc);
             
-            bq.remove(bq.);
+            //bq.remove(bq.);
             // CRIAR THREAD PARA INSERIR NA LISTA(QUEUE) mensagensQueue
             
             
@@ -73,5 +74,13 @@ public class ServidorUDP {
             // Log pra saber se enviou
             System.out.println("Enviou");
         }
+
+    public static Iterable<ContatoBean> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static void disconnect() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
