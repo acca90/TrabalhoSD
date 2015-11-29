@@ -4,6 +4,7 @@ import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -136,6 +137,7 @@ public class ContatoRest {
     public Response delete(@PathParam("id") Integer id) {
         Retorno resposta = new Retorno();
         try{
+            service.delete(id);
             resposta.setErro("");
         }catch(RuntimeException e){
             resposta.setErro(e.getMessage());
