@@ -45,8 +45,11 @@ public class ClienteUDP {
     
     private static final int PORTA = 2010;
     private static final String HOST = "localhost";
+    public static void main(String []args) throws RuntimeException, IOException {
+        comando(args);
+   }
     
-    public static boolean main (String[] args) throws SocketException, IOException{
+    public static boolean comando (String[] args) throws SocketException, IOException{
         
             while (true) {
                 Scanner scanner = new Scanner(System.in);   
@@ -55,7 +58,7 @@ public class ClienteUDP {
                 if (comandos[0].equals("help")) {    
                 System.out.println("Listar = Lista todos os contatos"
                     + "incluir = Inclui um contato, incluir nome NOMEtudoJUNTO email EMAIL end ENDERECO comp COPM cep CEP cid CID est EST \n"
-                    + "editar  = edita um contato, escrever ID=numero label=novoValor\n"
+                    + "editar  = edita um contato, escrever editar numeroDoID label VALORaSERalterado\n"
                     + "deletar = deletar id numero \n"
                     + "parar   = finaliza conexao \n"
                     + "cidade  = lista por cidade escrever cidade nomeCidade\n"
@@ -75,7 +78,7 @@ public class ClienteUDP {
                             udpConnection.disconnect();
 
                             break;
-                        }
+                        }// TERMINA LISTAR
                         case "incluir": {
                             ContatoBean cb = new ContatoBean();
                             if(comandos[1].equals("label=nome"))
@@ -99,219 +102,83 @@ public class ClienteUDP {
                                 }
                                 udpConnection.disconnect();
                                 break;
-                        }
+                        }//TERMINA INCLUIR
                         
+                        case "editar":{
+                            
+                            int numIdEdi = Integer.parseInt(args[1]);
+                            ContatoBean contact = new ContatoBean();
+                            contact = udpConnection.getById(numIdEdi);
+
+                            switch(args[2]) {        
+                                case "id":
+                                    contact.setId(Integer.parseInt(args[3]));
+                                    break;
+                                case "nome":
+                                    contact.setNome(args[3]);
+                                    break;
+                                case "email":
+                                    contact.setEmail(args[3]);
+                                    break;
+                                case "end":
+                                    contact.setEndereco(args[3]);
+                                    break;
+                                case "comp":
+                                    contact.setComplemento(args[3]);
+                                    break;
+                                case "cep":
+                                    contact.setCep(Integer.parseInt(args[3]));
+                                    break;
+                                case "cid":
+                                    contact.setCidade(args[3]);
+                                    break;
+                                case "est":
+                                    contact.setEstado(args[3]);
+                                    break;
+
+                            }// FINALIZA CASE DE TROCA DE DADOS
+
+                            try {
+                                contact = udpConnection.update(contact);
+                                System.out.println(new JSONObject(contact));
+                            }catch(RuntimeException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            udpConnection.disconnect();
+                        }// TERMINA EDITAR 
                         
-                         
-                }
-                    
-                    
-                }    
-//             switch(op[1]) {     
-//                 case "listar":  
-//
-//                    for(ContatoBean cb: tcpService.getAll()) {
-//                        System.out.println(new JSONObject(cb));
-//                    }
-//
-//                    tcpService.disconnect();
-//
-//
-//                break;
-//
-//                case "incluir":
-//                    String id;
-//                    String nome;
-//                    String email;
-//                    String end;
-//                    String comp;
-//                    String cep;
-//                    String cid;
-//                    String est;
-//
-//
-//                Scanner scan = new Scanner (System.in); 
-//
-//                System.out.printf("Digite o id:");
-//                id = scan.nextLine();
-//                System.out.printf("Digite o nome:");
-//                nome = scan.nextLine();
-//                System.out.printf("Digite o email:");
-//                email = scan.nextLine();
-//                System.out.printf("Digite o endereco:");
-//                end = scan.nextLine();
-//                System.out.printf("Digite o complemento:");
-//                comp = scan.nextLine();
-//                System.out.printf("Digite o cep:");
-//                cep = scan.nextLine();
-//                System.out.printf("Digite a cidade:");
-//                cid = scan.nextLine();
-//                System.out.printf("Digite o estado:");
-//                est = scan.nextLine();
-//
-//                ContatoBean c = new ContatoBean();
-//                int numCep = Integer.parseInt(cep);
-//                int numId = Integer.parseInt(id);
-//                c.setId(numId);
-//                c.setNome(nome);
-//                c.setEmail(email);
-//                c.setEndereco(end);
-//                c.setComplemento(comp);
-//                c.setCep(numCep);
-//                c.setCidade(cid);
-//                c.setEstado(est);
-//            try {
-//                     c = tcpService.insert(c);
-//                     System.out.println(new JSONObject(c));
-//                 } catch(RuntimeException e) {
-//                     System.out.println(e.getMessage());
-//                 }
-//
-//                 tcpService.disconnect();
-//
-//                 break;
-//
-//                case "editar": 
-//
-//                    while (true){
-//                    String resp;
-//                    String nummId;
-//                    Scanner sca = new Scanner (System.in);
-//                    System.out.println("Deseja alterar um contato? responda sim ou não");
-//                    resp = sca.nextLine();
-//                    if(resp.equals("sim")){
-//
-//                    System.out.println("Informe o id do contato à editar");
-//                    nummId = sca.nextLine();
-//
-//                    ContatoBean contB = new ContatoBean();
-//                    int numIdEdi = Integer.parseInt(nummId);
-//
-//
-//                    String opEditar;
-//
-//                    System.out.print("Escolha os atributos à alterar (id, nome, email, endereco, complemento, cep, cidade, estado, parar): ");
-//                    opEditar = sca.nextLine();      
-//
-//
-//                    String id2 = null;
-//                    String nome2 = null;
-//                    String email2 = null;
-//                    String end2 = null;
-//                    String comp2 = null;
-//                    String cep2 = null;
-//                    String cid2 = null;
-//                    String est2;
-//                    ContatoBean contact = new ContatoBean();
-//                    contact = tcpService.getById(numIdEdi);
-//
-//                    switch(opEditar) {        
-//                         case "id":
-//                           System.out.printf("Digite o id:");
-//                           id2 = sca.nextLine(); 
-//                           int numIdEdit = Integer.parseInt(id2);
-//                           contact.setId(numIdEdit);
-//                             break;
-//                         case "nome":
-//                             System.out.printf("Digite o nome:");
-//                             nome2 = sca.nextLine();
-//                             contact.setNome(nome2);
-//                             break;
-//                         case "email":
-//                            System.out.printf("Digite o email:");
-//                            email2 = sca.nextLine(); 
-//                            contact.setEmail(email2);
-//                             break;
-//                         case "endereco":
-//                             System.out.printf("Digite o endereco:");
-//                             end2 = sca.nextLine();
-//                             contact.setEndereco(end2);
-//                             break;
-//                         case "complemento":
-//                             System.out.printf("Digite o complemento:");
-//                              comp2 = sca.nextLine();
-//                             contact.setComplemento(comp2);
-//                             break;
-//                         case "cep":
-//                             System.out.printf("Digite o cep:");
-//                             cep2 = sca.nextLine();
-//                             int numCepEdit = Integer.parseInt(cep2);
-//                             contact.setCep(numCepEdit);
-//                             break;
-//                         case "cidade":
-//                             System.out.printf("Digite o cidade:");
-//                             cid2 = sca.nextLine();
-//                             contact.setCidade(cid2);
-//                             break;
-//                         case "parar":
-//                             return false;
-//                         case "estado":
-//                            System.out.printf("Digite o estado:");
-//                            est2 = sca.nextLine();
-//                            contact.setEstado(est2);
-//                             break;
-//
-//                    }
-//
-//
-//
-//
-//                  try {
-//                     contact = tcpService.update(contact);
-//                     System.out.println(new JSONObject(contact));
-//                 } catch(RuntimeException e) {
-//                     System.out.println(e.getMessage());
-//                 }
-//
-//                 tcpService.disconnect();
-//
-//                    }else{
-//                    return false;
-//                    } 
-//
-//                }
-//
-//                case "cidade":
-//                    String cidade;
-//                    Scanner scanner = new Scanner (System.in);
-//                    System.out.println("Informe a cidade à listar"); 
-//                    cidade = scanner.nextLine();
-//
-//                    ContatoBean cob = new ContatoBean();
-//                    cob.setCidade(cidade);
-//
-//                    try {
-//                     cob = tcpService.getByCidade(cob);
-//                     System.out.println(new JSONObject(cob));
-//                    } catch(RuntimeException e) {
-//                     System.out.println(e.getMessage());
-//                    }
-//
-//                 tcpService.disconnect();
-//                break;
-//
-//                case "deletar":
-//                    String idDel;
-//                    Scanner scann = new Scanner (System.in);
-//                    System.out.println("Informe o id do contato à deletar"); 
-//                    idDel = scann.next();
-//                    int numIdDel = Integer.parseInt(idDel);
-//                    ContatoBean cb = new ContatoBean();
-//                    cb.setId(numIdDel);
-//                try {
-//                     cb = tcpService.delete(numIdDel);
-//                     System.out.println(new JSONObject(cb));
-//                 } catch(RuntimeException e) {
-//                     System.out.println(e.getMessage());
-//                 }
-//
-//                 tcpService.disconnect();
-//                    break;
-//             }   
-//                }
-//            return false;
-//         
-//}
-            
-}
-}
+                        case "cidade":{
+                            ContatoBean cob = new ContatoBean();
+                            cob.setCidade(args[1]);
+                            try {
+                            cob = udpConnection.getByCidade(cob);
+                            System.out.println(new JSONObject(cob));
+                            } catch(RuntimeException e) {
+                            System.out.println(e.getMessage());
+                            }
+
+                            udpConnection.disconnect();
+                        break;
+                        }//termina listar CIDADE
+                        
+                        case "deletar":{
+                            ContatoBean cb = new ContatoBean();
+                            cb.setId(Integer.parseInt(args[1]));
+                            try {
+                                cb = udpConnection.delete(cb.getId());
+                                System.out.println(new JSONObject(cb));
+                            } catch(RuntimeException e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                            udpConnection.disconnect();
+                            break;
+                        }//termina DELETAR
+                        
+                    }//TERMINA SWTICH
+                }// TERMINA ELSE ANTES DO SWITCH    
+
+
+        }//TERMINA WILHER TRUE
+    }//TERMINA BOOLERAN MAIN
+}//TERMINA CLASSE
