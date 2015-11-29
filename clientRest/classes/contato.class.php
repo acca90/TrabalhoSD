@@ -19,6 +19,7 @@
 			$GET 	= 	false) 
 		{
 
+
 			$urlSperador = "";
 			$cidade 	 = "";
 			$id 		 = "";
@@ -39,10 +40,14 @@
 
 	   		$curl = curl_init($this->url.$urlSperador.$cidade.$id);
 
+	   		//echo $this->url.$urlSperador.$cidade.$id; exit;
+
 		   	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		   	/* PARA METODOS POST, PUT e DELETE */
 		   	if (!$GET) curl_setopt($curl, $OPT, $TIPO);
-		   	if (!$GET) curl_setopt($curl, CURLOPT_POSTFIELDS, $this->contato);
+	   		if (!$GET && !$this->delete) {
+	   			curl_setopt($curl, CURLOPT_POSTFIELDS, $this->contato);
+			}
 
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
 

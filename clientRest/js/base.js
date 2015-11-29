@@ -20,6 +20,8 @@
             	$scope.url = loadUrl.get();
             });
 
+
+			/* DELETE CONFIRMADO */
             $rootScope.$on('delete',function(){
             	var contato = loadContato.getContato();
             	$scope.acao = 'delete';

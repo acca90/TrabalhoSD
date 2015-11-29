@@ -31,7 +31,7 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-            	<a href="#" class="navbar-brand">Brand</a>
+            	<a href="#" class="navbar-brand">Contatos</a>
         	</div>
         	<!-- Collection of nav links, forms, and other content for toggling  -->
         	<div id="navbarCollapse" class="collapse navbar-collapse" ng-controller="pesquisa">
