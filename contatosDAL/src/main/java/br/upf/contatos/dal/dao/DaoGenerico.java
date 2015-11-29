@@ -96,10 +96,11 @@ public class DaoGenerico<T> implements Dao<T> {
     @Override
     public List<T> getList() throws Exception {
         EntityManager em = FabricaConexao.getEntityManager();
-        String hql = "select t from " + nomeClasse + " t";
+
+        String query = "select t from " + nomeClasse + " t";
 
         try {
-            List<T> lista = em.createQuery(hql).getResultList();
+            List<T> lista = em.createQuery(query).getResultList();
             return lista;
         } catch (Exception e) {
             throw e;
@@ -108,7 +109,6 @@ public class DaoGenerico<T> implements Dao<T> {
         }
     }
 
-    @Override
     public List<T> getList(String atributoOrdem)
             throws Exception {
         EntityManager em = FabricaConexao.getEntityManager();
@@ -125,7 +125,6 @@ public class DaoGenerico<T> implements Dao<T> {
         }
     }
 
-    @Override
     public List<T> getList(String atributoOrdem,
             String atributoFiltro, String valorFiltro) throws Exception {
         EntityManager em = FabricaConexao.getEntityManager();
@@ -135,27 +134,6 @@ public class DaoGenerico<T> implements Dao<T> {
             hql += setFilter(atributoFiltro, valorFiltro);
             hql += setOrderBy(atributoOrdem);
             List<T> lista = em.createQuery(hql).getResultList();
-            return lista;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
-    public List<T> getList(String atributoOrdem,
-            String atributoFiltro, String valorFiltro, Integer quantidade,
-            Integer posicaoInicial) throws Exception {
-
-        EntityManager em = FabricaConexao.getEntityManager();
-        String hql = "select t from " + nomeClasse + " t";
-
-        try {
-            hql += setFilter(atributoFiltro, valorFiltro);
-            hql += setOrderBy(atributoOrdem);
-            List<T> lista = em.createQuery(hql).setMaxResults(quantidade).
-                    setFirstResult(posicaoInicial).getResultList();
             return lista;
         } catch (Exception e) {
             throw e;

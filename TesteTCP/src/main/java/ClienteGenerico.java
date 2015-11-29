@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
@@ -95,4 +94,3 @@ public static boolean comando(String line) {
     }    
 }
 }
-

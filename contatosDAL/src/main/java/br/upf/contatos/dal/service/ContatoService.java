@@ -1,10 +1,8 @@
 package br.upf.contatos.dal.service;
 
-import br.upf.contatos.dal.dao.DaoGenerico;
+import br.upf.contatos.dal.dao.ContatoDao;
 import br.upf.contatos.dal.model.Contato;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.RollbackException;
 
 /**
@@ -13,90 +11,100 @@ import javax.persistence.RollbackException;
  */
 
 public class ContatoService {
+    private final ContatoDao dao = new ContatoDao();
     
-    private final DaoGenerico<Contato> dao;
-     
-    public ContatoService() {
-        this.dao = new DaoGenerico<>(Contato.class);
-    }
-    
-    public List<Contato> getAll() {
+    public List<Contato> getAll() throws RuntimeException {
         try {
             return dao.getList();
-        } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            throw new RuntimeException("Ocorreu um problema ao tentar buscar os contatos!");
         }
-        return null;
     }
     
     public Contato getById(Integer id) {
         try {
             return dao.getById(id);
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema ao buscar o contato #"+id+"!");
         }
-        return null;
     }
     
     public List<Contato> getByCidade(String cidade) {
         try {
-            return dao.getList("id", "cidade", cidade);
+            return dao.getByCidade(cidade);
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema ao tentar buscar os contatos da cidade "+cidade+"!");
         }
-        return null;
     }
     
-    public List<Contato> getByEmail(String email) {
+    public List<Contato> getByEmail(String email) throws RuntimeException {
         try {
-            return dao.getList("id", "email", email);
+            return dao.getByEmail(email);
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema ao tentar buscar os contatos pelo email "+email+"!");
         }
-        return null;
     }
     
-    public Contato add(Contato c) {
+    public Contato add(Contato c) throws RuntimeException {
+        boolean existe;
+        try {
+             existe = dao.exists(c);
+        } catch (Exception ex) {
+            throw new RuntimeException("Ocorreu um problema ao inserir o contato #"+c.getId()+"!");
+        }
+        if (existe)
+            throw new RuntimeException("Já existe um contato com o código "+c.getId()+"!");
         try {
             dao.persist(c);
             return c;
         } catch (RollbackException ex) {
             throw new RuntimeException("O email informado ("+c.getEmail()+") já está sendo usado!");
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema ao tentar inserir o contato #"+c.getId()+"!");
         }
-        return null;
     }
     
-    public Contato update(Contato c) {
+    public Contato update(Contato c) throws RuntimeException {
+        boolean existe;
         try {
-            if (dao.getById(c.getId()) == null) {
-                throw new RuntimeException("Não existe contato com o código informado ("+c.getId()+")!");
-            }
+             existe = dao.exists(c);
+        } catch (Exception ex) {
+            throw new RuntimeException("Ocorreu um problema ao atualizar o contato #"+c.getId()+"!");
+        }
+        if (!existe)
+            throw new RuntimeException("Não existe contato com o código "+c.getId()+"!");
+        try {
             c = dao.merge(c);
             return c;
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema ao atualizar o contato #"+c.getId()+"!");
         }
-        return null;
     }
     
-    public Contato delete(Integer id) {
+    public Contato delete(Integer id) throws RuntimeException {
+        Contato c;
         try {
-            return delete(dao.getById(id));
+             c = dao.getById(id);
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema excluir o contato #"+id+"!");
         }
-        return null;
+        return delete(c);
     }
     
-    public Contato delete(Contato c) {
+    public Contato delete(Contato c) throws RuntimeException {
+        boolean existe;
+        try {
+             existe = dao.exists(c);
+        } catch (Exception ex) {
+            throw new RuntimeException("Ocorreu um problema excluir o contato #"+c.getId()+"!");
+        }
+        if (!existe)
+            throw new RuntimeException("O contato #"+c.getId()+" não existe!");
         try {
             dao.remove(c);
             return c;
         } catch (Exception ex) {
-            Logger.getLogger(ContatoService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Ocorreu um problema excluir o contato #"+c.getId()+"!");
         }
-        return null;
     }
 }
