@@ -2,24 +2,90 @@
  
 <html>
     <head>
-        <title>Echo Chamber</title>
+        <title>Contatos</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width">        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="core.js"></script>
     </head>
     <body>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
        
         <div>
-            <table>
-            <div>Contatos </div>
+                     
+            <input style="display: none" id="op">
             
-            <input type="text" id="messageinput"/>
-            <input type="text" id="name"/>
-            <input id="op">
-            </tablr>
-        </div>
+            <h1>Formulário de Contato</h1>
+            <label>Codigo</label><br><input id="codigo" name="codigo"><br>
+            <label>Nome</label><br><input id="nome" name="nome"><br>
+            <label>E-mail</label><br><input id="email" name="email"><br>
+            <label>E-mail Alternativo</label><br><input id="email_alter" name="email_alter"><br>
+            <label>Cep</label><br><input id="cep" name="nome"><br>
+            <label>Estado</label><br><input id="estado" name="nome"><br>
+            <label>Cidade</label><br><input id="cidade" name="cidade"><br>
+            <label>Endereço</label><br><input id="endereco" name="cidade"><br>
+            <label>Complemento</label><br><input id="complemento" name="complemento"><br>
+            <button type="button" id="adicionar" >Adicionar Contato</button> <br><br><br>
+            
+            
+            
+        </div><br>
+    <div>
+        <label>Buscar por ID</label><br><input id="ID" name="cidade">
+        <button type="button" id="buscar_por_ID" >Consultar</button> <br><br><br>
+        <label>Buscar por cidade</label><br><input id="cidade_search" name="cidade">
+        <button type="button" id="buscar_por_cidade" >Consultar</button> <br><br><br>
+        <h2> LOGS </h2>
+        <textarea id="log" rows="4" cols="150">
+           
+        </textarea>
+    </div>
+
         <div>
-            <button type="button" onclick="openSocket();" >Open</button>
-            <button type="button" onclick="operacao();" >Buscar Todos os Contatos</button>
+            <h1> Tabela de Contatos </h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>E-mail Alternativo</th>
+                    <th>Cep</th>
+                    <th>Estado</th>
+                    <th>Cidade</th>
+                    <th>Endereço</th>
+                    <th>Complemento</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tr>
+                    <th> 1 </th>
+                    <th> João </th>
+                    <th> 1 </th>
+                    <th> 1 </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+                    <th> João </th>
+
+                </tr>
+
+
+               
+            </table>
+
+        </div>
+        
+        
+        <div>            
+            <button type="button" onclick="getAll();" >Buscar Todos os Contatos</button>
             <button type="button" onclick="closeSocket();" >Closse</button>
         </div>
         <!-- Server responses get written here -->
@@ -27,63 +93,8 @@
        
         <!-- Script to utilise the WebSocket -->
         <script type="text/javascript">
-                       
-            var webSocket;
-            var messages = document.getElementById("messages");
-            function operacao(){
-                document.getElementById("op").value=1;
-                send();
-            }
-           
-           
-            function openSocket(){
-                // Ensures only one connection is open at a time
-                if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
-                   writeResponse("WebSocket is already opened.");
-                    return;
-                }
-                // Create a new instance of the websocket
-                webSocket = new WebSocket("ws:localhost:8080/WebSocket/echo");
-                 
-                /**
-                 * Binds functions to the listeners for the websocket.
-                 */
-                webSocket.onopen = function(event){
-                    // For reasons I can't determine, onopen gets called twice
-                    // and the first time event.data is undefined.
-                    // Leave a comment if you know the answer.
-                    if(event.data === undefined)
-                        return;
- 
-                    writeResponse(event.data);
-                };
- 
-                webSocket.onmessage = function(event){
-                    writeResponse(event.data);
-                };
- 
-                webSocket.onclose = function(event){
-                    writeResponse("Connection closed");
-                };
-            }
-           
-            /**
-             * Sends the value of the text input to the server
-             */
-            function send(){
-                var op = document.getElementById("op").value;
-                var text = document.getElementById("messageinput").value;
-                var name = document.getElementById("name").value;
-                webSocket.send(op);
-            }
-           
-            function closeSocket(){
-                webSocket.close();
-            }
- 
-            function writeResponse(text){
-               messages.innerHTML += "<br/>" + text;
-            }
+            open();
+            
            
         </script>
        

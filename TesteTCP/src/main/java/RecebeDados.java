@@ -19,17 +19,41 @@ import java.util.List;
  */
 public class RecebeDados {
      public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+        
+         
         // Cria o Socket que vai Se conectar com um ServerSocket (Servidor)    
         Socket cliente = new Socket("localhost", 1236);
         // Aguarda resposta do Servidor e joga no object quando receber algo
         ObjectInputStream vem = new ObjectInputStream(cliente.getInputStream());
-       // Contato novo = new Contato();
+        ObjectInputStream vem2 = new ObjectInputStream(cliente.getInputStream());
+       int id = (int) vem.readObject();
+        String op = (String) vem2.readObject();
+        if(op == "deletar"){
+            System.out.println("acertou: ");
         
-        Contato novo = (Contato) vem.readObject();
+     }
+        //////////// incluir
+        // Contato novo = new Contato();
+        
+       // Contato novo = (Contato) vem.readObject();
        
-       ContatoService servico = new ContatoService();
-       servico.add(novo);
+      // ContatoService servico = new ContatoService();
+      // servico.add(novo);
+        
+        ////////////////////////
+        ////////////////// deletar
+     //  ContatoService service1 = new ContatoService();
+      //  List<Contato> contatos = service1.getAll();
+      //  int id = (int) vem.readObject();
+       // service1.delete(id);
+        //////////////////////////////
+         
+        ////////////// update
+       // Contato update = (Contato) vem.readObject();
+        //String op = (String) vem2.readObject();
+        // System.out.println("operacao" + op);
        
-      
+        //ContatoService servico = new ContatoService();
+        //servico.update(update);
    }
 }

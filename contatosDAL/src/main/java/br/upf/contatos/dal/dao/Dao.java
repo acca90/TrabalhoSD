@@ -56,41 +56,5 @@ public interface Dao<T> {
 	 */
 	public List<T> getList() throws Exception;
 
-	/**
-	 * Método para obter uma lista de todas as instâncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no parâmetro atributoOrdem.
-	 * @param atributoOrdem Nome do atributo para a ordenação. Pode ser mais de um, separado por vírgula.
-	 * @return Coleção com as instâncias ordenadas. 
-	 * Caso nenhuma instância for encontrada a coleção deverá ser vazia, mas inicializada.
-	 * @throws Exception Possível exceção gerada ao realizar a operação.
-	 */
-	public List<T> getList(String atributoOrdem) throws Exception;
-
-	/**
-	 * Método para obter uma lista de todas as instâncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no parâmetro atributoOrdem  
-	 * e filtrando os objetos que contém no atributoFiltro o conteúdo informado no valorFiltro.
-	 * @param atributoOrdem Nome do atributo para a ordenação. Pode ser mais de um, separado por vírgula.
-	 * @param atributoFiltro Atributo sobre o qual deve ser aplicado o filtro.
-	 * @param valorFiltro Valor para o filtro. 
-	 * @return Coleção com as instâncias ordenadas e filradas. 
-	 * Caso nenhuma instância for encontrada a coleção deverá ser vazia, mas inicializada.
-	 * @throws Exception Possível exceção gerada ao realizar a operação.
-	 */    
-	public List<T> getList(String atributoOrdem, String atributoFiltro, String valorFiltro) throws Exception;
-
-	/**
-	 * Método para obter uma lista de todas as instâncias contidas no 
-	 * banco de dados ordenadas pelo atributo informado no parâmetro atributoOrdem  
-	 * e filtrando os objetos que contém no atributoFiltro o conteúdo informado no valorFiltro.
-	 * O resultado deve ser paginado usando os parâmetros quantidade e posicaoInicial.
-	 * @param atributoOrdem Nome do atributo para a ordenação. Pode ser mais de um, separado por vírgula.
-	 * @param atributoFiltro Atributo sobre o qual deve ser aplicado o filtro.
-	 * @param valorFiltro Valor para o filtro. 
-	 * @return Coleção com as instâncias ordenadas, filradas e paginadas. 
-	 * Caso nenhuma instância for encontrada a coleção deverá ser vazia, mas inicializada.
-	 * @throws Exception Possível exceção gerada ao realizar a operação.
-	 */    
-	public List<T> getList(String atributoOrdem, String atributoFiltro, String valorFiltro, Integer quantidade, Integer posicaoInicial) throws Exception;
 	
 }
