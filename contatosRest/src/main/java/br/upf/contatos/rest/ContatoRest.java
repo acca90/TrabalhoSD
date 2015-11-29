@@ -77,18 +77,15 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response insert(Contato c) {
         Retorno resposta = new Retorno();
-        if(service.getByEmail(c.getEmail()).isEmpty()){
+        try{
             Contato contato = service.add(c);
-            if(contato.equals(c)){
+            if (contato.equals(c)) {
                 resposta.setErro("");
-            }
-            else
-            {
+            } else {
                 resposta.setErro("Erro ao inserir contato!");
             }
-        }else
-        {
-            resposta.setErro("Já existe um contato registrado com mesmo email!");
+        } catch (RuntimeException e) {
+            resposta.setErro(e.getMessage());
         }
         resposta.setContatos(service.getAll());
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
@@ -105,14 +102,14 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(Contato c) {
         Retorno resposta = new Retorno();
-        Contato contato = service.update(c);
-        if(contato.equals(c))
-        {
-            resposta.setErro("");
-        }
-        else
-        {
-            resposta.setErro("Erro ao atualizar contato!");
+        try{
+            Contato contato = service.update(c);
+            if(contato.equals(c))
+                resposta.setErro("");
+            else
+                resposta.setErro("Erro ao atualizar contato!");
+        }catch(RuntimeException e){
+            resposta.setErro(e.getMessage());
         }
         resposta.setContatos(service.getAll());
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
