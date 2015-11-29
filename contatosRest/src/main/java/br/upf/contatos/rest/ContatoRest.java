@@ -29,10 +29,13 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll() {
         Retorno resposta = new Retorno();
-        resposta.setErro("");
-        resposta.setContatos(service.getAll());
-        if(resposta.getContatos().size() < 1)
-            resposta.setErro("Nenhum contato encontrado!");
+        try{
+            resposta.setErro("");
+            resposta.setContatos(service.getAll());
+        }catch(RuntimeException e){
+            resposta.setErro(e.getMessage());
+            resposta.setContatos(new ArrayList<Contato>());
+        }
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
@@ -51,20 +54,24 @@ public class ContatoRest {
         try{
             Integer codigo = Integer.parseInt(atributo);
             List<Contato> selecionado = new ArrayList<>();
-            Contato contato = service.getById(codigo);
-            if(contato == null)
-                resposta.setErro("Nenhum contato encontrado com esse código!");
-            else
-                selecionado.add(contato);
-            resposta.setContatos(selecionado);
-            return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
+            try{
+                selecionado.add(service.getById(codigo));
+                resposta.setErro("");
+                resposta.setContatos(selecionado);
+            }catch(RuntimeException e){
+                resposta.setErro(e.getMessage());
+                resposta.setContatos(new ArrayList<Contato>());
+            }
         }catch(NumberFormatException nfe){
-            resposta.setErro("");
-            resposta.setContatos(service.getByCidade(atributo));
-            if(resposta.getContatos().size() < 1)
-                resposta.setErro("Nenhum contato encontrado nesta cidade!");
-            return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
+            try{
+                resposta.setErro("");
+                resposta.setContatos(service.getByCidade(atributo));
+            }catch(RuntimeException e){
+                resposta.setErro(e.getMessage());
+                resposta.setContatos(new ArrayList<Contato>());
+            }
         }
+        return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
     /**
@@ -78,16 +85,17 @@ public class ContatoRest {
     public Response insert(Contato c) {
         Retorno resposta = new Retorno();
         try{
-            Contato contato = service.add(c);
-            if (contato.equals(c)) {
-                resposta.setErro("");
-            } else {
-                resposta.setErro("Erro ao inserir contato!");
-            }
+            service.add(c);
+            resposta.setErro("");
         } catch (RuntimeException e) {
             resposta.setErro(e.getMessage());
         }
-        resposta.setContatos(service.getAll());
+        try{
+            resposta.setContatos(service.getAll());
+        }catch(RuntimeException e){
+            resposta.setErro(resposta.getErro() + " " + e.getMessage());
+            resposta.setContatos(new ArrayList<Contato>());
+        }
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
@@ -103,15 +111,17 @@ public class ContatoRest {
     public Response update(Contato c) {
         Retorno resposta = new Retorno();
         try{
-            Contato contato = service.update(c);
-            if(contato.equals(c))
-                resposta.setErro("");
-            else
-                resposta.setErro("Erro ao atualizar contato!");
+            service.update(c);
+            resposta.setErro("");
         }catch(RuntimeException e){
             resposta.setErro(e.getMessage());
         }
-        resposta.setContatos(service.getAll());
+        try{
+            resposta.setContatos(service.getAll());
+        }catch(RuntimeException e){
+            resposta.setErro(resposta.getErro() + " " + e.getMessage());
+            resposta.setContatos(new ArrayList<Contato>());
+        }
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
     
@@ -125,14 +135,17 @@ public class ContatoRest {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") Integer id) {
         Retorno resposta = new Retorno();
-        Contato contato = service.delete(id);
-        if(contato == null){
-            resposta.setErro("Erro ao excluir contato!");
-        }
-        else{
+        try{
             resposta.setErro("");
+        }catch(RuntimeException e){
+            resposta.setErro(e.getMessage());
         }
-        resposta.setContatos(service.getAll());
+        try{
+            resposta.setContatos(service.getAll());
+        }catch(RuntimeException e){
+            resposta.setErro(resposta.getErro() + " " + e.getMessage());
+            resposta.setContatos(new ArrayList<Contato>());
+        }
         return Response.ok(new GenericEntity<Retorno>(resposta){}).build();
     }
 }
