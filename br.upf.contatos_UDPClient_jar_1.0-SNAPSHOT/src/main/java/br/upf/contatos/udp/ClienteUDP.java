@@ -1,3 +1,15 @@
+/**
+ *
+ * @author Gehrke
+ *
+ * @author Barizon
+ */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package br.upf.contatos.udp;
 
 import br.upf.contatos.msg.model.ContatoBean;
@@ -20,22 +32,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
-
-/**
- *
- * @author Gehrke
- *
- * @author Barizon
- */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package br.upf.client.udp;
-
 import br.upf.contatos.msg.model.ContatoBean;
-import com.mycompany.servidorudp.ServidorUDP;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -44,11 +41,10 @@ import java.net.SocketException;
 import java.util.Scanner;
 import org.json.JSONObject;
 
-/**
- *
- * @author Usuario
- */
 public class ClienteUDP {
+    
+    private static final int PORTA = 2010;
+    private static final String HOST = "localhost";
     
     public static boolean main (String[] args) throws SocketException, IOException{
         
@@ -69,70 +65,48 @@ public class ClienteUDP {
                 } else if (comandos[0].equals("parar")) {       
                 return false;
                 } else {
+                    UDPConexao udpConnection = new UDPConexao(HOST, PORTA);
+                    udpConnection.connect();
                     switch(comandos[0]) {     
-                     case "listar": { 
-
-                        for(ContatoBean cb: ServidorUDP.getAll()) {
+                        case "listar": { 
+                            for(ContatoBean cb: udpConnection.getAll()) {
                             System.out.println(new JSONObject(cb));
-                        }
-
-                        ServidorUDP.disconnect();
-
-                        break;
-                     }
-                     case "incluir": {
-                         ContatoBean cb = new ContatoBean();
-                         if(comandos[1].equals("label=nome")){
-                             cb.setNome(comandos[2]);
-                         if(comandos[3].equals("label=email")){
-                             cb.setEmail(comandos[4]);
-                         if(comandos[5].equals("label=end")){
-                             cb.setEndereco(comandos[6]);
-                         if(comandos[7].equals("label=comp")){
-                             cb.setComplemento(comandos[8]);
-                         if(comandos[9].equals("label=cep")){
-                             cb.setCep(Integer.parseInt(comandos[10]));
-                         if(comandos[11].equals("label=cid")){
-                             cb.setCidade(comandos[12]);
-                         if(comandos[13].equals("label=est")){
-                             cb.setEstado(comandos[14]);
-                         }
-                         try {
-                                cb = ServidorUDP.insert(cb);
-                            } catch(RuntimeException e) {
-                                System.out.println(e.getMessage());
                             }
-
-                            ServidorUDP.disconnect();
+                            udpConnection.disconnect();
 
                             break;
-                     }
-                         
+                        }
+                        case "incluir": {
+                            ContatoBean cb = new ContatoBean();
+                            if(comandos[1].equals("label=nome"))
+                                cb.setNome(comandos[2]);
+                            if(comandos[3].equals("label=email"))
+                                cb.setEmail(comandos[4]);
+                            if(comandos[5].equals("label=end"))
+                                cb.setEndereco(comandos[6]);
+                            if(comandos[7].equals("label=comp"))
+                                cb.setComplemento(comandos[8]);
+                            if(comandos[9].equals("label=cep"))
+                                cb.setCep(Integer.parseInt(comandos[10]));
+                            if(comandos[11].equals("label=cid"))
+                                cb.setCidade(comandos[12]);
+                            if(comandos[13].equals("label=est"))
+                                cb.setEstado(comandos[14]);
+                            try {
+                                    cb = udpConnection.insert(cb);
+                                } catch(RuntimeException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                                udpConnection.disconnect();
+                                break;
+                        }
+                        
+                        
                          
                 }
                     
                     
                 }    
-            // Define o host, é importante saber porque se n for localhost é obrigatorio usar
-            InetAddress host = InetAddress.getByName("localhost");
-            // Cria uma String que vai ser enviada
-            String nome = "Felipe Lanius";
-            // Cria um Socket UDP, não precisa de porta porque é o cliente
-            DatagramSocket socket = new DatagramSocket();
-            // Cria um Pacote UDP passando a String em Bytes e a porta
-            // getBytes é para transformar em vetor de bytes e poder ser transportado
-            // host que vai ser enviado           
-            // .length é para pegar o tamanho do vetor
-            DatagramPacket pc = new DatagramPacket(nome.getBytes(), nome.getBytes().length, host, 2010);
-            // Envia o pacote pelo socket
-            socket.send(pc);
-            // Aguarda até receber um pacote
-            // quando receber ele armazena na string
-            String resposta = new String(pc.getData());
-            // Printa na tela
-            System.out.println(resposta);
-        }
-
 //             switch(op[1]) {     
 //                 case "listar":  
 //

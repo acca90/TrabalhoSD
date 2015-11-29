@@ -108,32 +108,32 @@ public class UDPConexao {
 	}
     
     
-    public List<ContatoBean> getAll() throws RuntimeException {
+    public static List<ContatoBean> getAll() throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().getAll());
         return resp.getContatos();
     }
     
-    public ContatoBean getById(Integer id) throws RuntimeException {
+    public static ContatoBean getById(Integer id) throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().getById(id));
         return resp.getContato();
     }
     
-    public List<ContatoBean> getByCidade(String cidade) throws RuntimeException {
+    public static List<ContatoBean> getByCidade(String cidade) throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().getByCidade(cidade));
         return resp.getContatos();
     }
     
-    public ContatoBean insert(ContatoBean c) throws RuntimeException {
+    public static ContatoBean insert(ContatoBean c) throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().insert(c));
         return resp.getContato();
     }
     
-    public ContatoBean update(ContatoBean c) throws RuntimeException {
+    public static ContatoBean update(ContatoBean c) throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().update(c));
         return resp.getContato();
     }
     
-    public ContatoBean delete(Integer id) throws RuntimeException {
+    public static ContatoBean delete(Integer id) throws RuntimeException {
         Response resp = sendAndReceive(new RequestImpl().delete(id));
         return resp.getContato();
     }
