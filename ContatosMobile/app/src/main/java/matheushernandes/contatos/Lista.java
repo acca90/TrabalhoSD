@@ -42,7 +42,7 @@ public class Lista extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
-        url = "http://192.168.0.102/wsRest/index.php/contato";
+        url = "http://192.168.1.104/wsRest/index.php/contato";
 
     }
 
