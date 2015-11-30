@@ -7,6 +7,7 @@ package br.upf.contatos.tcp;
 
 import br.upf.contatos.msg.model.ContatoBean;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import org.json.JSONObject;
 
@@ -16,33 +17,41 @@ import org.json.JSONObject;
  */
 public class Client {
     private static final int PORTA = 2005;
-    private static final String HOST = "localhost";
+    private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
-        
-        while (true) {
-        
+       
+        String teste = Arrays.toString(args);
+         if(args.length==0){
+            Client.HOST = "localhost";
+        }else{
+            Client.HOST = args[0];            
+            }
+       
+       String line;
+       do{        
         System.out.println("Digite help, para o menu");
         Scanner scanner = new Scanner(System.in);   
-        String line = scanner.nextLine();
-        comando(line);
-   }   
+         line = scanner.nextLine();
+       }while(comando(line));
+      
         
     } 
   public static boolean comando(String line){
-       
-        ClientConnector tcpService = new ClientConnector(HOST, PORTA);
-       
-               
+
+      ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
+              
       if (line.equals("help")) {    
         System.out.println("op = [ listar, incluir, editar, deletar, parar, cidade ], label = valor");
         System.out.println("Para sair digite: parar");           
+        
         return true;
+        
     } else if (line.equals("parar")) {       
         
         tcpService.disconnect();
       
         return false;
-        
+          
         
     } else { 
         
