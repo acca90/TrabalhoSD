@@ -30,7 +30,9 @@ public class Receiver implements Runnable {
             DatagramPacket pct = new DatagramPacket(buffer, buffer.length);
             
             try {
+                System.out.println("Aguardando requisição...");
                 socket.receive(pct);
+                System.out.println("Nova requisição de " + pct.getAddress());
                 fila.put(pct);
             } catch (IOException ex) {
                 System.out.println("Ocorreu um erro ao receber o pacote!");

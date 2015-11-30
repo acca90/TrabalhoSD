@@ -109,4 +109,15 @@ public class ContatoBean implements Serializable {
     public void setEmailAlternativo(String emailAlternativo) {
         this.emailAlternativo = emailAlternativo;
     }
+    
+    public void merge(ContatoBean other) {
+        this.nome = (other.getNome() == null ? this.nome : other.getNome());
+        this.email = (other.getEmail() == null ? this.email : other.getEmail());
+        this.endereco = (other.getEndereco() == null ? this.endereco : other.getEndereco());
+        this.complemento = (other.getComplemento() == null ? this.complemento : other.getComplemento());
+        this.cep = (other.getCep() == null ? this.cep : other.getCep());
+        this.cidade = (other.getCidade() == null ? this.cidade : other.getCidade());
+        this.estado = (other.getEstado() == null ? this.estado : other.getEstado());
+        this.emailAlternativo = (other.getEmailAlternativo() == null ? this.emailAlternativo : other.getEmailAlternativo());
+    }
 }
