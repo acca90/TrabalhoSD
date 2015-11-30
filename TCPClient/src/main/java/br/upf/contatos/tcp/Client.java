@@ -36,6 +36,8 @@ public class Client {
       
         
     } 
+    
+
   public static boolean comando(String line){
 
       ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
@@ -94,7 +96,7 @@ public class Client {
        
             Scanner scan = new Scanner (System.in); 
            
-            
+           
             System.out.printf("Digite o nome:");
             nome = scan.nextLine();
             System.out.printf("Digite o email:");
@@ -112,8 +114,8 @@ public class Client {
         
             ContatoBean c = new ContatoBean();
             int numCep = Integer.parseInt(cep);
-            
-            
+            int numId = 0;
+            c.setId(numId);
             c.setNome(nome);
             c.setEmail(email);
             c.setEndereco(end);
@@ -132,7 +134,7 @@ public class Client {
                 
              break;
                 
-            case "editar": 
+           case "editar": 
                 
                 while (true){
                 String resp;
@@ -147,14 +149,16 @@ public class Client {
                 
                 ContatoBean contB = new ContatoBean();
                 int numIdEdi = Integer.parseInt(nummId);
-                
                  
+                do{
                 String opEditar;
 
                 System.out.print("Escolha os atributos à alterar (id, nome, email, endereco, complemento, cep, cidade, estado, parar): ");
                 opEditar = sca.nextLine();      
                 
-                
+                if(opEditar.equals("parar")){
+                 break;   
+                }else{
                 String id2 = null;
                 String nome2 = null;
                 String email2 = null;
@@ -169,6 +173,7 @@ public class Client {
                  contact = tcpService.getById(numIdEdi);
              } catch(RuntimeException e) {
                  System.out.println(e.getMessage());
+                 break;
              }
                 
                 
@@ -210,34 +215,32 @@ public class Client {
                          cid2 = sca.nextLine();
                          contact.setCidade(cid2);
                          break;
-                     case "parar":
-                         return false;
                      case "estado":
-                        System.out.printf("Digite o estado:");
-                        est2 = sca.nextLine();
-                        contact.setEstado(est2);
+                         System.out.printf("Digite o estado:");
+                         est2 = sca.nextLine();
+                         contact.setEstado(est2);
                          break;
                         
                 }
             
             
-           
-                         
-              try {
-                 contact = tcpService.update(contact);
-                 System.out.println(new JSONObject(contact));
-             } catch(RuntimeException e) {
-                 System.out.println(e.getMessage());
-             }
-
-            
-                 
-                }else{
-                return false;
-                } 
-               
-            }
           
+                         
+                        try {
+                           contact = tcpService.update(contact);
+                           System.out.println(new JSONObject(contact));
+                       } catch(RuntimeException e) {
+                           System.out.println(e.getMessage());
+                       }
+                }
+            }while(true);
+                
+                }else{
+                break;
+                } 
+                
+            }
+          break;
             case "cidade":
                 String cidade;
                 ArrayList cidade2 = new ArrayList();
