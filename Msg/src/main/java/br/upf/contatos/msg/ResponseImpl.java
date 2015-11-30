@@ -5,7 +5,6 @@
  */
 package br.upf.contatos.msg;
 
-import br.upf.contatos.msg.Response;
 import br.upf.contatos.msg.model.ContatoBean;
 import br.upf.contatos.msg.model.Operacao;
 import static br.upf.contatos.msg.model.Operacao.DELETE;
@@ -76,7 +75,7 @@ public class ResponseImpl implements Response {
         setStatus();
         return this;
     }
-
+    
     @Override
     public String getError() {
         return this.errMsg;
@@ -98,6 +97,13 @@ public class ResponseImpl implements Response {
     public Response toBadRequest() {
         this.operacao = null;
         setStatus();
+        return this;
+    }
+    
+    @Override
+    public Response defineError(String errMsg) {
+        this.status = Status.ERROR;
+        this.errMsg = errMsg;
         return this;
     }
 

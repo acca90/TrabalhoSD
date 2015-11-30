@@ -23,6 +23,7 @@ public interface Response extends Serializable {
     public Response toDelete(ContatoBean c);
     public Response toDisconnect();
     public Response toBadRequest();
+    public Response defineError(String errMsg);
     public ContatoBean getContato();
     public List<ContatoBean> getContatos();
     public Status getStatus();
