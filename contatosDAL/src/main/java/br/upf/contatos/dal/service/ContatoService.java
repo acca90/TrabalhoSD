@@ -88,6 +88,10 @@ public class ContatoService {
         } catch (Exception ex) {
             throw new RuntimeException("Ocorreu um problema excluir o contato #"+id+"!");
         }
+        
+        if (c == null)
+            throw new RuntimeException("O contato #"+id+" não existe!");
+        
         return delete(c);
     }
     

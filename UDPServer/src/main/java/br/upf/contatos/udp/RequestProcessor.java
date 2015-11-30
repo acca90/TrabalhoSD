@@ -5,6 +5,7 @@
  */
 package br.upf.contatos.udp;
 
+import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
 import br.upf.contatos.msg.Request;
 import br.upf.contatos.msg.Response;
@@ -18,6 +19,7 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -83,27 +85,57 @@ public class RequestProcessor implements Runnable {
     }
 
     private Response getAll() {
-        return new ResponseImpl().toGetAll(ContatoWrapper.jpa2tcp(service.getAll()));
+        try {
+            List<Contato> contatos = service.getAll();
+            return new ResponseImpl().toGetAll(ContatoWrapper.jpa2tcp(contatos));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response getById(Integer idContato) {
-        return new ResponseImpl().toGetById(ContatoWrapper.jpa2tcp(service.getById(idContato)));
+        try {
+            Contato c = service.getById(idContato);
+            return new ResponseImpl().toGetById(ContatoWrapper.jpa2tcp(c));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response getByCidade(String cidade) {
-        return new ResponseImpl().toGetByCidade(ContatoWrapper.jpa2tcp(service.getByCidade(cidade)));
+        try {
+            List<Contato> contatos = service.getByCidade(cidade);
+            return new ResponseImpl().toGetByCidade(ContatoWrapper.jpa2tcp(contatos));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response insert(ContatoBean contato) {
-        return new ResponseImpl().toInsert(ContatoWrapper.jpa2tcp(service.add(ContatoWrapper.tcp2jpa(contato))));
+        try {
+            Contato c = service.add(ContatoWrapper.tcp2jpa(contato));
+            return new ResponseImpl().toInsert(ContatoWrapper.jpa2tcp(c));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response update(ContatoBean contato) {
-        return new ResponseImpl().toUpdate(ContatoWrapper.jpa2tcp(service.update(ContatoWrapper.tcp2jpa(contato))));
+        try {
+            Contato c = service.update(ContatoWrapper.tcp2jpa(contato));
+            return new ResponseImpl().toUpdate(ContatoWrapper.jpa2tcp(c));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response delete(Integer idContato) {
-        return new ResponseImpl().toDelete(ContatoWrapper.jpa2tcp(service.delete(idContato)));
+        try {
+            Contato c = service.delete(idContato);
+            return new ResponseImpl().toDelete(ContatoWrapper.jpa2tcp(c));
+        } catch (RuntimeException e) {
+            return new ResponseImpl().defineError(e.getMessage());
+        }
     }
 
     private Response badRequest() {
