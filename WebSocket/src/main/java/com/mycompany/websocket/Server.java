@@ -7,19 +7,16 @@ package com.mycompany.websocket;
 import br.upf.contatos.dal.model.Contato;
 import br.upf.contatos.dal.service.ContatoService;
 import java.io.IOException;
-import static java.lang.Math.log;
-import java.nio.channels.SeekableByteChannel;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.websocket.DecodeException;
 import javax.websocket.EncodeException;
- 
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -75,7 +72,7 @@ public class Server {
         
         //adicionar
         if(aux.getOperacao() == 1){
-             c = service.add(aux.getContato());        
+            c = service.add(aux.getContato());        
             contato asd = new contato();
             if(c != null){
                 retorno = "[{\n" +
@@ -151,22 +148,99 @@ public class Server {
     //consultar por ID
         if(aux.getOperacao() == 3){
             c = service.getById(Integer.parseInt(aux.getMsg()));
+            
             if(c == null){
                retorno = "[{\n" +
                                     "\"erro\":\"1\",\n" +                                    
                                     "}]";
             }else{
-                retorno = "contato encontrado";
+                retorno = "[{\n" +
+                                    "\"log\":\""+session.getRequestURI().getHost()+"\",\n" +
+                                    "\"erro\":\"0\",\n" +
+                                    "\"codigo\":\"" +c.getId()+ "\",\n" +
+                                    "\"nome\":\""+c.getNome()+"\",\n" +
+                                    "\"email\":\""+c.getEmail()+"\",\n" +
+                                    "\"emailAlter\":\""+c.getEmailAlternativo()+"\",\n" +
+                                    "\"cep\":\""+c.getCep()+"\",\n" +
+                                    "\"estado\":\""+c.getEstado()+"\",\n" +
+                                    "\"cidade\":\""+c.getCidade()+"\",\n" +
+                                    "\"endereco\":\""+c.getEndereco()+"\",\n" +
+                                    "\"complemento\":\""+c.getComplemento()+"\"\n" +
+                                    "}]";  
                         
                 //retorna somete para o cliente que solicitou
-                session.getBasicRemote().sendObject(retorno);
+                session.getBasicRemote().sendText(retorno);
+                
             }
     }
+        
+        
+        //getALL
+        if(aux.getOperacao() == 4){
+            getALL();
+        }
+        
+        
+        if(aux.getOperacao() == 6){
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            Contato ct = service.delete(Integer.parseInt(aux.getMsg()));
+            
+            if(ct != null){
+                getALL();
+            }
+            
+        }
+        
 }
 
     @OnClose
     public void onClose(Session session){
         peers.remove(session);
+    }
+
+    @OnError
+    public void onError(Throwable t) {
+        t.printStackTrace();
+    }
+    
+    public void getALL(){
+        String retorno;
+         List<Contato> list = service.getAll();
+            int i =0;
+            for(Contato x : list){
+                String col = "";
+                    String vir = ",";
+                    if(i == 0){
+                        col = "[";
+                        
+                    }
+                    if(i == list.size()-1){
+                        vir = "]";
+                    }
+                    retorno = ""+col+"{\n" +                            
+                            "\"codigo\":\"" +x.getId()+ "\",\n" +
+                            "\"nome\":\""+x.getNome()+"\",\n" +
+                            "\"email\":\""+x.getEmail()+"\",\n" +
+                            "\"emailAlter\":\""+x.getEmailAlternativo()+"\",\n" +
+                            "\"cep\":\""+x.getCep()+"\",\n" +
+                            "\"estado\":\""+x.getEstado()+"\",\n" +
+                            "\"cidade\":\""+x.getCidade()+"\",\n" +
+                            "\"endereco\":\""+x.getEndereco()+"\",\n" +
+                            "\"complemento\":\""+x.getComplemento()+"\"\n" +
+                            "}"+vir+"";
+                    //retorna somete para o cliente que solicitou
+                    
+                    i++;
+                 
+                for(Session s : peers){
+                    try {
+                        s.getBasicRemote().sendText(retorno);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+               
+            }
     }
     
 }
