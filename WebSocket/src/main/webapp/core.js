@@ -30,6 +30,26 @@
             console.log(myObject);
             send(myObject);
         });
+
+        $('#buscarTodos').click(function(){
+            var myObject = new Object();
+            myObject.operacao = 4;
+
+            send(myObject);
+
+
+        });
+
+        $('#delete').click(function(){
+            var codigo = prompt("Informe o id que deseja deletar:");
+
+            var myObject = new Object();
+            myObject.operacao = 6;
+            myObject.codigo = codigo;
+            
+            send(myObject);
+
+        });
     });
 
 
@@ -65,8 +85,7 @@
             var webSocket;
             var messages = document.getElementById("messages");
             function getAll(event){
-                document.getElementById("op").value=4;                
-                event.data.setData();
+                document.getElementById("op").value=4;
                 send();
             }
             

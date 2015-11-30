@@ -44,15 +44,29 @@ public class contatoDecoder implements Decoder.Text<contato> {
             c.setContato(dal);
         }
         
+        //busca cidade
         if(json.getInt("operacao") == 2){
             c.setOperacao(2);
             c.setMsg(json.getString("busca_cidade"));
         }
         
+        //busca id
         if(json.getInt("operacao") == 3){
             c.setOperacao(3);
             c.setMsg(json.getString("busca_ID"));
         }
+        
+        if(json.getInt("operacao") == 4){
+            c.setOperacao(4);
+           
+        }
+        
+        if(json.getInt("operacao") == 6){
+            c.setOperacao(6);
+            c.setMsg(json.getString("codigo"));
+            
+        }
+        
         return c;
     }
 
