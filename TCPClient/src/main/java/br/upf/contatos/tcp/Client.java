@@ -54,7 +54,6 @@ public class Client {
       
         return false;
           
-        
     } else { 
         
         tcpService.connect();
