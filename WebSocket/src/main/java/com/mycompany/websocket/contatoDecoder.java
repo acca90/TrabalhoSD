@@ -56,15 +56,30 @@ public class contatoDecoder implements Decoder.Text<contato> {
             c.setMsg(json.getString("busca_ID"));
         }
         
+        //busca todos
         if(json.getInt("operacao") == 4){
             c.setOperacao(4);
-           
         }
         
+        //alterar
+       if(json.getInt("operacao") == 5){
+            dal.setId(json.getInt("codigo"));
+            dal.setNome(json.getString("nome"));
+            dal.setCep(json.getInt("cep"));
+            dal.setCidade(json.getString("cidade"));
+            dal.setComplemento(json.getString("complemento"));
+            dal.setEmail(json.getString("email"));
+            dal.setEmailAlternativo(json.getString("email_alter"));
+            dal.setEstado(json.getString("estado"));
+            dal.setEndereco(json.getString("endereco"));
+            c.setOperacao(json.getInt("operacao"));
+            c.setContato(dal);
+        }
+        
+        //deletar
         if(json.getInt("operacao") == 6){
             c.setOperacao(6);
-            c.setMsg(json.getString("codigo"));
-            
+            c.setMsg(json.getString("codigo"));  
         }
         
         return c;

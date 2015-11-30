@@ -70,6 +70,12 @@ public class Server {
         Contato c = new Contato();
         String retorno;
         
+        //atualizar
+        if(aux.getOperacao()==5){
+            c=service.update(aux.getContato());
+            getALL();
+        }
+        
         //adicionar
         if(aux.getOperacao() == 1){
             c = service.add(aux.getContato());        
@@ -90,9 +96,8 @@ public class Server {
                                     "}]";               
             }else{
                 retorno = "[{\n" +
-                                    "\"erro\":\"1\",\n" +                                    
-                                    "}]";
-                
+                           "\"erro\":\"1\",\n" +                                    
+                           "}]"; 
             }
             
             for(Session s : peers){
@@ -135,10 +140,7 @@ public class Server {
                     //retorna somete para o cliente que solicitou
                     session.getBasicRemote().sendObject(retorno);
                     i++;
-             }  
-                
-                
-                
+             }    
             }else{
                 
             }
@@ -170,7 +172,6 @@ public class Server {
                         
                 //retorna somete para o cliente que solicitou
                 session.getBasicRemote().sendText(retorno);
-                
             }
     }
         
@@ -180,6 +181,15 @@ public class Server {
             getALL();
         }
         
+         if(aux.getOperacao() == 5){
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            Contato ct = service.update(aux.getContato());
+            
+            if(ct != null){
+                getALL();
+            }
+            
+        }
         
         if(aux.getOperacao() == 6){
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");

@@ -1,11 +1,16 @@
+//adicionar = 1
+//cidade = 2
+//id = 3
+//getall = 4
+//atualizar = 5
+//delete = 6
 
     $(document).ready(function(){
         //abre a conexão            
         openSocket(); 
 
         //clique no botao add contato
-        $('#adicionar').click(function() {            
-            
+        $('#adicionar').click(function() {              
             obj = get_all_inputs();
             obj.operacao = 1;
             send(obj);
@@ -16,9 +21,7 @@
             var myObject = new Object();
             myObject.busca_cidade = $cidade;
             myObject.operacao = 2;
-            
-            console.log(myObject);
-            
+            console.log(myObject);  
             send(myObject);
         });
         
@@ -34,21 +37,23 @@
         $('#buscarTodos').click(function(){
             var myObject = new Object();
             myObject.operacao = 4;
-
             send(myObject);
-
-
         });
 
+        $('#atualizar').click(function(){
+            var codigo = prompt("Informe o id que deseja Atualizar:");
+            obj = get_all_inputs();
+            obj.operacao = 5;
+            obj.codigo = parseFloat(codigo);   
+            send(obj);
+        });
+        
         $('#delete').click(function(){
             var codigo = prompt("Informe o id que deseja deletar:");
-
             var myObject = new Object();
             myObject.operacao = 6;
-            myObject.codigo = codigo;
-            
+            myObject.codigo = codigo;   
             send(myObject);
-
         });
     });
 
@@ -95,9 +100,6 @@
                 send();
             }
             
-            
-           
-           
             function openSocket(){
                 // Ensures only one connection is open at a time
                 if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
