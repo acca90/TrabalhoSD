@@ -58,28 +58,26 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         campoEstado = new javax.swing.JComboBox<>();
         campoCep = new javax.swing.JTextField();
-        campoCodigo = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
         setClosable(true);
         setTitle("Adicionar Contato");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameClosed(evt);
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -125,10 +123,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         campoEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum Estado Selecionado", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         getContentPane().add(campoEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 177, 187, -1));
         getContentPane().add(campoCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 144, 129, -1));
-        getContentPane().add(campoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 12, 96, -1));
-
-        jLabel9.setText("Código");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 17, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -136,7 +130,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        Contato c = new Contato();
         int r = 0;
-       c.setCodigo(Integer.parseInt(campoCodigo.getText()));
+      c.setCodigo(0);
        c.setCep(Integer.parseInt(campoCep.getText()));
        c.setNome(campoNome.getText());
        c.setEmail(campoEmail.getText());
@@ -159,7 +153,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
         if(erro == 2){
             JOptionPane.showMessageDialog(this, "Contato "+c.getNome()+" Inserido com Sucesso!");
             campoCep.setText("");
-            campoCodigo.setText("");
+            
             campoCidade.setText("");
             campoComplemento.setText("");
             campoEmail.setText("");
@@ -167,7 +161,7 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
             campoEndereco.setText("");
             campoEstado.setSelectedItem("");
             campoNome.setText("");
-            campoCodigo.requestFocus();           
+            campoNome.requestFocus();           
             
             r = JOptionPane.showConfirmDialog(campoComplemento, "Deseja Inserir um novo Contato ?");
             System.out.println(r);
@@ -200,7 +194,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoCep;
     private javax.swing.JTextField campoCidade;
-    private javax.swing.JTextField campoCodigo;
     private javax.swing.JTextField campoComplemento;
     private javax.swing.JTextField campoEmail;
     private javax.swing.JTextField campoEmailAlter;
@@ -216,7 +209,6 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 service dao = new service();
