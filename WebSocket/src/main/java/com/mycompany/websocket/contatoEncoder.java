@@ -16,7 +16,7 @@ import javax.websocket.EndpointConfig;
 
 /**
  *
- * @author joao
+ * @author joao                          
  */
 public class contatoEncoder implements Encoder.Text<contato>{
 
