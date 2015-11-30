@@ -11,4 +11,12 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     <name>Msg</name>
+    <dependencies>
+        <dependency>
+            <groupId>br.upf.contatos</groupId>
+            <artifactId>msg</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
