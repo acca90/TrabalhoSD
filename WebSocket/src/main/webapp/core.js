@@ -27,9 +27,7 @@
             var myObject = new Object();
             myObject.busca_ID = $codigo;
             myObject.operacao = 3;
-            
             console.log(myObject);
-            
             send(myObject);
         });
     });
@@ -67,14 +65,14 @@
             var webSocket;
             var messages = document.getElementById("messages");
             function getAll(event){
-                document.getElementById("op").value=1;                
+                document.getElementById("op").value=4;                
                 event.data.setData();
                 send();
             }
             
             
             function insert(){
-                var op = document.getElementById("op").value=2;       
+                var op = document.getElementById("op").value=1;       
                 send();
             }
             
