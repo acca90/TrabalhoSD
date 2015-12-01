@@ -106,8 +106,8 @@ public class Command {
                 }
                 break;
             case INSERT:
-                if (id == null || nome == null || email == null) {
-                    System.out.println("A operação INSERT exige que pelo menos id, nome e email do contato sejam informados.");
+                if (nome == null || email == null) {
+                    System.out.println("A operação INSERT exige que pelo menos nome e email do contato sejam informados.");
                     ehValido = false;
                 }
                 break;
