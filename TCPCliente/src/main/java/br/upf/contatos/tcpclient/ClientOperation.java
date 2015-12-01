@@ -33,13 +33,15 @@ public class ClientOperation {
         this.porta = porta;
     }
     
-    public void conecta(){
+    public boolean conecta(){
         try {
             s = new Socket(host, porta);
             escreve = new ObjectOutputStream(s.getOutputStream());
             le = new ObjectInputStream(s.getInputStream());
+            return true;
         } catch (IOException ex) {
             System.out.println("Não foi possível se conectar ao servidor!");
+            return false;
         }
     }
     

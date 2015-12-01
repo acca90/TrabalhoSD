@@ -5,6 +5,13 @@
  */
 package br.upf.contatos.tcpclient;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 /**
  *
  * @author jonas
@@ -22,7 +29,8 @@ public class Client {
     
     public void iniciar(){
         ClientOperation clienteOper = new ClientOperation(ENDERECO, PORTA);
-        clienteOper.conecta();
+        if(!clienteOper.conecta())
+            System.exit(0);
         Integer opcao = 4;//1-adiciona/2-altera/3-exclui/4-consulta/5-listacidade/6-encerrarcliente
         do {
             opcao = console.menuPrincipal();
@@ -53,6 +61,21 @@ public class Client {
     }
     
     public static void main(String[] args) {
-        new Client("localhost", 2005).iniciar();
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String url = "localhost";
+        Integer porta = 2006;
+        try {
+            System.out.print("Digite o endereço do servidor TCP: ");
+            url = bf.readLine();
+        } catch (IOException ex) {
+            System.out.println("Endereço inválido! O localhost será usado como padrão!");
+        }
+            System.out.print("Digite a porta do servidor TCP: ");
+        try {
+            porta = Integer.valueOf(bf.readLine());
+        } catch (IOException | NumberFormatException ex) {
+            System.out.println("Porta inválida! Porta 2006 será usada como padrão!");
+        }
+        new Client(url, 2006).iniciar();
     }
 }

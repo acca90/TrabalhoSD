@@ -24,7 +24,7 @@ public class ClientConsoleOperation {
         System.out.println("\n=====================================");
         System.out.println("Buscar Contatos Por Cidade");
         System.out.println("=====================================");
-        System.out.println("Digite o Nome da Cidade: ");
+        System.out.print("Digite o Nome da Cidade: ");
         try {
             cidade = bf.readLine();
         } catch (IOException ex) {
@@ -42,8 +42,7 @@ public class ClientConsoleOperation {
         System.out.println(" Consultar Contatos De Uma Cidade - 5");
         System.out.println("                Finalizar Cliente - 6");
         System.out.println("=====================================");
-        System.out.println("Que operação você deseja realizar: ");
-        System.out.println("=====================================");
+        System.out.print("Que operação você deseja realizar: ");
         Integer opcao = 4;
         try{
             opcao = Integer.valueOf(bf.readLine());
