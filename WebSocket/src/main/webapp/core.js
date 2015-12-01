@@ -147,7 +147,15 @@
                document.getElementById("messages").innerHTML+= "<br/>" + text;
                
                  var myObject = new Object();
-                 myObject = text;
+                
+                myObject = eval(text);
+                
+                alert("tamanho: "+myObject.length);
+                for(o in myObject){
+                    alert(myObject[o].nome);
+                }
+                 
+                 
 
-                console.log(text);
+                console.log(myObject);
             }
