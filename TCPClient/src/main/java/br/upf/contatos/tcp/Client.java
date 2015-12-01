@@ -20,6 +20,8 @@ public class Client {
     private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
        
+        ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
+        
         String teste = Arrays.toString(args);
          if(args.length==0){
             Client.HOST = "localhost";
@@ -28,19 +30,20 @@ public class Client {
             }
        
        String line;
+       tcpService.connect();
        do{        
         System.out.println("Digite help, para o menu");
         Scanner scanner = new Scanner(System.in);   
          line = scanner.nextLine();
-       }while(comando(line));
+       }while(comando(line,tcpService));
       
-        
+        tcpService.disconnect();
     } 
     
 
-  public static boolean comando(String line){
+  public static boolean comando(String line, ClientConnector tcpService){
 
-      ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
+      
               
       if (line.equals("help")) {    
         System.out.println("op=[ listar, incluir, editar, deletar, parar, cidade ], label = valor");
@@ -295,7 +298,7 @@ public class Client {
                 
             case "parar":
                 
-                 tcpService.disconnect();
+                 
                  System.out.println("Encerrando Aplicação...");
                  return false;
          }   
