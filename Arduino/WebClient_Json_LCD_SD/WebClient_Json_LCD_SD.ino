@@ -58,7 +58,7 @@ byte NET[] = {255, 255, 255, 0};
 // that you want to connect to (port 80 is default for HTTP):
 EthernetClient client;
 
-int qtdcontatos=0;
+int qtdcontatos=1;
 
 void setup()
 {
@@ -307,8 +307,6 @@ void escreve()
     String referencia="";
     String referencia2="";
     lesd(referencia,referencia2);
-    Serial.println(referencia);
-    Serial.println(referencia2);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(referencia);
