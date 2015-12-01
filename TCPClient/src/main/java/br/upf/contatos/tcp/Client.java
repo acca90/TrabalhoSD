@@ -47,7 +47,6 @@ public class Client {
         System.out.println("Para sair digite: parar");           
         
         return true;
-        
     } else if (line.equals("parar")) {       
         
         tcpService.disconnect();
