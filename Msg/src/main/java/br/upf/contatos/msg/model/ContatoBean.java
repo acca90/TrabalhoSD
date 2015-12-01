@@ -120,4 +120,8 @@ public class ContatoBean implements Serializable {
         this.estado = (other.getEstado() == null ? this.estado : other.getEstado());
         this.emailAlternativo = (other.getEmailAlternativo() == null ? this.emailAlternativo : other.getEmailAlternativo());
     }
+
+    public void setId(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
