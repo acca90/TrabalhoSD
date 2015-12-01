@@ -16,7 +16,7 @@ import org.json.JSONObject;
  * @author kaeff
  */
 public class Client {
-    private static final int PORTA = 2005;
+    private static final int PORTA = 2006;
     private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
        
