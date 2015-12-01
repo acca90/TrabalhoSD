@@ -12,6 +12,7 @@
         //clique no botao add contato
         $('#adicionar').click(function() {              
             obj = get_all_inputs();
+            obj.codigo = null;
             obj.operacao = 1;
             send(obj);
         });

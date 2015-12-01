@@ -31,7 +31,7 @@ public class contatoDecoder implements Decoder.Text<contato> {
         
         // adicionar
         if(json.getInt("operacao") == 1){
-            dal.setId(json.getInt("codigo"));
+            dal.setId(null);
             dal.setNome(json.getString("nome"));
             dal.setCep(json.getInt("cep"));
             dal.setCidade(json.getString("cidade"));
