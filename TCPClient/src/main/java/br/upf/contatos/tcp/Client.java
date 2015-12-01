@@ -20,7 +20,7 @@ public class Client {
     private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
        
-        ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
+       
         
         String teste = Arrays.toString(args);
          if(args.length==0){
@@ -29,6 +29,7 @@ public class Client {
             Client.HOST = args[0];            
             }
        
+          ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
        String line;
        tcpService.connect();
        do{        
