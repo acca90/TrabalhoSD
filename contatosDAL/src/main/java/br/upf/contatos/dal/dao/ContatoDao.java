@@ -42,7 +42,7 @@ public class ContatoDao extends DaoGenerico<Contato> {
     public boolean exists(Contato c) throws Exception {
         EntityManager em = FabricaConexao.getEntityManager();
         try {
-            return (em.find(Contato.class, c.getId()) != null);
+            return (c.getId() != null && em.find(Contato.class, c.getId()) != null);
         } catch (Exception e) {
             throw e;
         } finally {
