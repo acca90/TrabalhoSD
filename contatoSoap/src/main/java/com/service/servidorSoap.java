@@ -38,19 +38,19 @@ public class servidorSoap {
      * Operação de Web service que retorna os dados de um contato através do parametro id
      */
     @WebMethod(operationName = "getById")
-    public retorno getById(@WebParam(name = "id") int id) {
-       Contato retorno = service.getById(id);
+    public retorno getById(@WebParam(name = "id") int id) {       
+        
+        try {
+            Contato retorno = service.getById(id);
+            r.setCodigo(2);
+            r.setMsg("Sucesso na Consulta");
+            r.setContato(retorno);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
+        } 
        
-       retorno r = new retorno();
-       
-        if(retorno == null){
-           r.setCodigo(1);
-           r.setMsg("Erro na Consulta");
-        }else{
-           r.setCodigo(2);
-           r.setMsg("Sucesso na Consulta");
-           r.setContato(retorno);
-        }
         
         return r;
     }
@@ -59,17 +59,17 @@ public class servidorSoap {
      * Operação de Web service
      */
     @WebMethod(operationName = "delete")
-    public retorno delete(@WebParam(name = "id") Integer id) {
-        Contato retorno = service.delete(id);
-        
-        if(retorno == null){
-           r.setCodigo(1);
-           r.setMsg("Erro ao apagar o contato, ou esse Código não existe!!!");
-        }else{
-           r.setCodigo(2);
-           r.setMsg("Contato Apagado com Sucesso");
-           r.setContato(retorno);
-        }
+    public retorno delete(@WebParam(name = "id") Integer id) {        
+        try {
+            Contato retorno = service.delete(id);
+            r.setCodigo(2);
+            r.setMsg("Sucesso na Consulta");
+            r.setContato(retorno);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
+        } 
         
         return r;
     }

@@ -436,7 +436,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         
         if(r == true){
             retorno = dao.getById(Integer.parseInt(busca));
-            
+            System.out.println("aaaaaaaa: "+retorno.getMsg());
             if(retorno.getCodigo() == 1){
                 JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Nenhum Contato foi encontrado com esse ID!");
             }else{
