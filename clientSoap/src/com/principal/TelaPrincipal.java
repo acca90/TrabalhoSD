@@ -135,15 +135,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Retorno retorno = new Retorno();
         Contato c = new Contato();
         
-        retorno = dao.delete(Integer.parseInt(id)); 
+        retorno = dao.delete(Integer.parseInt(id));      
+        
         c = retorno.getContato();
          
         if(retorno.getCodigo() == 2){
-            JOptionPane.showMessageDialog(this, "O Contato"+c.getNome()+" foi apagado com sucesso!!!");
+            JOptionPane.showMessageDialog(this, "O Contato "+c.getNome()+" foi apagado com sucesso!!!");
         }
         if(retorno.getCodigo() == 1){
             JOptionPane.showMessageDialog(this, retorno.getMsg());
-        }
+        }      
+        
+        
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
