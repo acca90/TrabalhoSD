@@ -20,6 +20,8 @@ public class Client {
     private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
        
+       
+        
         String teste = Arrays.toString(args);
          if(args.length==0){
             Client.HOST = "localhost";
@@ -27,33 +29,30 @@ public class Client {
             Client.HOST = args[0];            
             }
        
+          ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
        String line;
+       tcpService.connect();
        do{        
         System.out.println("Digite help, para o menu");
         Scanner scanner = new Scanner(System.in);   
          line = scanner.nextLine();
-       }while(comando(line));
+       }while(comando(line,tcpService));
       
-        
+        tcpService.disconnect();
     } 
     
 
-  public static boolean comando(String line){
+  public static boolean comando(String line, ClientConnector tcpService){
 
-      ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
+      
               
       if (line.equals("help")) {    
         System.out.println("op=[ listar, incluir, editar, deletar, parar, cidade ], label = valor");
         System.out.println("Para sair digite: parar");           
         
-        return true;
-    } else if(line.equals("parar")) {       
-        
-       
-        tcpService.disconnect();
-        
-        return false;
-        
+
+        return true;       
+
     } else { 
         
         tcpService.connect();
@@ -82,6 +81,27 @@ public class Client {
                       
             break;
               
+            case "id":
+                String idList;
+                Scanner scan2 = new Scanner (System.in); 
+                System.out.println("Informe o id do contato à listar:");
+                idList = scan2.nextLine();
+                int numIdList = Integer.parseInt(idList);
+                ContatoBean conbean = new ContatoBean();
+                conbean.setId(numIdList);
+               
+                 try {
+                    conbean = tcpService.getById(numIdList);
+                    System.out.println("O contato buscado é: ");
+                    System.out.println(new JSONObject(conbean));
+                 } catch(RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                
+                
+                break;
+                
             case "incluir":
                 String id;
                 String nome;
@@ -155,7 +175,7 @@ public class Client {
                 do{
                 String opEditar;
 
-                System.out.print("Escolha os atributos à alterar (id, nome, email, endereco, complemento, cep, cidade, estado, parar): ");
+                System.out.print("Escolha os atributos à alterar (nome, email, endereco, complemento, cep, cidade, estado, parar): ");
                 opEditar = sca.nextLine();      
                 
                 if(opEditar.equals("parar")){
@@ -180,12 +200,7 @@ public class Client {
                 
                 
                 switch(opEditar) {        
-                     case "id":
-                       System.out.printf("Digite o id:");
-                       id2 = sca.nextLine(); 
-                       int numIdEdit = Integer.parseInt(id2);
-                       contact.setId(numIdEdit);
-                         break;
+                     
                      case "nome":
                          System.out.printf("Digite o nome:");
                          nome2 = sca.nextLine();
@@ -284,7 +299,7 @@ public class Client {
                 
             case "parar":
                 
-                 tcpService.disconnect();
+                 
                  System.out.println("Encerrando Aplicação...");
                  return false;
          }   
