@@ -99,9 +99,4 @@ public class ClientConnector {
             throw new RuntimeException("A resposta do servidor é inválida!");
         }
     }
-
-    ContatoBean getByCidade(ContatoBean cob) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

@@ -63,7 +63,7 @@ public class servidorSoap {
         try {
             Contato retorno = service.delete(id);
             r.setCodigo(2);
-            r.setMsg("Sucesso na Consulta");
+            r.setMsg("Sucesso ao deletar o contato!");
             r.setContato(retorno);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -79,16 +79,18 @@ public class servidorSoap {
      */
     @WebMethod(operationName = "insert")
     public retorno insert(@WebParam(name = "c") Contato c) {
-        Contato retorno =  service.add(c); 
         
-        if(retorno == null){
-           r.setCodigo(1);
-           r.setMsg("Erro ao Inserir");
-        }else{
-           r.setCodigo(2);
-           r.setMsg("Contato Inserido com Sucesso");
-           r.setContato(retorno);
-        }
+        
+        try {
+            Contato retorno = service.add(c);
+            r.setCodigo(2);
+            r.setMsg("Sucesso no Insert!");
+            r.setContato(retorno);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
+        } 
         
         return r;
     }  
@@ -98,16 +100,18 @@ public class servidorSoap {
      */
     @WebMethod(operationName = "getByEmail")
     public retorno getByEmail(@WebParam(name = "email") String email) {
-            r.setLista(service.getByEmail(email));           
+               
+        try {
+            r.setLista(service.getByEmail(email));
+            r.setCodigo(2);
+            r.setMsg("Sucesso na Consulta");
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
+        } 
             
-            if(r.getLista().isEmpty()){
-                r.setCodigo(3);
-                r.setMsg("Nenhum Contato está vinculado a esse e-mail");
-            }else{
-                r.setCodigo(1);
-                r.setMsg("Ok");
-            }
-            return r;
+        return r;
         
     }
 
@@ -116,17 +120,17 @@ public class servidorSoap {
      */
     @WebMethod(operationName = "getByCidade")
     public retorno getByCidade(@WebParam(name = "cidade") String cidade) {
-        r.setLista(service.getByCidade(cidade));
-        
-        if(r.getLista().isEmpty()){
-                r.setCodigo(3);
-                r.setMsg("Nenhum Contato está vinculado a essa cidade!!!");
-                r.getLista().clear();
-            }else{
-                r.setCodigo(1);
-                r.setMsg("Ok");                
-            }
-        
+       
+        try {
+            r.setLista(service.getByCidade(cidade));
+            r.setCodigo(2);
+            r.setMsg("Sucesso na Consulta");
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
+        } 
+            
         return r;     
     }
 
@@ -137,19 +141,15 @@ public class servidorSoap {
     public retorno update(@WebParam(name = "contato") Contato contato) {
         r.setContato(service.getById(contato.getId()));
         
-        if(r == null || r.getContato() == null || r.getContato().equals("")){
-            r.setCodigo(33);
-            r.setMsg("Contato não existe");
-        }else{
-            r.setContato(service.update(contato));
-
-            if (r.getContato() == null){
-                r.setCodigo(3);
-                r.setMsg("Erro ao atualizar o contato!!!");
-            }else{
-                r.setCodigo(1);
-                r.setMsg("Ok!!!");
-            }
+         try {
+            Contato c = service.update(contato);
+            r.setCodigo(2);
+            r.setMsg("Sucesso na Consulta");
+            r.setContato(c);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            r.setCodigo(1);
+            r.setMsg(ex.getMessage());
         }
         
         return r;

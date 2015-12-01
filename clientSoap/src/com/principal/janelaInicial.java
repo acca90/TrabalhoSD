@@ -436,7 +436,7 @@ public class janelaInicial extends javax.swing.JInternalFrame {
         
         if(r == true){
             retorno = dao.getById(Integer.parseInt(busca));
-            System.out.println("aaaaaaaa: "+retorno.getMsg());
+            System.out.println("retorno soap: "+retorno.getMsg());
             if(retorno.getCodigo() == 1){
                 JOptionPane.showInternalMessageDialog(controleTelas.getJdesk(), "Nenhum Contato foi encontrado com esse ID!");
             }else{
@@ -485,6 +485,8 @@ public class janelaInicial extends javax.swing.JInternalFrame {
             Retorno retorno = new Retorno();
 
             retorno = dao.getByCidade(busca);
+            
+            System.out.println("retorno SOAP: "+retorno.getMsg());
 
             //erro
             if(retorno.getCodigo() == 3){

@@ -16,7 +16,7 @@ import org.json.JSONObject;
  * @author kaeff
  */
 public class Client {
-    private static final int PORTA = 2005;
+    private static final int PORTA = 2006;
     private static  String HOST = "localhost";
     public static void main(String []args) throws RuntimeException {
        
@@ -43,16 +43,17 @@ public class Client {
       ClientConnector tcpService = new ClientConnector(Client.HOST, PORTA);
               
       if (line.equals("help")) {    
-        System.out.println("op = [ listar, incluir, editar, deletar, parar, cidade ], label = valor");
+        System.out.println("op=[ listar, incluir, editar, deletar, parar, cidade ], label = valor");
         System.out.println("Para sair digite: parar");           
         
         return true;
-    } else if (line.equals("parar")) {       
+    } else if(line.equals("parar")) {       
         
+       
         tcpService.disconnect();
-      
+        
         return false;
-          
+        
     } else { 
         
         tcpService.connect();
@@ -93,8 +94,8 @@ public class Client {
         
        
             Scanner scan = new Scanner (System.in); 
-           
-           
+            //System.out.printf("Digite o id:");   
+            //id = scan.nextLine();                     *** Pegar ID Informado
             System.out.printf("Digite o nome:");
             nome = scan.nextLine();
             System.out.printf("Digite o email:");
@@ -112,8 +113,10 @@ public class Client {
         
             ContatoBean c = new ContatoBean();
             int numCep = Integer.parseInt(cep);
-            int numId = 0;
-            c.setId(numId);
+            int numId = 0;    // ***  ID Sequencial automatico
+            //int idsec = Integer.parseInt(id); *** Pegar ID Informado
+            c.setId(numId);   //  ***  ID Sequencial automatico
+            //c.setId(idsec);                   *** Pegar ID Informado
             c.setNome(nome);
             c.setEmail(email);
             c.setEndereco(end);
@@ -123,6 +126,7 @@ public class Client {
             c.setEstado(est);
         try {
                  c = tcpService.insert(c);
+                 System.out.println("O contato foi adicionado com Sucesso! Segue abaixo as campos informados: ");
                  System.out.println(new JSONObject(c));
              } catch(RuntimeException e) {
                  System.out.println(e.getMessage());
@@ -221,11 +225,9 @@ public class Client {
                         
                 }
             
-            
-          
-                         
                         try {
                            contact = tcpService.update(contact);
+                           System.out.println("O contato foi alterado! Segue abaixo suas informações atualizadas: ");
                            System.out.println(new JSONObject(contact));
                        } catch(RuntimeException e) {
                            System.out.println(e.getMessage());
@@ -250,6 +252,7 @@ public class Client {
                 try {
                  cidade2 =  (ArrayList) tcpService.getByCidade(cidade);
                 // System.out.println(new JSONObject(cidade2));
+                System.out.println("Segue os contatos que moram na cidade de " + cidade + ":");
                   for(Object cb: cidade2) {
                     System.out.println(new JSONObject(cb));
                 }
@@ -259,6 +262,7 @@ public class Client {
 
             
             break;
+    
                 
             case "deletar":
                 String idDel;
@@ -270,15 +274,22 @@ public class Client {
                 cb.setId(numIdDel);
             try {
                  cb = tcpService.delete(numIdDel);
+                 System.out.println("O contato com o id" + numIdDel + " foi deletado!");
                  System.out.println(new JSONObject(cb));
              } catch(RuntimeException e) {
                  System.out.println(e.getMessage());
              }
-
              
                 break;
+                
+            case "parar":
+                
+                 tcpService.disconnect();
+                 System.out.println("Encerrando Aplicação...");
+                 return false;
          }   
-            }
+         
+    }
      
      return true;    
   }

@@ -128,26 +128,28 @@ public class cadastrarContato extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Contato c = new Contato();
+        Contato c = new Contato();
         int r = 0;
-      c.setCodigo(0);
-       c.setCep(Integer.parseInt(campoCep.getText()));
-       c.setNome(campoNome.getText());
-       c.setEmail(campoEmail.getText());
-       c.setEmailAlter(campoEmailAlter.getText());
-       c.setEndereco(campoEndereco.getText());
-       c.setEstado((String) campoEstado.getSelectedItem());
-       c.setCidade(campoCidade.getText());
-       c.setComplemento(campoComplemento.getText());
+        c.setCodigo(null);
+        c.setCep(Integer.parseInt(campoCep.getText()));
+        c.setNome(campoNome.getText());
+        c.setEmail(campoEmail.getText());
+        c.setEmailAlter(campoEmailAlter.getText());
+        c.setEndereco(campoEndereco.getText());
+        c.setEstado((String) campoEstado.getSelectedItem());
+        c.setCidade(campoCidade.getText());
+        c.setComplemento(campoComplemento.getText());
        
-        Retorno retorno   = dao.insert(c);
+        Retorno retorno  = dao.insert(c);
+        
+        System.out.println("menssagem de retorno do soap: "+retorno.getMsg());
         
         int erro = retorno.getCodigo();
         
         c = retorno.getContato();
         
         if(erro == 1){
-            JOptionPane.showMessageDialog(this, "Erro ao inserir o contato. Por Favor tente Novamente!");
+            JOptionPane.showMessageDialog(this, retorno.getMsg());
         }
         
         if(erro == 2){
