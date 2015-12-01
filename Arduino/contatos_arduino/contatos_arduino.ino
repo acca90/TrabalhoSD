@@ -7,6 +7,7 @@
 
 #include <SPI.h>
 #include <Ethernet.h>
+#include <aJSON.h>
 
 // Enter a MAC address for your controller below.
 // Newer Ethernet shields have a MAC address printed on a sticker on the shield
@@ -77,6 +78,10 @@ void conectar()
         // kf you didn't get a connection to the server:
         Serial.println("connection failed");
     }
+    char dadcont[256];
+    bool st=0;
+    int qtdcontatos=0;
+    int i=0;
     while(client.connected())
     {
         // if there are incoming bytes available
@@ -84,7 +89,22 @@ void conectar()
         if (client.available())
         {
             char c = client.read();
-            Serial.print(c);
+            //Serial.print(c);
+            if(c=='{'){
+              st=1;          
+            }
+            if(st==1){
+              dadcont[i]=c;
+              i++;
+            }
+            if(c=='}')
+            {
+              qtdcontatos++;
+              st=0;
+              i=0;
+              //Serial.println(dadcont);
+              json(dadcont);
+            }
         }
 
         // if the server's disconnected, stop the client:
@@ -94,8 +114,53 @@ void conectar()
             Serial.println("disconnecting.");
             client.stop();
         }
-    }
+    }   
+    //Serial.println(dadcont);
+    
 }
+void json(char* sonString){
+    //char asonString[]="{\"codigo\":1,\"nome\":\"dasd\",\"email\":\"sadasdas\",\"endereco\":\"asdasdasd\",\"complemento\":\"asdasdadas\",\"cep\":99050120,\"cidade\":\"Passo fundo\",\"estado\":\"RS\",\"email_alter\":\"daksdasdas\"}";
+    Serial.println(sonString);
+    aJsonObject* contatos = aJson.parse(sonString);
+    
+    aJsonObject* codigo = aJson.getObjectItem(contatos, "codigo");
+
+    aJsonObject* nome = aJson.getObjectItem(contatos, "nome");
+    
+    aJsonObject* email = aJson.getObjectItem(contatos, "email");
+
+    aJsonObject* endereco = aJson.getObjectItem(contatos, "endereco");
+
+    aJsonObject* complemento = aJson.getObjectItem(contatos, "complemento");
+
+    aJsonObject* cep = aJson.getObjectItem(contatos, "cep");
+
+    aJsonObject* cidade = aJson.getObjectItem(contatos, "cidade");
+
+    aJsonObject* estado = aJson.getObjectItem(contatos, "estado");
+
+    aJsonObject* email2 = aJson.getObjectItem(contatos, "email_alter");
+     
+    Serial.println(codigo->valueint);
+
+    Serial.println(nome->valuestring);
+
+    Serial.println(email->valuestring);
+
+    Serial.println(endereco->valuestring);
+
+    Serial.println(complemento->valuestring);
+
+    Serial.println(cep->valueint);
+
+    Serial.println(cidade->valuestring);
+
+    Serial.println(estado->valuestring);
+
+    Serial.println(email2->valuestring);
+  
+}
+
 void loop()
 {
 
