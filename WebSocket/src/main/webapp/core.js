@@ -147,16 +147,16 @@
             function writeResponse(text){
                document.getElementById("messages").innerHTML+= "<br/>" + text;
                
-                 var myObject = new Object();
+                //  var myObject = new Object();
                 
-                myObject = eval(text);
+                // myObject = eval(text);
                 
-                alert("tamanho: "+myObject.length);
-                for(o in myObject){
-                    alert(myObject[o].nome);
-                }
+                // alert("tamanho: "+myObject.length);
+                // for(o in myObject){
+                //     alert(myObject[o].nome);
+                // }
                  
                  
 
-                console.log(myObject);
+                // console.log(myObject);
             }
